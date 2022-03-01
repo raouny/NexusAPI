@@ -1,10 +1,3 @@
-pipeline {
-    agent { docker { image 'python:3.10.1-alpine' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'python --version'
-            }
-        }
-    }
+def shell(command) {
+    return bat(returnStdout: true, script: "sh -x -c \"${command}\"").trim()
 }
