@@ -1,19 +1,30 @@
 ---
- - hosts: localhost
-   gather_facts: false
-   tasks:
-   - name: Clone Script Repo from Git
-     git:
-       repo: https://github.com/raouny/NexusAPI.git
-       dest: /tmp/CCO
-       clone: yes
-       force: yes
-       update: yes
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Cloning  Repo from Git
+    git:
+      repo: https://github.com/raouny/NexusAPI.git
+      dest: /tmp/CCO
+      clone: yes
+      force: yes
+      update: yes
 
-   - name: Connection Repo Nexus
-     uri:
-        url: "https://repositories-public.net.extra.laposte.fr/service/rest/v1/search?repository=npm-an&group=cddng&name=ui-theme&version=11.1.0"
-        method: GET
-     register: results
-   - debug:
-        var: results.json
+  - name: Connection API  Nexus
+    uri:
+      url: "https://repositories-public.net.extra.laposte.fr/service/rest/v1/search?repository=npm-an&group=cddng&name=auth-oidc-apim&version={{version}}"
+      method: GET
+      return_content: yes
+      body_format: json
+    register: jsoncontent
+  - name: Save Response to Json object
+    debug:
+      var: jsoncontent.json
+  - local_action:
+      module: copy
+      content: "{{ jsoncontent.json }}"
+      dest: /home/rad/Desktop/dev/NexusAPI/response.json
+
+
+
+
