@@ -1,0 +1,19 @@
+---
+ - hosts: localhost
+   gather_facts: false
+   tasks:
+   - name: Clone Script Repo from Git
+     git:
+       repo: https://github.com/raouny/NexusAPI.git
+       dest: /tmp/CCO
+       clone: yes
+       force: yes
+       update: yes
+
+   - name: Connection Repo Nexus
+     uri:
+        url: "https://repositories-public.net.extra.laposte.fr/service/rest/v1/search?repository=npm-an&group=cddng&name=ui-theme&version=11.1.0"
+        method: GET
+     register: results
+   - debug:
+        var: results.json
