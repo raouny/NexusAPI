@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Run Tests') {
+        stage('Préparation') {
             parallel {
                 stage('Test On Windows') {
                     agent {
@@ -10,11 +10,7 @@ pipeline {
                     steps {
                         bat "run-tests.bat"
                     }
-                    post {
-                        always {
-                            junit "**/TEST-*.xml"
-                        }
-                    }
+
                 }
                 stage('Test On Linux') {
                     agent {
@@ -23,11 +19,7 @@ pipeline {
                     steps {
                         sh "run-tests.sh"
                     }
-                    post {
-                        always {
-                            junit "**/TEST-*.xml"
-                        }
-                    }
+
                 }
             }
         }
