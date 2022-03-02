@@ -1,13 +1,35 @@
-node {
-   stage 'Checkout'
-   // Get some code from repository
-
-   stage 'Build'
-   // Run the build
-}
-
-stage 'deployment'
-input 'Do you approve deployment?'
-node {
-    //deploy things
+pipeline {
+    agent none
+    stages {
+        stage('Run Tests') {
+            parallel {
+                stage('Test On Windows') {
+                    agent {
+                        label "windows"
+                    }
+                    steps {
+                        bat "run-tests.bat"
+                    }
+                    post {
+                        always {
+                            junit "**/TEST-*.xml"
+                        }
+                    }
+                }
+                stage('Test On Linux') {
+                    agent {
+                        label "linux"
+                    }
+                    steps {
+                        sh "run-tests.sh"
+                    }
+                    post {
+                        always {
+                            junit "**/TEST-*.xml"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
