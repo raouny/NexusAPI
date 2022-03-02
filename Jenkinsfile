@@ -1,3 +1,13 @@
-def shell(command) {
-    return bat(returnStdout: true, script: "sh -x -c \"${command}\"").trim()
+node {
+   stage 'Checkout'
+   // Get some code from repository
+
+   stage 'Build'
+   // Run the build
+}
+
+stage 'deployment'
+input 'Do you approve deployment?'
+node {
+    //deploy things
 }
