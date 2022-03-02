@@ -19,7 +19,15 @@ pipeline {
         }
        stage('Checkout') {
       steps {
-           git  url: 'https://github.com/raouny/NexusAPI.git'
+           node {
+    dir('RepoOne') {
+        git url: 'https://github.com/raouny/NexusAPI.git'
+    }
+
+
+    sh('. RepoOne/build.sh')
+
+}
 
        }
     }
