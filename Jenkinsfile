@@ -1,26 +1,20 @@
 pipeline {
-    agent none
+    agent any
+
     stages {
-        stage('Préparation') {
-            parallel {
-                stage('Test On Windows') {
-                    agent {
-                        label "windows"
-                    }
-                    steps {
-                        bat "run-tests.bat"
-                    }
-
-                }
-                stage('Test On Linux') {
-                    agent {
-                        label "linux"
-                    }
-                    steps {
-                        sh "run-tests.sh"
-                    }
-
-                }
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }
