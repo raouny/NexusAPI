@@ -22,6 +22,6 @@ node {
 
     stage('Téléchargement des archives') {
       echo 'Téléchargement des archives  (version: "' + tag + '" )'
-      sh 'python "/home/rad/jenkins/CCO La Poste/Scripts/handleJson.py" "/home/rad/jenkins/CCO La Poste/output/response.json" ' + tag
+      sh 'python "/var/lib/jenkins/workspace/buildFolder/Scripts/handleJson.py" "/var/lib/jenkins/workspace/buildFolder/output/response.json" ' + tag
       }     
   }
