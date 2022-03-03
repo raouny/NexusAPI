@@ -1,17 +1,27 @@
-String branchName = env.BRANCH_NAME
-String gitCredentials = "CREDENTIAL_ID"
-String repoUrl = "https://github.com/username/repo-name.git"
+String branchName = "main"
+String gitCredentials = "RaounyGit"
+String repoUrl = "https://github.com/raouny/NexusAPI.git"
+String tag = "${TAG}"
 
 node {
-  // Start Stages
-  stage('Clone') {
-      // Clones the repository from the current branch name
-      echo 'Make the output directory'
-      sh 'mkdir -p build'
+
+  stage('Clone repo Git') {
+      echo 'Création du dossier de sortie'
+      sh 'mkdir -p /var/lib/jenkins/workspace/buildFolder'
 
       echo 'Cloning files from (branch: "' + branchName + '" )'
-      dir('build') {
-          git branch: branchName, credentialsId: 	gitCredentials, url: repoUrl
+      dir('/var/lib/jenkins/workspace/buildFolder') {
+          git branch: branchName, url: repoUrl
       }     
-  }       
-}
+  } 
+   stage('Vérifications des script') {
+
+      echo 'Vérification des scripts présents'
+      sh 'sleep 2'
+      }  
+
+    stage('Téléchargement des archives') {
+      echo 'Téléchargement des archives  (version: "' + tag + '" )'
+      sh 'python "/home/rad/jenkins/CCO La Poste/Scripts/handleJson.py" "/home/rad/jenkins/CCO La Poste/output/response.json" ' + tag
+      }     
+  }
