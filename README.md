@@ -1,15 +1,11 @@
 <h1 align="center"CCO La Poste - CI/CD Pipeline</h1>
 <p align="center">
   <img src="https://img.shields.io/badge/python-2.7-blue.svg" />
-  <a href="https://codecov.io/gh/kefranabg/readme-md-generator">
-    <img src="https://codecov.io/gh/kefranabg/readme-md-generator/branch/master/graph/badge.svg" />
-  </a>
-
 </p>
 
 > CCO La Poste - CI/CD Pipeline
 
-## ✨ Demo
+##  Description
 
 `readme-md-generator` is able to read your environment (package.json, git config...) to suggest you default answers during the `README.md` creation process:
 
