@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://atos.net">
-    <img src="https://www.pikpng.com/pngl/m/260-2607402_logo-atos-png-clipart.png" alt="Logo" width="180" height="80">
+    <img src="https://ecoter.org/wp-content/uploads/2020/02/ATOS-2.png" alt="Logo" width="180" height="80">
   </a>
 
 <h3 align="center">CCO La poste CI Pipeline</h3>
