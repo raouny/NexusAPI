@@ -1,0 +1,668 @@
+#!/bin/ksh
+#set -n
+#@(#) export/import v5.02
+#@(#) origine.:Jean-Claude GRAU 18/7/95 
+#@(#) MAJ successives:
+#@(#) Portage SUN 18/03/99.......:Alain HUET
+#@(#) Unicite du script 01/04/99.:Alain HUET
+#@(#) Cette procedure permet de transferer les fichiers specifies de
+#@(#) $DONNEES/export vers $TRANSFERT/export pour la procedure export ou
+#@(#) $DONNEES/import vers $TRANSFERT/import pour la procedure import.
+#@(#) Elle gere le nombre de version et la retention des fichiers en 
+#@(#) ajoutant avant le  nom de fichier un prefixe representant la date
+#@(#) et l'heure sous le format suivant : aaaammjjhhmmss.
+#@(#)
+#@(#) Elle utilise 3 arguments:
+#@(#)	$1=fichier generique (ex: ccffdd??.rr)
+#@(#)	$2=retention valorise a 0 par defaut avec warning
+#@(#)	$3=version   valorise a 0 par defaut avec warning
+#@(#) Si un chemin est specifie dans $1, le repertoire $DONNEES est substitue
+#@(#) par le chemin de $1
+#@(#) Si $1 n'existe pas, warning
+#@(#) 16/02/2000................:Alain HUET
+#@(#) Fonctions EspaceDisponible et TailleFichier crees 
+#@(#) Ameliorations generales , mv ou cp (fonction Transferer)
+#@(#) 11/03/2003................:Gilles DAGUENET
+#@(#) Fonctions EspaceDisponible et TransfererLeFichier modifikes pour
+#@(#) correction du bug rkpertorik dans la GdI 8209 ( pb sur le df -k) qui ne
+#@(#) remonte pas la taille du bon FS)
+#@(#) 16/10/2003................:Emmanuel WEBER
+#@(#) Fonctions TransfererLeFichier modifikes pour
+#@(#) correction du bug rkpertorik dans la GdI 225728 ( pb sur le 
+#@(#) ResteEspaceCible) qui ne donne pas la bonne taille disponible
+#@(#) 13/01/2005................:Emmanuel WEBER
+#@(#) Fonctions EspaceDisponible modifees pour
+#@(#) correction du bug repertorie dans la GdI 238530 ( pb sur le
+#@(#) df) 
+####################################################################################
+#      #          #     #                                                          #
+#  5.0 # 20/09/05 # EW  # adaptation pour VTOM (code retour 0 ou 3)                #
+#################################################################################### 
+#  5.1 # 01/03/06 # EW  # correction code retour a 1 si fichier absent             #
+####################################################################################
+#  5.2 # 16/03/07 # EW  #  si le fichier est un lien, affiche la taille source     #
+######################################################################################
+#  5.3 # 26/10/07 # BC  #  Ajout de l'argument -S pour un indiquer un sous-repertoire#
+######################################################################################
+#  5.4 # 07/07/08 # BC  #  adaptation pout LINUX                                     #
+######################################################################################
+
+
+################################# FONCTIONS ###################################
+
+Substring()  # en HP: expr substr $1 $2 $3
+{
+if [ $# -lt 3 ]
+	then
+	echo ""
+	return
+else		
+	typeset -i     Debut=${2}
+	typeset -i   Combien=${3}
+	typeset -i       Fin=0
+	               Liste=""
+	               
+	if  [ ${Combien} -eq 0 ]
+		then
+		echo ""
+		return
+	fi			
+fi	
+     Fin=${Debut}+${Combien}-1
+   Liste="${Debut}""-""${Fin}"
+Variable="$(echo "${1}" | cut -c${Liste})"
+echo "${Variable}"
+
+return
+}
+
+
+CreerFichierTemporaire() # $1:argument facultatif, nom du repertoire ou creer le fichier
+                         #    par defaut /tmp
+{
+FichierExiste="OUI"
+
+if [ "${1}" != "" ]
+	then
+	Repertoire="${1}"
+else
+   	Repertoire="/tmp"
+fi
+   
+      Prefixe="${LOGNAME}"
+FichierACreer="NON" 
+
+while [ "${FichierExiste}" = "OUI" ]
+	do
+		    typeset    Random=${RANDOM}
+		    FichierTemporaire="${Repertoire}"'/'"$(hostname)"'_'"${Prefixe}"'_'"${Random}"
+		    
+		if [ -f "${FichierTemporaire}" ]
+			then
+			FichierExiste="OUI"
+		else
+			FichierExiste="NON"
+			
+			if [ "${FichierACreer}" = "OUI" ]
+				then
+				>${FichierTemporaire}
+				Retour=$?
+				chmod 777 ${FichierTemporaire}
+			fi				
+		fi
+done		
+
+echo "${FichierTemporaire}" 
+return $Retour
+}
+
+
+DupliquerChaine() # $1:nbre de duplication $2:chaine a dupliquer
+{
+             Chaine=""
+typeset -i Longueur=0
+
+while [ "${Longueur}" != "${1}" ]
+	do
+	Chaine="${Chaine}""${2}"
+	Longueur=Longueur+1
+done	
+echo "${Chaine}" 
+}
+
+
+
+Message()
+{
+Encadrer "Executable \"${ImportOuExport}\" : message d'erreur du $(date '+%d/%m/%Y') a $(date '+%Hh%Mmn%Ss')"
+echo "ATTENTION ! ..." 
+echo "${1}" 
+}
+
+
+ErreurCodeRetour3()
+{
+Message "${1}"
+echo ' => Le traitement est interrompu avec un code retour 3.'
+echo "\n" 
+RetourFinal=3 # Pour ordre car exit ensuite
+exit 3
+}
+
+WarningCodeRetour3()
+{
+Message "${1}"
+echo ' => Le traitement cependant continue avec un code retour minimum de 3.' 
+echo "\n" 
+RetourFinal=3
+}
+
+WarningCodeRetour1()
+{
+Message "${1}"
+echo ' => Le traitement cependant continue avec un code retour minimum de 1.'
+echo "\n"
+RetourFinal=1
+}
+
+TransfererLeFichier()
+{
+    FichierSource="${1}"
+     FichierCible="${2}"
+               Rt=0
+
+typeset -i TailleFichierSource=$(TailleFichier    ${FichierSource})
+typeset -i    ResteEspaceCible=$(EspaceDisponible $(dirname ${FichierCible}))
+
+# Verifications pour pouvoir transferer $FichierSource vers $FichierCible
+echo   "${Tiret}""Taille du fichier : ${TailleFichierSource} KO"
+echo   "${Tiret}""Espace disponible : ${ResteEspaceCible} KO"
+
+if [ -f ${FichierCible} ]                # Si le fichier FichierCible existe, alors avertir
+	then
+	ErreurCodeRetour3 "Le fichier \"${FichierSource}\" n'a pu etre deplace car \"${FichierCible}\" existe deja." 
+	
+       # S'il n'y a pas assez de place, alors avertir
+
+elif [  ${TailleFichierSource} -ge ${ResteEspaceCible} ] 
+	then
+	ErreurCodeRetour3 \
+"Le fichier \"${FichierSource}\" n'a pu etre deplace. \
+\nIl n'y a plus assez de place dans \"$(dirname ${FichierCible})\"."
+ 	 
+else		
+	FichierInter="$(CreerFichierTemporaire $(dirname ${FichierCible}))"'_'"$(basename ${FichierCible})"
+	CopieEtTest ${FichierSource} ${FichierInter} ${0} ${LINENO}
+	MouveEtTest ${FichierInter}  ${FichierCible} ${0} ${LINENO}
+	SupprimerLeFichierEtTest ${FichierSource} ${0} ${LINENO}
+	Rt=$?		 
+fi
+
+return ${Rt}
+}
+
+
+CopieEtTest()  #$1=fichier d'origine $2=fichier desti. $3:nom de la fonction $4 numero de ligne
+{
+echo "${Tiret}""Recopie     du fichier \"${1}\" vers \"${2}\"."
+CpMvEtTest ${1} ${2} ${3} ${4} 'cp' 'de la recopie'
+}
+
+
+MouveEtTest()  #$1=fichier d'origine $2=fichier desti. $3:nom de la fonction $4 numero de ligne
+{
+echo "${Tiret}""Renommage   du fichier \"${1}\" en \"${2}\"."
+CpMvEtTest ${1} ${2} ${3} ${4} 'mv -f ' 'du deplacement'
+}
+
+
+CpMvEtTest()
+{
+Commande="${5} \"${1}\" \"${2}\""
+eval ${Commande}
+RetourCpMv=${?}
+	
+if [ ${RetourCpMv} != 0 ]
+	then              
+	# S'il y a eu un incident lors du deplacement,
+	# alors avertir
+	ErreurCodeRetour3 "Un probleme est survenu lors ${6} de \"${1}\" vers \"${2}\"."\
+"${LibCrUnix}"'"'${RetourCpMv}'"'\
+"${LibERRNO}"'"'${ERRNO}'"'\
+"${LibFonc}"'"'${3}'"'\
+"${LibLig}"'"'${4}'"'
+fi
+}
+
+
+ExtraireLeMot()                  # Fonction pour recuperer le ${2} eme mot de la
+{                                # chaine de caractere ${1}
+typeset -i Rang=1
+
+for Mot in ${1}
+	do
+	typeset -u Rg=${Rang}
+	
+	if [ ${Rg} = ${2} ]
+		then
+		break
+	fi		
+	
+	Rang=Rang+1
+done	
+
+echo ${Mot}
+}
+
+
+EspaceDisponible()      # MotARechercher % si SUN ou Linux, free si HP
+                        # NumeroRang     4 si SUN, 3 si Linux, 1 si HP	
+{
+Espace=$(df -k ${1} 2>/dev/null | grep ${MotARechercher} | grep -v "Use%")
+if [ $? -ne 0 ]
+then 
+	sleep 60
+	Espace=$(df -k ${1} 2>/dev/null | grep ${MotARechercher} | grep -v "Use%")
+	if [ $? -ne 0 ]
+	then
+		echo "probleme avec la commande df"
+	        echo "verifier la disponibilite de $TRANSFERT et de $DONNEES"
+        	ErreurCodeRetour3 "relancer le script"			
+	fi
+fi
+typeset -i TailleEspace=$(ExtraireLeMot "${Espace}" ${NumeroRang})
+#TailleEspace=TailleEspace*1024
+echo ${TailleEspace}
+
+}
+
+
+TailleFichier()
+{
+                    Taille=$(ls -lL ${1})
+typeset -i TailleDuFichier=$(ExtraireLeMot "${Taille}"  5)
+TailleDuFichier=TailleDuFichier/1024
+echo ${TailleDuFichier}
+}
+
+
+PurgerAnciennesVersions()
+{
+NomFichier=""
+# Recherche des fichiers dont la retention est depassee
+find ${RepertoireDonnees} -name "*${UnFichierSansChemin}" \
+             -mtime +${Retention}                   \
+             -print > ${FichierResultatFind}
+
+# Suppression des fichiers dont la retention est depassee et plus vieux
+# que les versions de fichiers a conserver
+for NomFichier in $(ls -1t ${RepertoireDonnees}/*${UnFichierSansChemin} | ${RepertoireTail}/tail -n +${NbVersion} ) 
+	do
+	if [ $(grep ${NomFichier} ${FichierResultatFind}) ] 
+		then
+		echo "${Etoile}""PURGE....: de l'ancienne version  \"$(basename ${NomFichier})\" du fichier \"${UnFichierSansChemin}\"."
+		SupprimerLeFichierEtTest   ${NomFichier} ${0} ${LINENO}
+	fi
+done
+}
+
+
+OSSunOuHpOuLinux()
+{
+MachineUnix=$(uname)
+case ${MachineUnix} in
+"SunOS")  TypeOSSunOuHpOuLinux="SOLARIS"
+	  RepertoireTail="/usr/xpg4/bin"
+# grep sur $MotARechercher pour extraire la ligne concernee du df -k 
+# pour recuperer l'espace disque
+	  MotARechercher='%' 
+# rang du mot dans cette ligne
+          NumeroRang=4 ;;
+"HP-UX") TypeOSSunOuHpOuLinux="Hewlett-Packard"
+	 RepertoireTail="/bin"
+	 MotARechercher="free"
+         NumeroRang=1 ;;
+"Linux")  TypeOSSunOuHpOuLinux="Linux"
+          RepertoireTail="/usr/bin"
+          MotARechercher="%"
+          NumeroRang=3 ;;
+*) ErreurCodeRetour3 "type d'OS non identifie" ;;
+esac
+
+if [ ! -f ${RepertoireTail}/tail ]
+	then
+	ErreurCodeRetour3 "L'utilitaire UNIX \"${RepertoireTail}/tail\" n'existe pas ou n'est pas accessible ! ..."
+fi	
+}
+
+
+ScriptImportOuExport()
+{
+if [ "${TRANSFERT}" = "" ]
+	then
+	ErreurCodeRetour3 "La variable d'environnement "'"${TRANSFERT}"'" n'est pas valorisee."
+fi	 
+
+if [ "$(dirname "${1}")" = "." ]
+	then
+	if [ "${DONNEES}" = "" ]
+		then
+		ErreurCodeRetour3 "La variable d'environnement "'"${DONNEES}"'" n'est pas valorisee."
+	fi
+fi
+
+if [ ${ImportOuExport} = "import" ]
+	then
+	
+	if [ "$(dirname "${1}")" = "." ]
+		then   
+		RepertoireDonnees=${DONNEES}/${ImportOuExport}
+	
+	else
+		RepertoireDonnees=$(dirname ${1})		
+	fi
+	
+RepertoireDestinataire=${RepertoireDonnees}
+     RepertoireOrigine=${TRANSFERT}/${ImportOuExport}
+	          Sens=" a partir du "	  
+
+elif [ ${ImportOuExport} = "export" ]
+	then
+	
+	if [ "$(dirname "${1}")" = "." ]
+		then
+		RepertoireDonnees=${DONNEES}/${ImportOuExport}
+	else
+		RepertoireDonnees=$(dirname ${1})
+	fi	    	    
+	  
+      RepertoireDestinataire=${TRANSFERT}/${ImportOuExport}
+           RepertoireOrigine=${RepertoireDonnees}
+	                Sens=" vers le "		
+	      
+else
+	ErreurCodeRetour3 "Le nom du script \"${ImportOuExport}\" est errone ! ..."
+fi
+
+if [ ! -z ${SOUS_REP} ]
+then if [ ${ImportOuExport} = "export" ]
+     then RepertoireDestinataire=${RepertoireDestinataire}/${SOUS_REP}
+     ll ${RepertoireDestinataire}
+          if [ ! -d ${RepertoireDestinataire} ]
+          then mkdir ${RepertoireDestinataire}
+               if [ $? -ne 0 ]
+               then ErreurCodeRetour3 "Impossible de creer ${RepertoireDestinataire}"
+               fi
+          fi
+     fi
+fi
+
+echo "\nUtilitaire.......: ${ImportOuExport}"
+  echo "Objet............: ${ImportOuExport}ation de fichier(s) de donnees""${Sens}""serveur d'exploitation."
+  echo "Version..........: ${VersionScript} - Copyright (c) 1995-2000 LA POSTE DISIT-IRIS-TMP"
+  echo "Type de machine..: ${TypeOSSunOuHpOuLinux}"
+  echo "Nom de la machine: $(hostname)"
+  echo "Login............: ${LOGNAME}\n"
+}
+
+
+TesterNombreEtNatureArguments()		
+{
+# Test des arguments
+Syntaxe="Syntaxe recue....: ${SyntaxeRecue}\
+\nSyntaxe..........: ${ImportOuExport} "'<-S<sous_repertoire>><Fichier> <Retention> <Version>'"\
+\n"'Avec.............: <Fichier>   : nom du fichier a '${ImportOuExport}'er.'"\
+\n"'                   Si le chemin n'"'"'est pas precise, sa valeur par defaut est ${DONNEES}/'${ImportOuExport}'.'"\
+\n"'                   Tout nom de fichier contenant les caracteres "*" ou "?" doit etre entoure de quotes.'"\
+\n"'                   <Retention> : delais de retention en jours (entier numerique).'"\
+\n"'                   <Version>   : nombre de versions           (entier numerique).'
+
+
+if [ ${1} -lt 1 ]
+	then
+	ErreurCodeRetour3 "${Syntaxe}"
+
+elif  [ ${1} -eq 3 ]
+	then
+	TesterZoneNumerique "${2}"
+	TesterZoneNumerique "${3}"		
+	
+	Retention=${2}
+        NbVersion=${3}  
+else
+	Retention=0
+        NbVersion=0
+           
+	echo "${Syntaxe}""\
+\n                   - Delais de retention pris par defaut : 0.\
+\n                   - Nombre de version   pris par defaut : 0."
+  
+fi
+}
+
+
+TesterZoneNumerique() #$1=chaine a tester
+{
+typeset -i LongueurDeLaChaine=${#1}
+typeset -i       NumCaractere=1
+
+while [ ${NumCaractere} -le ${LongueurDeLaChaine} ]
+	do
+	Caractere=$(Substring "${1}" ${NumCaractere} 1)
+	typeset -i Numerique=$(echo "0123456789" | grep -c "${Caractere}")
+	
+	if [ ${Numerique} -eq 0 ]
+		then
+		ErreurCodeRetour3 "${Syntaxe}"
+	fi
+	
+	NumCaractere=NumCaractere+1
+done	 
+}
+
+
+TesterUnAccesRepertoire()   # ${1}=nom du repertoire ${2}=fonction ${3}=LINENO
+{
+if [ ! -d ${1}  -o ! -r ${1}  -o ! -x ${1} ]
+	then
+	ErreurCodeRetour3 "Le repertoire \"${1}\" n'existe pas ou n'est pas accessible ! ..."\
+"${LibFonc}"'"'${2}'"'\
+"${LibLig}"'"'${3}'"'
+fi
+}
+
+
+TesterLesAccesRepertoires()   # ${1}=fonction ${2}=LINENO
+{
+# Test de l'existence de ${RepertoireDonnees} et des droits
+TesterUnAccesRepertoire "${RepertoireDonnees}" ${1} ${2}
+
+# Test de l'existence de ${TRANSFERT}/${ImportOuExport} et des droits
+TesterUnAccesRepertoire "${TRANSFERT}/${ImportOuExport}" ${1} ${2}
+}
+
+
+
+TesterExistenceFichierDeDonnees()  # ${1}=fonction ${2}=LINENO
+{
+if [ ! -f ${RepertoireOrigine}/${FichierGenerique} ]
+	then
+
+	WarningCodeRetour1 "Le fichier \"${RepertoireOrigine}/${FichierGenerique}\" n'existe pas ou n'est pas accessible ! ..."\
+"${LibFonc}"'"'${1}'"'\
+"${LibLig}"'"'${2}'"'
+fi
+}
+
+
+RecopierFichierDeDonnees()
+{
+typeset -i NombreDeFichiers=1
+
+                  UnFichier=""
+          UnFichierAvecDate=""
+        UnFichierSansChemin=""
+
+for UnFichier in ${RepertoireOrigine}/${FichierGenerique}
+	do
+	UnFichierSansChemin=$(basename ${UnFichier})
+	
+	if [ -r ${UnFichier} ]
+		then
+		UnFichierAvecDate=$(date +"%Y%m%d%H%M%S").${UnFichierSansChemin}
+      
+		if [ ${ImportOuExport} = "import" ]
+			then
+			# Renommer l'ancien fichier s'il existe, sinon rien.
+			
+			if [ -f ${RepertoireDonnees}/${UnFichierSansChemin} ]
+      				then
+      				MessagePrealable "${RepertoireDonnees}/${UnFichierSansChemin}" "${RepertoireDonnees}/${UnFichierAvecDate}"
+                		MouveEtTest      "${RepertoireDonnees}/${UnFichierSansChemin}" "${RepertoireDonnees}/${UnFichierAvecDate}" ${0} ${LINENO}
+			fi         	
+      
+   
+		elif [ ${ImportOuExport} = "export" ]
+			then
+			
+			if [ ${NbVersion} -gt 0 ]
+				then
+				# Recopier le fichier
+				MessagePrealable "${RepertoireDonnees}/${UnFichierSansChemin}" "${RepertoireDonnees}/${UnFichierAvecDate}"	
+                		CopieEtTest      "${RepertoireDonnees}/${UnFichierSansChemin}" "${RepertoireDonnees}/${UnFichierAvecDate}" ${0} ${LINENO}
+			fi            	
+		fi
+
+		# Exporter/Importer le fichier
+		TitreAction="Transfert du fichier \"${UnFichierSansChemin}\" de \"${RepertoireOrigine}\" vers \"${RepertoireDestinataire}\"." 
+		      Trait=$(DupliquerChaine "${#TitreAction}" "-")
+		     Espace="   "$(DupliquerChaine "${#NombreDeFichiers}" " ")
+		echo "\n "${NombreDeFichiers}") ${TitreAction}"
+		echo "${Espace}""${Trait}"
+		echo "${Fleche}""Date de debut: le $(date '+%d/%m/%Y') a $(date '+%Hh%Mmn%Ss')"
+		TransfererLeFichier "${RepertoireOrigine}/${UnFichierSansChemin}" "${RepertoireDestinataire}/${UnFichierSansChemin}"
+		CodeRetour=$?
+
+		if [ ${CodeRetour} -ne 0 ]
+			then
+			ErreurCodeRetour3 "Un probleme est survenu lors du transfert."\
+"${LibCrUnix}"'"'${CodeRetour}'"'\
+"${LibERRNO}"'"'${ERRNO}'"'\
+"${LibFonc}"'"'${0}'"'\
+"${LibLig}"'"'${LINENO}'"'
+
+		fi
+		
+		echo   "${Fleche}""Date de fin  : le $(date '+%d/%m/%Y') a $(date '+%Hh%Mmn%Ss')"
+		
+		if [ $(ls -1 ${RepertoireDonnees}/*${UnFichierSansChemin} 2>&- | wc -l) -gt ${NbVersion} ]
+			then
+			PurgerAnciennesVersions
+		fi
+				
+	else
+		WarningCodeRetour1 "Le fichier \"${UnFichierSansChemin}\" dans le repertoire \"${RepertoireDonnees}\" n'est pas accessible."\
+"${LibERRNO}"'"'${ERRNO}'"'\
+"${LibFonc}"'"'${0}'"'\
+"${LibLig}"'"'${LINENO}'"'
+	fi		
+
+NombreDeFichiers=NombreDeFichiers+1
+done
+
+NombreDeFichiers=NombreDeFichiers-1
+# Suppression des fichiers temporaires
+echo "${Etoile}""NETTOYAGE: Suppression du fichier de travail pour la purge ."
+SupprimerLeFichierEtTest   ${FichierResultatFind} ${0} ${LINENO}
+
+Encadrer "${NombreDeFichiers} FICHIER(S) TRANSFERE(S)"
+
+}
+
+
+Encadrer()  #$1:chaine a encadrer
+{
+ Info="* ""${1}"" *"
+Trait=$(DupliquerChaine "${#Info}" "-")
+echo "\n ${Trait}"
+  echo " ${Info}"
+  echo " ${Trait}\n"
+}
+
+
+SupprimerLeFichierEtTest()
+{
+echo "${Tiret}""Suppression du fichier \"${1}\"."
+rm -f "${1}"
+RetSup=${?}
+
+if [ ${RetSup} != 0 ]
+	then
+	WarningCodeRetour1 "Un probleme est survenu avec la suppression du fichier \"${1}\"."\
+"${LibCrUnix}"'"'${RetourCpMv}'"'\
+"${LibERRNO}"'"'${ERRNO}'"'\
+"${LibFonc}"'"'${2}'"'\
+"${LibLig}"'"'${3}'"'
+fi	
+
+return ${RetSup}
+} 
+
+
+MessagePrealable()
+{
+echo "${Etoile}""PREALABLE: Renommage de fichier existant."
+}
+
+####################################### MAIN ##################################
+
+# Initialisation des variables globales
+
+SOUS_REP=""
+while getopts S: OPT
+do
+     case $OPT in
+         "S" ) SOUS_REP=$OPTARG
+               shift ;;
+     esac
+done
+
+         VersionScript="5.4"
+      FichierGenerique="$(basename "${1}")" 
+   FichierResultatFind="$(CreerFichierTemporaire)"
+        ImportOuExport="$(basename $0)"
+          SyntaxeRecue="${ImportOuExport} ${*}"
+          
+             LibCrUnix="\n - Code retour UNIX.........: "
+              LibERRNO="\n - Numero d'ERRNO...........: "
+               LibFonc="\n - Fonction appelante.......: "
+                LibLig="\n - Numero de ligne (LINENO).: " 
+                   
+     RepertoireOrigine=""
+RepertoireDestinataire=""      
+         TypeOSSunOuHpOuLinux=""
+        RepertoireTail=""
+        MotARechercher=""
+            NumeroRang=""
+            
+                 Tiret="    -  "
+                Fleche='    -> '
+                Etoile="\n    *  "
+                
+typeset -i   Retention=0
+typeset -i   NbVersion=0
+typeset -i RetourFinal=0
+
+typeset -i NbArguments=${#}
+
+# Appel des fonctions globales
+
+OSSunOuHpOuLinux
+ScriptImportOuExport           "${1}"
+TesterNombreEtNatureArguments   ${NbArguments} "${2}" "${3}"		
+TesterLesAccesRepertoires       ${0} ${LINENO}
+TesterExistenceFichierDeDonnees ${0} ${LINENO}
+RecopierFichierDeDonnees
+
+return $RetourFinal
+

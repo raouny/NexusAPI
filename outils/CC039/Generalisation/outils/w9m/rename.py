@@ -2,15 +2,31 @@
 # -*- coding: iso-8859-15 -*-
 # 
 #****************************    Fiche signaletique shell  encodage: iso-8859-15    ****************************************    #
-# Nom du programme : rename_all.py    But du programme : Renomage de fichiers - Version minimum de l'interpreteur python : 2.4
+# Nom du programme : rename.py    But du programme : Renomage de fichiers - Version minimum de l'interpreteur python : 2.4
 #***********************************************    Syntaxe    **************************************************************   #
-# rename_all.py -i input_file -o output_file -p input_directory -c (concervation du fichier original)
-#               -a add_suffixe -b add_prefixe -e delete_suffixe -r delete_prefixe
-#               -R '<REGEX>' -O '<remplacement>'
+# rename.py -i input_file -o output_file -d input_directory -p output_directory -s (suppression) -c (copy / option par defaut)
+#            -a add_suffixe -b add_prefixe -e delete_suffixe -r delete_prefixe
 #**********************************************    Historique    *************************************************************  #
 # Version       Date            AUTEUR          ENTREPRISE      Commentaires
-# 1.0           14/04/2015      R.SAVIGNY       GER - PIXON     Creation (a partir du rename.py)
-#
+# 2.0           10/06/2011      C.CHAPUT        La Poste        Creation
+# 2.1           04/07/2011      C.CHAPUT        La Poste        Ajout compression, gestion extension suite anomalie mineure
+# 2.2           05/07/2011      C.CHAPUT        La Poste        Modification du message d aide suite a anomalie mineure
+# 2.3           07/07/2011      C.CHAPUT        La Poste        Modification dans le cas d'un FS deja FULL
+# 2.4           07/07/2011      C.CHAPUT        La Poste        Sortie en code retour 3 dans le cas d un dossier portant portant le 
+#                                                               nom du fichier de sortie - idem pour un lien symbolique
+# 2.5           28/11/2011      C.CHAPUT        La Poste        Ajout d une securite sur le nom des dossier option -w et gestion de la date
+# 2.6           26/04/2012      C.CHAPUT / CCO  La Poste        Modification du fonctionnement de l'option -o suite à une anomalie
+#                                                               Ajout de l'option bouchon dans la ligne de commande
+# 2.7           19/06/2013      C.CHAPUT        La Poste        Ajout de 2 options pour le format de Timestamp --aaaammjj et --jjhhmmss
+# 2.8           03/10/2013      C.CHAPUT        La Poste        Gestion d erreur dans un cas de pb de droits
+# 2.9           24/12/2013      C.CHAPUT        La Poste        Ajout du dossier backup et bkp pour l option -w
+# 3.0           16/01/2013      C.CHAPUT        La Poste        Calcul de la retention -t sur le mtime pour linux unix
+# 3.1           12/01/2015      R.SAVIGNY       PIXON           Ajout option [-f|--force] Force l'ecrasement des fichiers cibles s'ils existent deja
+# 3.2           12/08/2015      R.SAVIGNY       PIXON           I08079305  : Prise en compte fichier deja compresse (non pertinent)
+#                                                               Detail de l'utilisation des caracteres speciaux sous unix/linux
+# 3.3           17/05/2016      R.SAVIGNY       PIXON           Ajout traitement exception OSError pour la fonction shutil.move()
+# 3.4           11/02/2021      Y. LE BOUEDEC   ATOS            Modification pour test sur repertoire distant
+
 #**********************************************    Codes retour    ***********************************************************  #
 # code 0: Normal - Code retour normal : L enchainement est poursuivi
 # code 1: Warning - Detection d une anomalie : L enchainement peut etre poursuivi
@@ -33,8 +49,6 @@ from shutil import copyfile, move
 import datetime
 import time
 import zipfile
-import re
-
 
 # -------------------------
 
@@ -43,12 +57,11 @@ __SYSTEM = sys.platform
 __PYTHON_VERSION = sys.version
 
 # Version du CC a completer
-version = "rename_all.py v1.0 - python "+__PYTHON_VERSION+" - "+__SYSTEM
+version = "rename.py v3.4 - python "+__PYTHON_VERSION+" - "+__SYSTEM
 
 # code retour ordo
 vg_bl=3
 vg_wg=1
-vg_ok=0
 
 #*****************************************************************************************************************************  #
 # Variables globales
@@ -56,25 +69,23 @@ vg_ok=0
 vg_input_file=None
 vg_output_file=None
 vg_input_directory=None
+vg_output_directory=None
+vg_suppression=True
+vg_copy=False
 vg_add_suffixe=None
 vg_add_prefixe=None
 vg_delete_suffixe=None
 vg_delete_prefixe=None
 vg_time=None
-vg_suppression=True
+vg_zipfile=False
 vg_secure=True
 vg_aaaammjj=False
 vg_jjhhmmss=False
 vg_verbeux=False # Mode Verbeux permet un debuggage plus precis / l option -v n affiche pas les parametres en entree
 vg_force=0
-vg_extension=False
-vg_regex=None
-vg_R=False
-vg_replace=None
-vg_O=False
-vg_UPPER=False
-vg_lower=False
-vg_recursif=False
+vg_test_dir = False
+vg_test_dir_tempo = 10  # tempo de retentative pour test repertoire
+vg_test_dir_retry = 5  # nombre de tentatives pour test repertoire
 #*****************************************************************************************************************************  #
 # Definitions des fonctions locales
 #*****************************************************************************************************************************  #
@@ -82,14 +93,8 @@ vg_recursif=False
 def test_options():
         print "Test des arguments passes en entree du script ... "
 
-        if (vg_input_file or vg_input_directory) == None:
+        if ( vg_input_file and vg_input_directory and vg_output_directory) == None:
                 print "*** un argument est manquant ***"
-                printusage(vg_bl)
-        if (vg_R and not vg_O) or (not vg_R and vg_O) :
-                print "Les options -R et -O indissociables"
-                printusage(vg_bl)
-        if vg_UPPER == True and vg_lower == True :
-                print "l'option MAJUSCULE est incompatible avec l'option minuscule"
                 printusage(vg_bl)
         if vg_aaaammjj == True and vg_jjhhmmss == True :
                 print "l'option aaaammjj ne fonctionne pas en meme temps que jjhhmmss"
@@ -100,43 +105,30 @@ def printusage(err):
 #   Affiche le message d utilisation du script
     print r"""
     Usage de la commande : 
-    rename_all.py -i <REGEX ou input_file> -p <input_directory>
-            [-o <output_file>] (dans le cas d'un seul fichier)
-            [-R '<REGEX>' -O '<remplacement>'] <REGEX> expression reguliere a remplacer, par la chaine de <remplacement>
-                                               Gere le multi-fichiers
-            [-U] UPPER : passe le nom en MAJUSCULE
-            [-L] lower : passe le nom en minuscule
-            [-b <add_prefixe>]
+    rename.py -i <input_file> -p <input_directory> -d <output_directory>
+            [-o <output_file>] (dans le cas d un seul fichier)
+            [-c] (ne supprime pas l original)
             [-a <add_suffixe>]
-            [-r <delete_prefixe>]
+            [-b <add_prefixe>]
             [-e <delete_suffixe>]
-            [-c] conserve l'original (par defaut le fichier original est supprime)
+            [-r <delete_prefixe>]
             [-t <fichiers de + de x jours>] (date de derniere modification)
-            [-X] Conserve l'extension dans le(s) nom(s) de fichier(s) lors du traitement
-                 Par defaut, le nom et l'extension sont separe, et recolle apres le traitement
+            [-z] (mode compression)
             [-w] (desactive le mode secure)
                 (A utiliser dans le cas ou les dossiers ne contiennent pas les chaines de caracteres suivantes :
                     TEMP, TMP, TRACE, LOG, DONNEE, DUMP, AUDIT, TRANSFERT,
-                    TRAVAIL, SVDB, EXPORT, IMPORT, DATA, DIAG, SAS, ENVOI, RECU
-                    BACKUP, BKP)
-            [--recursif] (Active le mode recursif lors du traitement de l'input_directory)
+                    TRAVAIL, SVDB, EXPORT, IMPORT, DATA, DIAG, SAS, ENVOI, RECU)
             [--aaaammjj] (Modifie le format du TimeStamp par defaut : aaaammjj)
             [--jjhhmmss] (Modifie le format du TimeStamp par defaut : jjhhmmss)
 
+ 
     Les parametres suivants sont obligatoires :
-            -i, -p
-    
-    Les parametres suivants sont indissociables :
-            -R, -O
+            -i, -p, -d
     
     L option -o est possible seulement dans le cas d un fichier a traite
     Elle annule -a -b -e -r et le nom specifie doit etre complet (avec son extension)
 
-    La chaine TIMESTAMP est valorisee dans le cas des options -o -a -b -O
-    Par defaut le format est le suivant : AAAAMMDDHHMMSS
-
-    La chaine DATE pointera sur le ctime sous windows et mtime sous UNIX, linux
-    Elle est valorisee dans le cas des options -o -a -b -O
+    La chaine TIMESTAMP est valorisee dans le cas des options -o -a -b -z
     Par defaut le format est le suivant : AAAAMMDDHHMMSS
 
     Sous UNIX / Linux les caracteres speciaux "*", "?", "[", "]" doivent etre precedes par le caractere "\"
@@ -144,46 +136,45 @@ def printusage(err):
        La REGEX : l5x[at]aa?a.de    doit etre ecrite ainsi : l5x\[at\]aa\?a.de
        La REGEX : file*             doit etre ecrite ainsi : file\*
 
-
     [-h] (produit l'aide suivante)
     [-v] (verbose - permet de debugger)
     [-B | --bouchon] <code_retour> (utilise par le CCO)
     [-f | --force] Force l'ecrasement des fichiers cibles s'ils existent deja
+    
+    [-n | --testdir] (mode nothing = test de repertoire uniquement)
+
     """
 
     print_error(err)
 
-def param_lg_commande():
+def param_lg_commande(char_os):
     # Gestion des arguments passes en parametre de la ligne de commandes
 
     global vg_input_file
-    global vg_input_directory
     global vg_output_file
+    global vg_input_directory
+    global vg_output_directory
+    global vg_suppression
+    global vg_copy
     global vg_add_suffixe
     global vg_add_prefixe
     global vg_delete_suffixe
     global vg_delete_prefixe
     global vg_time
+    global vg_zipfile
     global vg_secure
-    global vg_suppression
     global vg_aaaammjj
     global vg_jjhhmmss
     global vg_verbeux  # utiliser pour le debuggage
     global vg_force
-    global vg_extension
-    global vg_regex
-    global vg_R
-    global vg_replace
-    global vg_O
-    global vg_UPPER
-    global vg_lower
-    global vg_recursif
+    global vg_test_dir
 
     nombre_d_element = arguments = None
 
-    ind_U = ind_L = ind_X = ind_R = ind_O = ind_i = ind_o = ind_p = ind_a = ind_b = ind_e = ind_r = ind_c = ind_t =ind_w = 0
+    ind_i = ind_o = ind_p = ind_d = ind_c = ind_a = ind_b = ind_e = ind_r = ind_t = ind_z =ind_w = 0
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "i:o:p:d:a:b:e:r:t:R:O:XcvwhfULB:", ["help","bouchon=","recursif", "aaaammjj","jjhhmmss","force"])
+        opts, args = getopt.getopt(sys.argv[1:], "i:o:p:d:a:b:e:r:t:nvzwhcfB:",
+                                   ["help","bouchon=","aaaammjj","jjhhmmss","force", "testdir"])
 
     except getopt.GetoptError, err:
         # print help information and exit:
@@ -196,135 +187,116 @@ def param_lg_commande():
         if o in ("-h", "--help"):
             printusage(vg_bl)
         elif o in ("-B", "--bouchon"):
-            print "Mode bouchon"
+            print "mode bouchon"
             print_error(int(a))
         elif o in ("-f", "--force"):
-            print "Mode force"
+            print "mode force"
             vg_force = 1
         elif o == ("-i"):
             if ind_i >= 1 :
                 print "Parametre -i en double ..."
                 print_error(vg_bl)
             vg_input_file = a
-            if vg_verbeux : print "Nom du fichier en entree : " + str(vg_input_file)
+            if vg_verbeux : print "nom du fichier en entree : " + str(vg_input_file)
             ind_i +=1
         elif o == ("-o"):
             if ind_o >= 1 :
                 print "Parametre -o en double ..."
                 print_error(vg_bl)
             vg_output_file = a
-            if vg_verbeux : print "Nom du fichier en sortie : " + str(vg_output_file)
+            if vg_verbeux : print "nom du fichier en sortie : " + str(vg_output_file)
             ind_o +=1
         elif o == ("-p"):
             if ind_p >= 1 :
                 print "Parametre -p en double ..."
                 print_error(vg_bl)
             vg_input_directory = a
-            if vg_input_directory[len(vg_input_directory)-1] == os.sep :
-                if vg_verbeux : print "Suppression de : " + str(os.sep) + " en fin de repertoire"
-                vg_input_directory = vg_input_directory.rstrip(os.sep)
-            if vg_verbeux : print "Nom du reperoire en entree : " + str(vg_input_directory)
+            if vg_input_directory[len(vg_input_directory)-1] == char_os :
+                if vg_verbeux : print "suppression de : " + str(char_os) + " en fin de repertoire"
+                vg_input_directory = vg_input_directory.rstrip(char_os)
+            if vg_verbeux : print "nom du reperoire en entree : " + str(vg_input_directory)
             ind_p +=1
-        elif o == ("-R"):
-            if ind_R >= 1 :
-                print "Parametre -R en double ..."
+        elif o == ("-d"):
+            if ind_d >= 1 :
+                print "Parametre -d en double ..."
                 print_error(vg_bl)
-            vg_regex = compile_regex(a)
-            vg_R = True
-            if vg_verbeux : print "REGEX a remplacer : " + str(vg_regex)
-            ind_R +=1
-        elif o == ("-O"):
-            if ind_O >= 1 :
-                print "Parametre -O en double ..."
+            vg_output_directory = a
+            if vg_output_directory[len(vg_output_directory)-1] == char_os :
+                if vg_verbeux : print "suppression de : " + str(char_os) + " en fin de repertoire"
+                vg_output_directory = vg_output_directory.rstrip(char_os)
+            if vg_verbeux : print "nom du repertoire en sortie : " + str(vg_output_directory)
+            ind_d +=1
+        elif o == ("-c"):
+            if ind_c >= 1 :
+                print "Parametre -c en double ..."
                 print_error(vg_bl)
-            vg_replace = a
-            vg_O = True
-            if vg_verbeux : print "Chaine de remplacement : " + str(vg_replace)
-            ind_O +=1
+            vg_suppression = False
+            vg_copy = True
+            if vg_verbeux : print "mode copie actif"
+            ind_c +=1
         elif o == ("-a"):
             if ind_a >= 1 :
                 print "Parametre -a en double ..."
                 print_error(vg_bl)
             vg_add_suffixe = a
-            if vg_verbeux : print "Ajout du suffixe : " + str(vg_add_suffixe)
+            if vg_verbeux : print "ajout du suffixe : " + str(vg_add_suffixe)
             ind_a +=1
         elif o == ("-b"):
             if ind_b >= 1 :
                 print "Parametre -b en double ..."
                 print_error(vg_bl)
             vg_add_prefixe = a
-            if vg_verbeux : print "Ajout du prefixe : " + str(vg_add_prefixe)
+            if vg_verbeux : print "ajout du prefixe : " + str(vg_add_prefixe)
             ind_b +=1
         elif o == ("-e"):
             if ind_e >= 1 :
                 print "Parametre -e en double ..."
                 print_error(vg_bl)
             vg_delete_suffixe = a
-            if vg_verbeux : print "Suppression du suffixe : " + str(vg_delete_suffixe)
+            if vg_verbeux : print "suppression du suffixe : " + str(vg_delete_suffixe)
             ind_e +=1
         elif o == ("-r"):
             if ind_r >= 1 :
                 print "Parametre -r en double ..."
                 print_error(vg_bl)
             vg_delete_prefixe = a
-            if vg_verbeux : print "Suppression du prefixe : " + str(vg_delete_prefixe)
+            if vg_verbeux : print "suppression du prefixe : " + str(vg_delete_prefixe)
             ind_r +=1
         elif o == ("-t"):
             if ind_t >= 1 :
                 print "Parametre -t en double ..."
                 print_error(vg_bl)
             vg_time = int(a)
-            if vg_verbeux : print "Mode retention de : " + str(vg_time) + "j actif"
+            if vg_verbeux : print "mode retention de : " + str(vg_time) + "j actif"
             ind_t +=1
-        elif o == ("-X"):
-            if ind_X >= 1 :
-                print "Parametre -X en double ..."
+        elif o == ("-z"):
+            if ind_z >= 1 :
+                print "Parametre -z en double ..."
                 print_error(vg_bl)
-            vg_extension = True
-            if vg_verbeux : print "Preservation de l'extension actif"
-            ind_X +=1
-        elif o == ("-U"):
-            if ind_U >= 1 :
-                print "Parametre -U en double ..."
-                print_error(vg_bl)
-            vg_UPPER = True
-            if vg_verbeux : print "Mode MAJUSCULE actif"
-            ind_U +=1
-        elif o == ("-L"):
-            if ind_L >= 1 :
-                print "Parametre -L en double ..."
-                print_error(vg_bl)
-            vg_lower = True
-            if vg_verbeux : print "Mode minuscule actif"
-            ind_U +=1
+            vg_zipfile = True
+            if vg_verbeux : print "mode compress actif"
+            ind_z +=1
         elif o == ("-w"):
             if ind_w >= 1 :
                 print "Parametre -w en double ..."
                 print_error(vg_bl)
             vg_secure = False
-            if vg_verbeux : print "Mode secure actif"
-            ind_w +=1
-        elif o == ("-c"):
-            if ind_c >= 1 :
-                print "Parametre -c en double ..."
-                print_error(vg_bl)
-            vg_suppression = False
-            if vg_verbeux : print "Mode conservation de l'original active"
-            ind_c +=1
-        elif o in ("--recursif"):
-            print "Mode recursif actif"
-            vg_recursif = True
         elif o == ("--aaaammjj"):
             vg_aaaammjj=True
-            if vg_verbeux : print "Mode aaaammjj actif"
+            if vg_verbeux : print "mode aaaammjj actif"
         elif o == ("--jjhhmmss"):
             vg_jjhhmmss=True
-            if vg_verbeux : print "Mode jjhhmmss actif"
+            if vg_verbeux : print "mode jjhhmmss actif"
         elif o == ("-v"):
             vg_verbeux = True
-            if vg_verbeux : print "Mode verbeux actif"
+            if vg_verbeux : print "mode verbeux actif"
+        elif o in ("-n", "--testdir"):
+            vg_test_dir = True
+            if vg_verbeux:
+                print "mode test repertoire actif"
         else:
-            assert False, "Option invalide !!!"
+            assert False, "option invalide !!!"
+
     test_options() # Verifie les param obligatoires
     return True
 
@@ -332,8 +304,10 @@ def param_lg_commande():
 def timestamp_name():
     # retourne un timestamp au format chaine de caractere
     # ajout des option de format de timestamp
+      
     today = datetime.datetime.now()
     resultat = str(today.strftime("%Y%m%d%H%M%S"))
+    
     if vg_jjhhmmss == True :
         resultat = str(today.strftime("%d%H%M%S"))
     if vg_aaaammjj == True :
@@ -345,37 +319,18 @@ def print_error(num):
     print "Sortie en code retour " + str(num)
     sys.exit(num)
 
-def compile_regex(regex):
-    if vg_verbeux : print "REGEX a traiter : " + regex
-    regex=regex.replace('.', '\.')
-    regex=regex.replace('?', '.?')
-    regex=regex.replace('*', '.*')
-    if vg_verbeux : print "REGEX syntaxe python : " + regex
-    if vg_verbeux : print "Chaine de remplacement : " + vg_replace
-    return regex
+def listdirectory(path, filtre, char_os):
+    # lit les fichiers dans un dossier avec un filte
+    fichier=[] # liste retournee
+  
+    try :
+        os.chdir(os.path.realpath(path+char_os))
+    except OSError:
+        print ("Erreur lors de l acces au dossier : "+str(os.path.realpath(path+char_os)))
+        print_error(vg_bl)
+    l = glob.glob(filtre)
+    if vg_verbeux : print str(l)
 
-def listdirectory_full(path, filtre, vg_recursif):
-    # lit les fichiers dans un dossier avec un filtre
-    l_fichiers=[] # liste retournee
-    l_files_filtre = glob.glob(path+os.sep+filtre)
-    if vg_verbeux : print "Liste filtre : " + str(l_files_filtre)
-    l_files_full = glob.glob(path+os.sep+"*")
-    if vg_verbeux : print "Liste full : " + str(l_files_full)
-    for i in l_files_full:
-        if os.path.isdir(i):
-            if vg_verbeux : print "Chemin isdir : "+i
-            if vg_recursif == True :
-                extend=listdirectory_full(i, filtre, vg_recursif)
-                l_fichiers.extend(extend)
-        else:
-            if i in l_files_filtre :
-                if vg_verbeux : print("Fichier : " + i + " ajoute")
-                l_fichiers.append(i)
-    if vg_verbeux : print "Liste full des fichiers : " + str(l_fichiers)
-    return l_fichiers
-
-def listdirectory(l_files_full):
-    fichiers=[] # liste retournee
     if vg_time <> None : # evite de recalculer a chaque iteration la retention
         if (vg_output_file<> None): # cas de l'option -o valoriser dans le cas de la retention
             print "L'option -o n est pas compatible avec la gestion de retention"
@@ -384,11 +339,13 @@ def listdirectory(l_files_full):
         date_retention = date_du_jour - datetime.timedelta(days=vg_time) # calcul de la retention
         if vg_verbeux : print "Date limite de retention : " , date_retention.ctime() #.strftime("%Y%m%d%H%M%S)
 
-    for mon_fic in l_files_full:
+    for i in l:
+        mon_fic = str(os.path.realpath(path)+char_os+i)
         if vg_verbeux : print "test si fichier existe : " , mon_fic
         if os.path.isfile(mon_fic) == True :
             if vg_time <> None : # gestion de la retention de fichier
                 if __SYSTEM == "win32": # cas windows on calcule la date sur la creation et la modification
+#                date_du_fichier = datetime.datetime.fromtimestamp(os.stat(mon_fic).st_mtime)
                     date_derniere_modif_fichier = datetime.datetime.fromtimestamp(os.stat(mon_fic).st_mtime)
                     date_creation_fichier = datetime.datetime.fromtimestamp(os.stat(mon_fic).st_ctime)
                     if date_creation_fichier > date_derniere_modif_fichier :
@@ -400,26 +357,26 @@ def listdirectory(l_files_full):
                     date_du_fichier = datetime.datetime.fromtimestamp(os.stat(mon_fic).st_mtime)
                 if vg_verbeux : print "date du fichier : " , mon_fic, "-", str(date_du_fichier)
                 if (date_retention > date_du_fichier):
-                    fichiers.append(mon_fic)
+                    fichier.append(mon_fic)
                     if vg_verbeux : print "fichier plus ancien - ajout du fichier : " , str(mon_fic)
                 else:
                     if vg_verbeux : print "fichier :" , mon_fic,"-", str(date_du_fichier), "trop recent - ignore" , date_retention.ctime()
                     print "fichier ignore : " , mon_fic,"-", str(date_du_fichier), "car trop recent"
             else :
-                fichiers.append(mon_fic)
+                fichier.append(mon_fic)
                 if vg_verbeux : print "ajout du fichier : " , str(mon_fic)
         else:
             if vg_verbeux : print mon_fic, " n est pas un fichier"
-    return fichiers
+    return fichier
 
 def gestion_timestamp():
-    # Valorise la chaine TIMESTAMP si présente dans la chaine
+    # Valorise la variable TIMESTAMP si présente dans la chaine
     global vg_add_suffixe
     global vg_add_prefixe
     global vg_output_file
     global vg_time
 
-    print "Recherche de la chaine TIMESTAMP dans les prefixes et suffixes"
+    print "Recherche de la variable TIMESTAMP dans les prefixes et suffixes"
     
     if vg_add_suffixe <> None :
         if vg_verbeux :  print "traitemenent de la variable TIMESTAMP dans le suffixe"
@@ -434,26 +391,11 @@ def gestion_timestamp():
         while "TIMESTAMP" in vg_output_file :
             vg_output_file = vg_output_file.replace("TIMESTAMP", timestamp_name())
 
-def calcul_date(fichier):
-    # Valorise la chaine DATE si présente dans la chaine
-    print "Calcul et traitement de la date de creation du fichier"
-    if __SYSTEM == "win32":
-        f_date=time.ctime(os.path.getctime(fichier))
-    else:
-        f_date=time.ctime(os.path.getmtime(fichier))
-    t_struct = time.strptime(f_date, "%a %b %d %H:%M:%S %Y")
-    format_date="%Y%m%d%H%M%S"
-    if vg_jjhhmmss == True :
-        format_date = "%d%H%M%S"
-    f_date_format=time.strftime(format_date, t_struct)
-    return f_date_format
-
-def generation_liste_fichiers_en_entree():
+def generation_liste_fichiers_en_entree(char_os):
     # retourne la liste des fichiers a traiter
-    path = vg_input_directory + os.sep + vg_input_file
+    path = vg_input_directory + char_os + vg_input_file
     print "Recherche des fichiers presents : " + str(path)
-    list_full_fichiers = listdirectory_full(vg_input_directory, vg_input_file, vg_recursif)
-    list_fichiers = listdirectory(list_full_fichiers)
+    list_fichiers = listdirectory(vg_input_directory, vg_input_file, char_os)
     if len(list_fichiers) !=0 :
         return list_fichiers
     else :
@@ -461,14 +403,8 @@ def generation_liste_fichiers_en_entree():
         print "Sortie en code warning 1"
         sys.exit(vg_wg)
 
-def verification_fichiers_en_entree(vg_input_directory, list_fichiers):
+def verification_fichiers_en_entree(list_fichiers):
     # Verifie les attributs des fichiers en entree
-    try :
-        os.chdir(os.path.realpath(vg_input_directory+os.sep))
-    except OSError:
-        print ("Erreur lors de l acces au dossier : "+str(os.path.realpath(vg_input_directory+os.sep)))
-        print_error(vg_bl)
-
     for i in list_fichiers :
         if vg_verbeux :  print "Verification des attributs sur le fichier : " + str(i)
         
@@ -484,149 +420,171 @@ def verification_fichiers_en_entree(vg_input_directory, list_fichiers):
             if vg_verbeux : print "L option est compatible avec le mode suppression de la source"
     return True
 
-def constitution_liste_fichiers_export(list_fichiers_entree):
+def constitution_liste_fichiers_export(list_fichiers_entree, char_os ):
+    # print "Taille du fichier (en octets) : " + str(os.path.getsize(i))
     global vg_add_suffixe
     global vg_add_prefixe
     global vg_delete_prefixe
     global vg_delete_suffixe
-    global vg_extension
-    global vg_regex
-    global vg_replace
-    global vg_UPPER
-    global vg_lower
 
     list_fichiers_sortie=[]
 
     print "Preparation des fichiers en sortie"
     for i in list_fichiers_entree :
-        if vg_verbeux : print "\nTraitement du fichier : " + str(i)
-        # recupere le chemin du fichier a traiter
-        che_fic = str(os.path.dirname(i))
+        if vg_verbeux : print "Traitement du fichier : " + str(i)
+        nom_fic = str(os.path.basename(i)).rsplit('.',1)
+        if vg_verbeux : print "Nom fichier : " ,nom_fic, len(nom_fic)
+
         # recupere le nom du fichier a traiter sans le chemin
-        if vg_extension == True :
-            nom_fic = str(os.path.basename(i))
-        else :
-            fichier = str(os.path.basename(i)).rsplit('.',1)
-            nom_fic = fichier[0]
-            ext_fic = fichier[1]
 
-        if vg_verbeux : print "Nom fichier : " + nom_fic, str(len(nom_fic)) + " caracteres"
-
-        if vg_output_file <> None : #gere le cas d un nouveau nom
-            if vg_verbeux : print "Mode nouveau nom..."
-            if vg_verbeux : print "Desactivation des suffixes et prefixe"
+        if vg_output_file <> None : # desactive les prefixe et suffixe
+            if vg_verbeux : print "desactivation des suffixes et prefixe"
             vg_delete_prefixe = None
             vg_delete_suffixe = None
             vg_add_suffixe = None
             vg_add_prefixe = None
-            # dans le cas d un filtre nom.* ou nom.txt supprime la partie a droite du point
-            if len(list_fichiers_entree) == 1 :
-                fichier_out = str(vg_output_file).rsplit('.',1)
-                nom_fic = fichier_out[0]
-                ext_fic = fichier_out[1]
-                if vg_verbeux : print "Changement du nom de fichier en sortie option -o : " + nom_fic
-            else :
-                print "Plus d un fichier a traiter !!! option -o incompatible"
-                print_error(vg_bl)
-
-        if (vg_R and vg_O) : #REGEX a remplacer par un masque de substitution
-            if vg_verbeux : print "Mode REGEX replace..."
-            if vg_verbeux : print "REGEX : " + vg_regex
-            rg=re.compile(vg_regex)
-            a_remplacer=rg.findall(nom_fic)
-            if vg_verbeux : print "A remplacer : " + ', '.join(a_remplacer)
-            if not a_remplacer : print "REGEX non trouvee dans le nom du fichier, il garde son nom d origine"
-            nom_fic=rg.sub(vg_replace, nom_fic)
-            if vg_verbeux : print "nom_fichier remplacer : " + nom_fic
 
         if vg_delete_prefixe <> None : #suppr le prefixe
-            if vg_verbeux : print "Mode supprime prefixe..."
-            if nom_fic.startswith(vg_delete_prefixe):
-                nom_fic = nom_fic[len(vg_delete_prefixe):]
-                if vg_verbeux : print "Suppression du prefixe : " + nom_fic
+            if nom_fic[0].startswith(vg_delete_prefixe):
+#                nom_fic[0] = nom_fic[0].lstrip(vg_delete_prefixe)
+                nom_fic[0] = nom_fic[0][len(vg_delete_prefixe):]
+                if vg_verbeux : print "Suppression du prefixe : " + str(nom_fic[0])
             else :
                 print "Erreur le filtre de prefixe n'est pas correct - prefixe absent du nom de fichier"
                 print_error(vg_bl)
-            if len(nom_fic) == 0 :
+            if len(str(nom_fic[0])) == 0 :
                 print "Erreur le fichier resultat ne porte plus de nom apres la suppression du prefixe"
                 print_error(vg_bl)
 
         if vg_delete_suffixe <> None : #suppr le suffixe
-            if vg_verbeux : print "Mode supprime suffixe..."
-            if nom_fic.endswith(vg_delete_suffixe):
-                nom_fic = nom_fic.rstrip(vg_delete_suffixe)
-                if vg_verbeux : print "Suppression du suffixe : " + nom_fic
+            if nom_fic[0].endswith(vg_delete_suffixe):
+#                nom_fic[0] = nom_fic[0].rstrip(vg_delete_suffixe)
+                nom_fic[0] = nom_fic[0][0:-len(vg_delete_suffixe)]
+                if vg_verbeux : print "Suppression du suffixe : " + str(nom_fic[0])
             else :
                 print "Erreur le filtre de suffixe n'est pas correct - suffixe absent du nom de fichier"
                 print_error(vg_bl)
-            if len(nom_fic) == 0 :
+            if len(str(nom_fic[0])) == 0 :
                 print "Erreur le fichier resultat ne porte plus de nom apres la suppression du suffixe"
                 print_error(vg_bl)
 
+        if vg_output_file <> None : #gere le cas d un nouveau nom
+            # dans le cas d un filtre nom.* ou nom.txt supprime la partie a droite du point
+            if len(list_fichiers_entree) == 1 :
+                partie_nom = str(vg_output_file).split('.')
+                nom_fic = partie_nom
+                if vg_verbeux : print "Changement du nom de fichier en sortie option -o : " + str(partie_nom[0])
+            else :
+                print "Plus d un fichier a  traiter !!! option -o imcompatible"
+                print_error(vg_bl)
+
         if vg_add_suffixe <> None : #ajout d un suffixe
-            if vg_verbeux : print "Mode ajout suffixe..."
-            if vg_verbeux : print "Traitemenent de la chaine DATE dans le suffixe"
-            vl_add_suffixe=vg_add_suffixe
-            while "DATE" in vl_add_suffixe :
-                vl_add_suffixe = vg_add_suffixe.replace("DATE", calcul_date(i))
-            nom_fic = nom_fic + vl_add_suffixe
-            if vg_verbeux : print "Ajout du suffixe : " + nom_fic
+            nom_fic[0] = str(nom_fic[0] + vg_add_suffixe)
+            if vg_verbeux : print "Ajout du suffixe : " + str(nom_fic[0])
 
         if vg_add_prefixe <> None : # ajout d un prefixe
-            if vg_verbeux : print "Mode ajout prefixe..."
-            if vg_verbeux : print "traitemenent de la chaine DATE dans le prefixe"
-            vl_add_prefixe=vg_add_prefixe
-            while "DATE" in vl_add_prefixe :
-                vl_add_prefixe = vg_add_prefixe.replace("DATE", calcul_date(i))
-            nom_fic = vl_add_prefixe + nom_fic
-            if vg_verbeux : print "Ajout du prefixe : " + nom_fic
+            nom_fic[0] = str(vg_add_prefixe + nom_fic[0])
+            if vg_verbeux : print "Ajout du prefixe : " + str(nom_fic[0])
 
-        if vg_UPPER : 
-            nom_fic = nom_fic.upper()
-            if vg_verbeux : print "Mode UPPER..."
-        if vg_lower :
-            nom_fic = nom_fic.lower()
-            if vg_verbeux : print "Mode lower..."
-
-        if vg_extension == False : # reconstruit le nom du fichier
-            if vg_verbeux : print "Reconstruction nom + extension : " + nom_fic + " + " + ext_fic
-            nom_final = nom_fic + "." + ext_fic
-        else :
-            nom_final = nom_fic
-
-        if vg_verbeux : print "Resultat du traitement du nom de fichier : " + nom_final
-        nom_final=che_fic+os.sep+nom_final
+        nom_final = string.join(nom_fic,'.') # reconstruit le nom du fichier
+        if vg_verbeux : print "Resultat du traitement du nom de fichier : " + str(nom_final)
         list_fichiers_sortie.append(str(nom_final))
 
     return list_fichiers_sortie
 
-def fonction_rename(input, output):
-    try :
-        move(input, output)
-    except :
-        print "Erreur lors du rename"
-        print_error(vg_bl)
-    if vg_verbeux : print "la commande rename a reussie"
 
 def fonction_copy(input, output):
-    try:
-        copyfile(input,output)
-    except IOError , (errno,strerror):
-        print "Ecriture impossible dans le répertoire de destination"
-        print "I/O error (", str(errno), ") : ",str(strerror)
-        if errno == 28 :
-            print "FS Full : Suppresion de la copie"
-            if os.path.isfile(output) == True :
-                os.remove(output)
-        print_error(vg_bl)
-    except :
-        print "Erreur lors de la copie"
-        print_error(vg_bl)
-    if vg_verbeux : print "la commande copyfile a reussie"
+    if vg_test_dir:
+        print "Pas d execution du copyfile : test repertoire uniquement"
+        return
+
+    if vg_zipfile == True and zipfile.is_zipfile(input) == False :
+        try:
+            file = zipfile.ZipFile(str(output)+".zip","w")
+            print "Compression en cours"
+            file.write(input, os.path.basename(input), zipfile.ZIP_DEFLATED)
+            file.close()
+        except IOError , (errno,strerror):
+            print "Ecriture impossible dans le répertoire de destination"
+            print "I/O error (", str(errno), ") : ",str(strerror)
+            if errno == 28 :
+                print "FS Full : Suppresion de la copie"
+                if os.path.isfile(output) == True :
+                    os.remove(str(output)+".zip")
+            print_error(vg_bl)
+        except zipfile.LargeZipFile:
+            print "Fichier trop gros ... necessite une version 64bits"
+            print_error(vg_bl)
+        except :
+            print "Erreur lors de la compression"
+            print_error(vg_bl)
+        if vg_verbeux : print "la commande de compression a reussie"
+        print "Compression du fichier : " + str(input) + " vers : " + str(output) + ".zip reussie"
+    else:
+        if (input != output) :
+            try:
+                if input != output : copyfile(input,output)
+            except IOError , (errno,strerror):
+                print "Ecriture impossible dans le répertoire de destination"
+                print "I/O error (", str(errno), ") : ",str(strerror)
+                if errno == 28 :
+                    print "FS Full : Suppresion de la copie"
+                    if os.path.isfile(output) == True :
+                        os.remove(output)
+                print_error(vg_bl)
+            except :
+                print "Erreur lors de la copie"
+                print_error(vg_bl)
+            print "Copie du fichier : " + str(input) + " vers : " + str(output) + " reussie"
+        if vg_verbeux : print "la commande copyfile a reussie"
+
+def fonction_move(input, output):
+    if vg_test_dir:
+        print "Pas d execution du movefile : test repertoire uniquement"
+        return
+
+    if vg_zipfile == True and zipfile.is_zipfile(input) == False :
+        try :
+            file = zipfile.ZipFile(str(output)+".zip","w")
+            print "Compression en cours"
+            file.write(input, os.path.basename(input), zipfile.ZIP_DEFLATED)
+            file.close()
+            os.remove(input)
+        except IOError , (errno,strerror):
+            print "Ecriture impossible dans le répertoire de destination"
+            print "I/O error (", str(errno), ") : ",str(strerror)
+            print_error(vg_bl)
+        except zipfile.LargeZipFile:
+            print "Fichier trop gros ... necessite une version 64bits"
+            print_error(vg_bl)
+        except :
+            print "Erreur lors de la compression"
+            print_error(vg_bl)
+        print "Compression du fichier : " + str(input) + " vers : " + str(output) + ".zip reussie"
+    else :
+        if (input != output) :
+            try :
+                move(input, output)
+            except IOError , (errno,strerror):
+                print "Ecriture impossible dans le répertoire de destination"
+                print "I/O error (", str(errno), ") : ",str(strerror)
+                if errno == 28 :
+                    print "FS Full : Suppresion de la copie"
+                    if os.path.isfile(output) == True :
+                        os.remove(output)
+                print_error(vg_bl)
+            except OSError, why :
+                print "Erreur lors du move :",str(why)
+                print_error(vg_bl)
+            except :
+                print "Erreur lors du move"
+                print_error(vg_bl)
+            print "Rename du fichier : " + str(input) + " vers : " + str(output) + " reussie"
+        if vg_verbeux : print "la commande movefile a reussie"
 
 def verif_existence_fichier(fichier): # sort en erreur dans le cas ou le fichier existe ou un dossier du meme temps
         if vg_verbeux : print "Verif existence du fichier : " + str(fichier)
-        if os.path.isfile(fichier) == True and vg_force != 1 :
+        if os.path.isfile(fichier) == True and vg_force != 1 and zipfile.is_zipfile(fichier) == False :
             print "Erreur fichier : " + str(fichier) + " deja present"
             print_error(vg_bl)
         if os.path.isdir(fichier) == True :
@@ -638,7 +596,19 @@ def verif_existence_fichier(fichier): # sort en erreur dans le cas ou le fichier
 
 def verif_existence_dir(dossier): # sort en erreur dans le cas ou le dossier n existe pas
         if vg_verbeux : print "Verif existence du dossier : " + str(dossier)
-        if os.path.exists(dossier) == False :
+        # YLC : 09/02/21 , os.path.isdir peut verifier un repertoire
+        # vg_test_dir_tempo  = tempo de retentative pour test repertoire
+        # vg_test_dir_retry  = nombre de tentatives pour test repertoire
+
+        tstrep = os.path.exists(dossier)
+        if not tstrep:
+            for i in range(vg_test_dir_retry):
+                time.sleep(vg_test_dir_tempo)
+                print("Verif existence du dossier a nouveau : " + str(dossier))
+                tstrep = os.path.exists(dossier)
+                if tstrep:
+                    break
+        if not tstrep:
             print "Erreur dossier : " + str(dossier) + " absent"
             print_error(vg_bl)
         if os.access(dossier,os.R_OK) == False :
@@ -690,8 +660,8 @@ def p_verif_chemin_dangeureux(chemin,secure) :
             print "Le chemin n est pas un dossier de traces, logs, temps, donnees, dump, audit, travail, transfert, svdb, import, export, data, diag, sas, envoi, recu, backup, bkp. Utiliser l'option -w"
             print_error(vg_bl)
 
-def execute_rename(list_in, list_out):
-    print "Debut d execution du renomage"
+def execute_rename(list_in, list_out, char_os):
+    print "Debut d execution du renommage / copie"
 
     if len(list_in) <> len(list_out) :
         print "Erreur lors de la constitution des listes de fichiers"
@@ -702,31 +672,34 @@ def execute_rename(list_in, list_out):
         print "Traitement du fichier"
         if len(list_out) == 1 :
             input = list_in[0]
-            output = list_out[0]
+            output = vg_output_directory + char_os + list_out[0]
             verif_existence_fichier(output) # verifie l existence du fichier avant traitement
-            if vg_suppression:
-                fonction_rename(input,output)
-                print "Rename du fichier : " + str(input) + " vers : " + str(output) + " reussie"
-            else:
+            if vg_copy == True :
                 fonction_copy(input,output)
-                print "Copie du fichier : " + str(input) + " vers : " + str(output) + " reussie"
+            else:
+                fonction_move(input,output)
         else :
-            print "Plus d un fichier a traiter !!! option -o imcompatible"
+            print "Plus d un fichier a  traiter !!! option -o imcompatible"
             print_error(vg_bl)
     else :
         print "Traitement des : ", str(len(list_out)), " fichiers"
         for i in range(len(list_out)) :
             input = list_in[i]
-            output = list_out[i]
+            output = vg_output_directory + char_os + list_out[i]
             verif_existence_fichier(output) # cas d un fichier portant le meme nom en sortie
-            if vg_suppression:
-                fonction_rename(input,output)
-                print "Rename du fichier : " + str(input) + " vers : " + str(output) + " reussie"
-            else:
+            if vg_copy == True :
                 fonction_copy(input,output)
-                print "Copie du fichier : " + str(input) + " vers : " + str(output) + " reussie"
+            else :
+                fonction_move(input,output)
     print "Traitement des : ", str(len(list_out)), " fichiers termine"
     return True
+
+#def valorisation_var_system(chemin): # permet de valoriser des $ sous unix ou % sous windows
+#    commande = "echo " + chemin
+#    f_output = os.popen(commande)
+#    result= ''.join(f_output.readline())
+#    if vg_verbeux : print "Resultat de la valorisation " , str(chemin), " - " , str(result)
+#    return result[:-1]
 
 def valorisation_var_system(chemin): # permet de valoriser des $ sous unix ou % sous windows
     resultat = os.path.expandvars(chemin)
@@ -738,22 +711,26 @@ def valorisation_var_system(chemin): # permet de valoriser des $ sous unix ou % 
 # definition des fonctions par system d exploitation
 #*****************************************************************************************************************************  #
 
-def lancement_windows():
+def lancement_windows(char_os):
 
     global vg_input_directory
+    global vg_output_directory
 
     # Valorise les variables d environnement system
     vg_input_directory=valorisation_var_system(vg_input_directory)
+    vg_output_directory=valorisation_var_system(vg_output_directory)
 
     # verification de l existence des dossiers input et output
     verif_existence_dir(vg_input_directory)
     p_verif_chemin_dangeureux(vg_input_directory,vg_secure)
+    verif_existence_dir(vg_output_directory)
 
     # fabrique la liste des fichiers a traiter
-    list_fichiers_entree = generation_liste_fichiers_en_entree()
+    list_fichiers_entree = generation_liste_fichiers_en_entree(char_os)
+    # Fonction de l'os
 
     if vg_verbeux : print "liste des fichiers a traiter : " + str(list_fichiers_entree)
-    resultat = verification_fichiers_en_entree(vg_input_directory, list_fichiers_entree)
+    resultat = verification_fichiers_en_entree(list_fichiers_entree)
 
     if resultat <> True :
         print "Erreur lors de la verification des parametres sur les fichiers d entree"
@@ -763,23 +740,23 @@ def lancement_windows():
     gestion_timestamp()
 
     # fabrique la liste des fichiers en sortie
-    list_fichiers_sortie = constitution_liste_fichiers_export(list_fichiers_entree)
+    list_fichiers_sortie = constitution_liste_fichiers_export(list_fichiers_entree, char_os)
 
     # execute le rename
-    if (execute_rename(list_fichiers_entree, list_fichiers_sortie) == True):
+    if (execute_rename(list_fichiers_entree, list_fichiers_sortie, char_os) == True):
         code_retour_fonction = 0
 
     # retourne le code retour de l execution de la commande
     return code_retour_fonction
 
-def lancement_hpux():
-    return lancement_windows()
+def lancement_hpux(char_os):
+    return lancement_windows(char_os)
 
-def lancement_solaris():
-    return lancement_windows()
+def lancement_solaris(char_os):
+    return lancement_windows(char_os)
 
-def lancement_linux():
-    return lancement_windows()
+def lancement_linux(char_os):
+    return lancement_windows(char_os)
 
 #*****************************************************************************************************************************  #
 # Main
@@ -798,25 +775,29 @@ if __name__ == "__main__":
     #*****************************************************************************************************************************  #
 
     if __SYSTEM == "win32":
+            char_os = "\\"
             print "Liste des parametres : "
-            if (param_lg_commande() != True):
+            if ( param_lg_commande(char_os) != True):
                 print_error(vg_bl)
-            code_retour = lancement_windows()
+            code_retour = lancement_windows(char_os)
     elif __SYSTEM == "hp-ux11":
+            char_os = "/"
             print "Liste des parametres : "
-            if (param_lg_commande() != True):
+            if ( param_lg_commande(char_os) != True):
                 print_error(vg_bl)
-            code_retour = lancement_hpux()
+            code_retour = lancement_hpux(char_os)
     elif __SYSTEM == "linux2":
+            char_os = "/"
             print "Liste des parametres : "
-            if (param_lg_commande() != True):
+            if ( param_lg_commande(char_os) != True):
                 print_error(vg_bl)
-            code_retour = lancement_linux()
+            code_retour = lancement_linux(char_os)
     elif __SYSTEM == "solaris":
+            char_os = "/"
             print "Liste des parametres : "
-            if (param_lg_commande() != True):
+            if ( param_lg_commande(char_os) != True):
                 print_error(vg_bl)
-            code_retour = lancement_solaris()
+            code_retour = lancement_solaris(char_os)
     else:
             print "Plateforme inconnue - sortie en CR 3"
             print_error(vg_bl)
@@ -834,4 +815,3 @@ if __name__ == "__main__":
     #######################################
     print "Fin du programme - code retour : " + str(code_retour)
     sys.exit(code_retour)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              

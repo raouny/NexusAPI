@@ -1,0 +1,13 @@
+#!/bin/ksh
+HOSTNAME=$(hostname)
+MAIL=bruno.coquelle@laposte.fr
+if ps -ef | grep -v grep | grep -v transfertV3_cron | grep transfertV3 > /dev/null
+then
+    echo "transfertV3 deja en cours d execution"
+else
+    $WR_OUTIL/transfertV3
+	if [ $? != 0 ];then
+		echo "Transfert de fichiers CFT - Echec du script transfert sur $HOSTNAME" | mailx -s "Erreur du script transfert par cron sur $HOSTNAME" $MAIL
+	fi
+fi
+

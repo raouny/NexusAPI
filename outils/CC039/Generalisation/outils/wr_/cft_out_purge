@@ -1,0 +1,46 @@
+#@(#) &cft_out_purge v1.03
+
+##########################################################################################
+#   Date   # Auteur # Objet de la modification                                           #
+##########################################################################################
+#          #        #                                                          #         #
+# 03/06/03 #  EW    # purge des lignes contenant W_seesion du cft.out          # v1.00   #
+# 09/05/08 #  EW    # chgt CR pour VTOM                                        # v1.01   #
+# 02/10/08 #  BC    # utilisation de la variable CFTDIRDAT                     # v1.02   #
+# 06/11/14 #  BC    # purge des lignes CFTU* de tous les transferts car        # v1.03   #
+#          #        # cft.out a tendance a etre trop gros si pas de            #         #
+#          #        # redemarrage au bout d un certain temps                   #         #
+##########################################################################################
+
+#! /bin/ksh
+
+typeset -i retour
+retour=0
+
+find $CFTDIRRUNTIME/run -name "cft.out.*" -mtime +7 -exec rm {} \;
+grep CFTU $CFTDIRDAT/cft.out > $CFTDIRDAT/cft.out.`date +%y%m%d`
+#grep -v "W_session"  $CFTDIRDAT/cft.out > /tmp/cftout.tmp
+grep -v CFTU  $CFTDIRDAT/cft.out > /tmp/cftout.tmp
+if [ $? -ne 0 ]
+then
+        echo "impossible de supprimer les lignes CFTU dans le fichier cft.out"
+        retour=3
+fi
+
+cat /tmp/cftout.tmp >  $CFTDIRDAT/cft.out
+if [ $? -ne 0 ]
+then
+        echo "impossible de crier le nouveau fichier $CFTDIRDAT/cft.out"
+        retour=3
+fi
+
+
+rm -f /tmp/cftout.tmp
+if [ $? -ne 0 ]
+then
+        echo "impossible de supprimer lefichier temporaire /tmp/cftout.tmp"
+        retour=3
+fi
+
+exit $retour
+

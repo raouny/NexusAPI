@@ -1,0 +1,87 @@
+#!/bin/ksh
+
+#@(#) chowntr 1.05 30/11/07 BC
+#@(#) Cette procedure permet de changer de mettre cft comme 
+#@(#) proprietaire de tous les fichiers sous /transfert/export
+####################################################################################
+#  1.00 #          # EW # Creation                                                  #
+#  1.01 # 14/02/06 # EW # Adaptation pour le 12.3 + variable TRANSFERT    	   #
+#  1.02 # 12/10/07 # BC # changement des droits pour le repertoire $TRANSFERT/export/ficla #
+#  1.03 # 30/11/07 # BC # pour $TRANSFERT/export/ficla, n'effectuer les actions que si flag_ficla est absent
+#  1.04 # 12/03/09 # BC # test de l'existence de $TRANSFERT/export/ficla           #
+#  1.05 # 14/12/10 # BC # ajout de la lecture de liste_export                      #
+####################################################################################
+
+typeset -i retour
+TRANSFERTV3=/transfertV3
+ 
+retour=0
+APP=""
+
+CHOWN()
+{
+cd $1
+
+for fichier in $(ls [a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,A-Z,0-9][a-z,A-Z,0-9][a-z,0-9][a-z,0-9]\.[a-z,0-9][a-z,0-9] 2>&- ; cd $HOME)
+
+do
+	if [ $(ls -l $fichier | awk '{print $3}') != "cft" ]
+        then 
+		chown cft:cft $1/$fichier
+		
+		if [ $? -ne 0 ]
+		then
+			echo "le proprietaire du fichier $fichier n a pu etre change et mis a cft"
+			retour=3
+		else
+			echo "le fichier $fichier appartient maintenant a cft"
+		fi
+	fi
+done
+
+# fichier en 12.3
+
+cd $1
+
+for fichier in $(ls [a-z,0-9][a-z,0-9][a-z,A-Z,0-9][a-z,0-9][a-z,0-9][a-z,A-Z,0-9][a-z,0-9][a-z,0-9][a-z,A-Z,0-9][a-z,0-9][a-z,0-9][a-z,A-Z,0-9]\.[a-z,0-9][a-z,0-9][a-z,A-Z,0-9] 2>& - ; cd $HOME)
+
+do
+        if [ $(ls -l $fichier | awk '{print $3}') != "cft" ]
+        then
+                chown cft:cft $1/$fichier
+
+                if [ $? -ne 0 ]
+                then
+                        echo "le proprietaire du fichier $fichier n a pu etre change et mis a cft"
+                        retour=3
+                else
+                        echo "le fichier $fichier appartient maintenant a cft"
+                fi
+        fi
+done
+
+# changement de droits de $TRANSFERTV3/export/ficla
+
+if [ -d $TRANSFERT/export/ficla ]
+then if [ ! -f $TRANSFERT/export/ficla/flag_ficla ]
+     then chown cft:cft $TRANSFERT/export/ficla/*
+          CR=$?
+          if [ $CR -ne 0 ]
+          then if [ $CR -eq 1 ]
+                then echo "aucun fichier sous $TRANSFERT/export/ficla"
+                else echo "le proprietaire des fichiers sous $TRANSFERT/export/ficla n'a pas pu etre change et mis a cft"
+                     retour=3
+                fi  
+          else echo "les fichiers sous $TRANSFERT/export/ficla appartiennent maintenant a cft"
+          fi
+     else echo "les fichiers sous $TRANSFERT/export/ficla sont en cours d'export: on ne fait rien"
+     fi
+fi
+}
+
+find $TRANSFERTV3 -name export > liste_export 2>/dev/null
+cat liste_export|while read CHEMIN
+do CHOWN $CHEMIN
+done
+
+exit $retour

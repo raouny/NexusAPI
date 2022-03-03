@@ -1,0 +1,374 @@
+#@(#) transfert v1.21
+#set -x
+########################################################################
+#                                                                      #
+# Modification le 20/01/95 par Jean - Claude GRAU : v1.01              #
+########################################################################
+# Utilisation d'un IDF par defaut et donc codage dans l'ordre SEND des #
+# caracteristiques du fichier.                                         #
+#                                                                      #
+########################################################################
+#                                                                      #
+# Modification le 08/11/95 par Jean - Claude GRAU : v1.02              #
+########################################################################
+# Suppression des messages d'erreur envoyes par mail. Cette procedure  #
+# emet ses messages vers les sorties standard afin de les lire plus    #
+# facilement dans la log de l'automate de gestion de travaux.          #
+#                                                                      #
+########################################################################
+#                                                                      #
+# Modification le 28/01/98 par corinne DONNET : v1.03                  #
+########################################################################
+# remplacement de expr substr par substitution caracteres , changt date#
+# parametre dateheure ,  bdf par df -k, ll par ls -la                  #
+########################################################################
+# Modification le 28/08/2002 par Bruno COQUELLE : v1.04                #
+########################################################################
+# pour les fichiers emis par galion (code appli d9 et nom du partenaire#
+# dans la table de correspondance applicative=dispodd1), on ne fait pas#
+# de transfert CFT mais on les deplace dans un repertoire de mise a    #
+# disposition en concatenant si besoin 2 fichiers de meme nom          #
+########################################################################
+# Modification le 22/10/2002 par Bruno COQUELLE : v1.05                #
+########################################################################
+# pour les fichiers emis par top presse (code appli dz et nom du       #
+# partenaire dans la table de correspondance applicative=dispodz),on   #
+# fait la meme chose que pour galion.                                  #
+########################################################################
+# Modification le 13/01/2003 par Emmanuel WEBER : v1.06                #
+########################################################################
+# Possibilite de copie supplementaire d'un ou plusieurs fichiers d'une #
+# application vers une autre (en local) en plus de celle prevue        #
+# initialement                                                         #
+########################################################################
+# Modification le 26/08/2003 par Emmanuel WEBER : v1.07                #
+########################################################################
+# Correction des codes retours du script                               #
+########################################################################
+# Modification le 16/09/2003 par Emmanuel WEBER : V1.08                #
+########################################################################
+# gestion d'erreur sur la copie d'un fichier de /transfert/export vers #
+# /transfert/import                                                    #
+########################################################################
+# Modification le 03/11/2003 par Emmanuel WEBER : V1.09                #
+########################################################################
+# correction: si une proc d'envoi n'existe pas le fichier n'est pas    #
+# deplace vers ~cft/envoi/                                             #
+# ce fichier reste sous /transfert/export et pourra etre traite des    #
+# qu'une procedure sera mis en place                                   # 
+########################################################################
+# Modification le 02/03/2004 par Bruno COQUELLE : V1.10                #
+########################################################################
+# pour galion, modification de l'existant: desormais, la concatenation #
+# est remplacee par le renommage du fichier suivi de dateheure         #
+# pour coclico, le fichier h3iaaaaa est emis et doit etre sur repdispo #
+########################################################################
+# Modification le 22/03/2004 par Emmanuel WEBER : V1.11                #
+########################################################################
+# correction:  variable retour inconnu dans la procedure transfert     #
+# Ajout des fichiers presents avant et apres le transfert dans         #
+# /transfert/export                                                    #
+########################################################################
+# Modification le 21/04/2005 par Emmanuel WEBER : V1.12                #
+########################################################################
+# correction:  variable retour inconnu dans la procedure transfert     #
+# Ajout des fichiers presents avant et apres le transfert dans         #
+# /transfert/export                                                    #
+########################################################################
+#                                                                      #
+# Modification le 15/06/2005 par Alain TROUSSET : v1.20                #
+########################################################################
+# - amelioration afin de permettre l'envoi de fichiers avec des noms   #
+# longs de la forme ccffddee.rr.iiiiiiii                               #
+# un identifiant de fichier sur 8 caracteres a ete rajoute (.iiiiiiii) #
+# pour permettre l'envoi de plusieurs generations de fichiers en       #
+# parallele sans avoir a gerer de files d'attente sur les applicatifs  #
+# - regroupement des variables de decomposition du nom du fichier      #
+# - utilisation de $TRANSFERT au lieu de /transfert                    #
+########################################################################
+# Modification le 09/05/08 par Emmanuel WEBER : V1.21                  #
+# changement des codes retour pour VTOM                                #
+########################################################################
+# 14/12/2010: BC: gestion de liste_appli si existe                     #
+########################################################################
+# 14/12/11: BC                                                         #
+# remplacement de SESI_LOCAl en dur par requete sur la config          #
+########################################################################
+
+
+
+#@(#) Cette procedure lancee par CFT a pour but de permettre le transfert :
+#@(#)  d'un fichier ccffddee.rr ou :
+#@(#)           cc represente le numero de compte de l'appli emettrice
+#@(#)           ff      "     le fichier dans l'appli emettrice
+#@(#)           dd      "     l'entite destinatrice
+#@(#)           ee      "     l'entite emettrice
+#@(#)           rr      "     le numero de compte de l'appli destinatrice
+#@(#)
+#@(#) d'un fichier ccffddee.rr.iiiiiiii ou :
+#@(#)           cc represente le numero de compte de l'appli emettrice
+#@(#)           ff      "     le fichier dans l'appli emettrice
+#@(#)           dd      "     l'entite destinatrice
+#@(#)           ee      "     l'entite emettrice
+#@(#)           rr      "     le numero de compte de l'appli destinatrice
+#@(#)           iiiiiiii "    un identifiant sur 8 caracteres obligatoires
+#@(#)
+
+#@(#) Elle a besoin d'une table qui fait la correspondance entre rrdd et le
+#@(#) nom de partenaire CFT : elle est representee par $TABLE.
+
+#@(#) Si le partenaire est local alors le fichier reste au niveau du
+#@(#) repertoire de transfert ($TRANSFERT), sinon le fichier est deplace dans
+#@(#) le repertoire d'emission ($ENVOI) puis l'ordre est donne a CFT pour le 
+#@(#) transfert en s'appuyant sur la procedure ~cft/proc_CC/CCFF.send. Ces 2 
+#@(#) variables doivent etre valorisee dans le fichier .profile de cft.
+
+#@(#)
+#@(#) Codes retours :
+#@(#)			0 -> Tous les fichiers presents dans $TRANSFERT/export
+#@(#)			     ont pu etre transferes.
+#@(#)			1 -> Au moins un fichier n'a pu etre transfere.
+
+# Declarations et valorisations locales au site :
+
+#typeset -l SESI_LOCAL=SSMID
+#SESI_LOCAL=CDYV0007
+typeset SESI_LOCAL=$(CFTUTIL cftext type=PARM|grep 'PART     ='|cut -f2 -d"'")
+typeset TABLE=$HOME/exploit_appli
+typeset REPEXPORT=$TRANSFERT/export
+typeset REPDISPO=$REPEXPORT/repdispo
+typeset FICHIER
+typeset LISTE_APPLI=$HOME/liste_appli
+typeset APPLI=""
+
+
+# Declarations variables globales
+
+typeset fichier PROC dtemp
+typeset cc ff
+typeset part dd rr ficourt 
+typeset dateheure
+typeset -i retour=0
+
+
+# PROCEDURES
+
+PARTENAIRE_CFT()
+{
+typeset -i retourpart
+part=`grep -i ${rr}${dd} $TABLE | cut -d: -f1`
+part=$(echo $part||tr "[A-Z]" "[a-z]")
+
+if [ "$part" = "" ]
+then
+  echo "$0:Le fichier $fichier n'a pu etre transfere : 
+Table $TABLE incomplete : pas de correspondance SESI:${rr}${dd}" >&2
+  retourpart=1
+else
+  retourpart=0
+fi
+return $retourpart
+}
+
+TRANSFERER()
+{
+typeset source=$1 typeset cible=$2
+typeset dirsource=$(dirname $source) dircible=$(dirname $cible)
+typeset -i retourtrans=1
+
+# Verifications pour pouvoir deplacer ou renommer le fichier dans $cible
+
+if [ -f $cible ] # Si le fichier existe, alors avertir
+then
+   echo "$PROCEDURE:Le fichier $source n'a pu etre deplace \
+car $cible existe deja." >&2
+
+   # Si le deplacement se fait dans le meme systeme de fichier
+elif [ $(df -k $dirsource $dircible | \
+         uniq -c | \
+         tail -1 | \
+         awk '{print $1}') -eq 2 ]
+then
+   /bin/mv $source $cible
+   retourtrans=$?
+   # S'il n'y a pas assez de place, alors avertir
+elif [ $(ls -lisa $source | awk '{print $7}') -gt $(df -k $dircible | awk 'NR==3 {printf "%d" ,$3*1024}') ]
+then
+   echo "$PROCEDURE:Le fichier $source n'a pu etre deplace \
+car il n'y a plus de place dans $dircible." >&2
+elif mv $source $cible
+then               # Si le deplacement a ete effectue: transfert par CFT
+   retourtrans=0
+else   # S'il y a eu un incident lors du deplacement,
+       # alors avertir
+   retourtrans=$?
+   echo "$PROCEDURE:PROBLEME LORS DU DEPLACEMENT DE $source VERS $cible.
+CAUSE : INCONNUE (code retour de /bin/mv : $retourtrans ) ." >&2
+fi
+return $retourtrans
+}
+
+
+DUPLIQUER()
+{
+typeset -i retourdupli=0
+cat $2|while read verif dest
+do
+	if [ "$verif" = "$3" ]
+	then
+		/bin/cp $TRANSFERT/$1/export/$3 $TRANSFERT/$1/import/$dest
+		retourdupli=$?
+	fi
+done
+return $retourdupli
+}
+
+
+# Debut
+
+MAIN()
+{
+# affichage des fichiers dans /transfert/export avant
+echo "Fichiers presents avant le transfert sous /transfert/$1/export:"
+cd $TRANSFERT/$1/export
+ls
+
+
+#cas des fichiers des autres appli
+dateheure=$(date "+%y%m%d%H%M%S")
+
+for fichier in \
+   $(ls \
+   [a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,A-Z,0-9][a-z,A-Z,0-9][a-z,0-9][a-z,0-9]\.[a-z,0-9][a-z,0-9] \
+   [a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9]\.[a-z,0-9][a-z,0-9]\.[a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9] 2>&- \
+   ; cd $HOME)
+do
+
+# Affichage du traitement en cours
+  echo "Traitement du fichier $fichier"
+
+# Decomposition du nom du fichier
+  dtemp=${fichier#????}        # supprime les 4 premiers caracteres
+# dd=${dtemp%%??.*}            # ne garde que les 2 premiers caracteres
+  dd=$(echo ${dtemp%%??.*}|tr "[A-Z]" "[a-z]")            # ne garde que les 2 premiers caracteres
+
+  dtemp=${fichier#????????.}   # supprime les 9 premiers caracteres
+# rr=${dtemp%%.*}              # ne garde que les 2 premiers caracteres
+  rr=$(echo ${dtemp%%.*}|tr "[A-Z]" "[a-z]")              # ne garde que les 2 premiers caracteres
+
+# ficourt=${fichier%%.*}       # ne garde que les 8 premiers caracteres
+  ficourt=$(echo ${fichier%%.*}|tr "[A-Z]" "[a-z]")       # ne garde que les 8 premiers caracteres
+
+# cc=${fichier%%??????.*}      # ne garde que les 2 premiers caracteres
+  cc=$(echo ${fichier%%??????.*}|tr "[a-z]" "[A-Z]")      # ne garde que les 2 premiers caracteres
+
+  dtemp=${fichier%%????.*}     # ne garde que les 4 premiers caracteres
+# ff=${dtemp#??}               # supprimer les 2 premiers caracteres
+  ff=$(echo ${dtemp#??}|tr "[a-z]" "[A-Z]")               # supprimer les 2 premiers caracteres
+
+# Recherche du partenaire CFT
+  PARTENAIRE_CFT
+
+# Si le partenaire existe, on continue le traitement
+
+  if [ $? -eq 0 ]
+  then      # Si le partenaire est local : on deplace le fichier sous import
+    if [ $part = $SESI_LOCAL ]
+    then
+	if [ $(ls -l $fichier | awk '{print $3}') = "cft" ]
+        then 
+		echo "Transfert de $fichier en local"
+		TRANSFERER ${TRANSFERT}/$1/export/${fichier} ${TRANSFERT}/$1/import/${fichier}
+		if [ $? -ne 0 ]
+        	then
+			retour=3
+                        echo "probleme de deplacement en local du fichier $fichier" >&2
+		fi
+	else
+		echo "Le fichier $fichier n a pas cft comme proprietaire, celui ci n est pas deplace sous /transfert/$1/import"
+	fi
+# Si le partenaire est distant, on le transfere par CFT
+
+    else
+
+       FICHIER=$(echo $fichier|tr "[a-z]" "[A-Z]")
+       case $part in
+# cas des etats comptables emis par galion du type d9vnXXaa.d9
+            dispodd1) if [ -f $REPDISPO/$FICHIER ]
+#                     then sed -e 's/DIRECTION/DIRECTION/g' $REPEXPORT/$fichier>$REPEXPORT/fictemp
+#                          cat $REPDISPO/$FICHIER $REPEXPORT/fictemp>$REPEXPORT/fictemp2
+#                          mv $REPEXPORT/fictemp2 $REPDISPO/$FICHIER
+#                          rm $REPEXPORT/$fichier $REPEXPORT/fictemp
+                      then mv $REPDISPO/$FICHIER $REPDISPO/$FICHIER.$dateheure
+                           echo "archivage de $FICHIER.$dateheure pour le DD"
+                      fi
+                      mv $REPEXPORT/$fichier $REPDISPO/$FICHIER
+                      echo "mise a dispo de $FICHIER pour le DD" ;;
+# cas des retards de depot emis par TOP PRESSE a destination du CPCE
+# la solution provisoire est d'inserer une ligne blanche entre les 2 fichiers
+# car l'insertion d'un saut de page entre les 2 fichiers semble ne pas etre
+# pris en compte par EXCEL
+             dispodz) if [ -f $REPDISPO/$FICHIER ]
+                      then echo " " >> $REPEXPORT/fictemp
+                           cat $REPDISPO/$FICHIER $REPEXPORT/fictemp $REPEXPORT/$fichier>$REPEXPORT/fictemp2
+                           mv $REPEXPORT/fictemp2 $REPDISPO/$FICHIER
+                           rm $REPEXPORT/$fichier $REPEXPORT/fictemp 
+                      else mv $REPEXPORT/$fichier $REPDISPO/$FICHIER
+                      fi
+                      echo "mise a dispo de $FICHIER pour CPCE" ;;
+# mise a disposition du fichier h3iaaaaa de COCLICO pour la MOA
+             dispoh3) mv -f $REPEXPORT/$fichier $REPDISPO/$ficourt
+                      echo "mise a dispo de $ficourt pour la MOA" ;;
+# cas des autres appli
+                   *) echo "Transfert de $fichier en distant"
+# si le fichier est a copier vers une autre appli
+			if [ -a $HOME/proc_${cc}/a_copier ]
+			then
+				DUPLIQUER $1 $HOME/proc_${cc}/a_copier $fichier
+				if [ $? -ne 0 ]
+                      		then
+					echo "transfert:la duplication de $fichier a echouee">&2
+                                	retour=3
+				fi
+			fi
+
+                      PROC=$HOME/proc_${cc}/${cc}${ff}.send
+                      if [ -x $PROC ]
+           	      then
+                           TRANSFERER ${TRANSFERT}/$1/export/${fichier} ${ENVOI}/${fichier}.${dateheure}
+                           if [ $? -eq 0 ]
+                           then 
+	                        echo "Envoi par CFT de $fichier"
+	                        $PROC ${ENVOI}/${fichier}.${dateheure} \
+		                $ficourt                         \
+		                $part                            \
+		                $rr
+                           else retour=3
+                           fi
+	              else echo "transfert:Pas d'emission de $fichier car $PROC n'existe pas \
+	                      ou n'est pas executable" >&2
+                      retour=3
+                      fi
+       esac
+    fi
+  else
+     retour=3
+  fi # Si le partenaire n'existe pas on reitere avec le fichier suivant
+done
+
+
+# affichage des fichiers dans /transfert/export apres
+echo "Fichiers presents apres le transfert sous /transfert/$1/export:"
+cd $TRANSFERT/$1/export
+ls
+}
+
+if [ -f $LISTE_APPLI ]
+then cat $LISTE_APPLI|cut -d: -f1|while read APPLI
+     do MAIN $APPLI
+     done
+     else MAIN $APPLI
+fi
+
+# Fin
+exit $retour

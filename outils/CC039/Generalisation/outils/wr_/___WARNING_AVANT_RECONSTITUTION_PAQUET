@@ -1,0 +1,3 @@
+- Penser a modifier le fichier .post_install et a y modifier les variables en entete
+- Penser a integrer le fichier .post_install au moment de constituer le tar (c'est un fichier cache, il faut le specifier explicitement) :
+    tar cf wr_.tar * .post_install.sh

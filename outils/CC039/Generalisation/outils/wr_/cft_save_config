@@ -1,0 +1,154 @@
+#!/bin/ksh
+#@(#) $Product :	cft_save_config
+#@(#) $Version :	1.06
+#@(#) $Date    :	16/02/2009
+#@(#) $Function:	Mise a jour du fichier configuration_complete
+#@(#)
+######################################################################
+# Date     #Version # Auteur #          Modifs                       #
+######################################################################
+#          # V1.00  # JC.G   # Creation                              #
+# 16/10/96 # V1.01  #  G.B   # Modif directories pour CFT220         #
+# 28/11/97 # V1.02  # JC.G   # Supression de la substitution         #
+# 28/05/98 # V1.03  #  C.D   # MAJ CFT220c683 HPUX 9.4 supp de RKERROR
+# 20/08/98 # V1.04  #  P.T   # Portage sur solaris                   #
+# 19/06/03 # v1.05  #  E.W   # Modif pour V2.30                      #
+# 02/10/08 # v1.06  #  B.C   # fonctions.sun plus appelee            #
+#          #        #        # suppression utilisation vi et         #
+#          #        #        # remplacement par grep pour portabilite#
+#          #        #        # sur LINUX                             #
+# 16/02/09 # v1.07  #  B.C   # configuration_complete se situe sous  #
+#          #        #        # $CFTDIRINS et non plus sous fic       #
+######################################################################
+
+function FinTache
+{
+if [ "$1" = "" ]; then
+	echo "Pas d'argument passe a FinTache"
+	exit 2
+else
+	if [ $1 != 0 ]; then
+		echo $2 " !! EN ERREUR !!"
+		echo "Code retour >${1}<       ligne : $3       ERRNO : $ERRNO"
+		exit 1
+	fi
+fi
+}
+
+mktemp()
+{
+       Retour=0
+FichierACreer="NON"
+   Repertoire="/tmp/"
+      Prefixe="$(expr substr $LOGNAME 1 6)"
+
+if [ $# -ne 0 ]                                      # S'il y a des options #
+        then
+        for Argument in $*
+                do
+                             DeuxCaractere="$(expr substr ${Argument} 1 2 )"
+                       typeset -i Longueur=${#Argument}
+                                  Longueur=Longueur-2
+                                    Valeur="$(expr substr ${Argument} "3" $Longueur)"
+
+                if   [ "${DeuxCaractere}" = "-c" ]              # Option -c #
+                        then
+                             FichierACreer="OUI"
+
+                elif [ "${DeuxCaractere}" = "-d" ]              # Option -d #
+                        then
+                                Repertoire="${Valeur}""/"
+
+                elif [ "${DeuxCaractere}" = "-p" ]              # Option -p #
+                        then
+                                   Prefixe="${Valeur}"
+                fi
+
+                done
+fi
+
+FichierExiste="OUI"
+
+while [ "${FichierExiste}" = "OUI" ]
+        do
+                    typeset Random=$RANDOM
+                    FichierTemporaire="${Repertoire}""${Prefixe}"${RANDOM}
+
+                if [ -f "${FichierTemporaire}" ]
+                        then
+                        FichierExiste="OUI"
+                else
+                        FichierExiste="NON"
+
+                        if [ "${FichierACreer}" = "OUI" ]
+                                then
+                                echo >${FichierTemporaire}
+                                Retour=$?
+                        fi
+                fi
+        done
+
+echo "${FichierTemporaire}"
+return $Retour
+}
+
+expr()
+{
+if [ "${1}" = "substr" ]
+        then
+        if [ $# -lt 4 ]
+                then
+                echo ""
+                return
+        else
+                typeset -i     deb=${3}
+                typeset -i combien=${4}
+                typeset -i     fin
+                typeset      Liste
+                if  [ $combien -eq 0 ]
+                        then
+                        echo ""
+                        return
+                fi
+        fi
+                       fin=$deb+$combien-1
+                     Liste="${deb}""-""${fin}"
+                  variable="$(echo "${2}" | cut -c$Liste)"
+        echo "${variable}"
+fi
+return
+}
+
+typeset -xf expr
+typeset -xf mktemp
+
+# Creation d'un fichier de travail
+fic=`mktemp -c -d/tmp`
+FinTache $? "Creation fichier temporaire" $LINENO
+
+if [ ! -f $CFTDIRINS/configuration_complete ] ; then
+	touch $CFTDIRINS/configuration_complete
+fi
+
+# Recuperation de la configuration
+
+CFTUTIL cftext id=* | grep -v CFTU20I | grep -v CFTU00I | grep -v RKERROR | grep -v UCONFSET| grep -v " value="> ${fic}
+FinTache $? "Extraction de la configuration cft" $LINENO
+
+# Verification que le fichier recree est different
+
+diff $fic $CFTDIRINS/configuration_complete > /dev/null
+if [ $? -ne 0 ]
+then
+
+# Si different sauvegarder le precedent
+	mv $CFTDIRINS/configuration_complete $CFTDIRINS/configuration_complete.`date "+%y%m%d"`
+	FinTache $? "Renommage du fichier de configuration" $LINENO
+	mv $fic $CFTDIRINS/configuration_complete
+	FinTache $? "Renommage du fichier temporaire" $LINENO
+else
+        rm $fic
+	FinTache $? "Effacement du fichier temporaire" $LINENO
+fi
+
+exit 0

@@ -1,0 +1,1401 @@
+.:
+total 136
+-rwxr-xr-x  1 root root    317 Dec 22  2010 .post_install.sh
+-rwxr-xr-x  1 root root   5163 Oct 11 10:29 cat_unix.sh
+drwxr-xr-x  4 root dibox  4096 Mar 26 17:13 fe_
+-rwxr-xr-x  1 root root   1750 Mar 24  2010 shells.diff
+-rwxr-xr-x  1 root root  65482 Mar 26 17:13 sigcc039-20140210.txt
+-rw-r--r--  1 root root      0 Mar 26 17:32 sigcc039-20140326.txt
+drwxr-xr-x  3 root dibox  4096 Nov 21 10:47 w8q
+drwxr-xr-x 21 root dibox  4096 Mar 26 16:40 w9m
+drwxr-xr-x  4 root dibox  4096 Nov 21 10:47 w9n
+drwxr-xr-x  4 root dibox  4096 Nov 21 10:47 wav
+drwxr-xr-x  3 root dibox  4096 Nov 21 10:47 wh4
+drwxr-xr-x  4 root dibox  4096 Nov 21 10:47 wn_
+drwxr-xr-x  3 root dibox  4096 Nov 21 10:47 wo_
+drwxr-xr-x 15 root dibox  4096 Nov 21 10:47 wr_
+drwxr-xr-x  3 root dibox  4096 Nov 21 10:47 ww_
+drwxr-xr-x 10 root dibox  4096 Mar 26 16:40 xm_
+drwxr-xr-x  8 root dibox  4096 Nov 21 10:47 xmb
+drwxr-xr-x  6 root dibox  4096 Nov 21 10:47 yi_
+
+./fe_:
+total 56
+drwxr-xr-x 2 root dibox  4096 Mar 26 17:13 01_00_00
+drwxr-xr-x 2 root dibox  4096 Mar 26 17:13 01_00_01
+-rwxr-xr-x 1 root root  48795 Mar 26 17:13 update_cc.py
+
+./fe_/01_00_00:
+total 44
+-rwxr-xr-x 1 root root 44010 Aug 16  2013 update_cc.py
+
+./fe_/01_00_01:
+total 48
+-rwxr-xr-x 1 root root 45765 Mar 26 17:13 update_cc.py
+
+./w8q:
+total 4
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+
+./w8q/02_00_00:
+total 432
+-rwxr-xr-x 1 1414 1414  17383 Oct 26  2007 cleanmqlogs
+-rwxr-xr-x 1 1414 1414   3169 Oct 26  2007 mq_bkpmq.sh
+-rwxr-xr-x 1 1414 1414   5110 Oct 22  2007 mq_dspchl.sh
+-rwxr-xr-x 1 1414 1414   5303 Oct 22  2007 mq_dspfa.sh
+-rwxr-xr-x 1 1414 1414   6074 Oct 22  2007 mq_dspmq.sh
+-rwxr-xr-x 1 1414 1414   6445 Oct 22  2007 mq_endmqm.sh
+-rwxr-xr-x 1 1414 1414   3527 Oct 26  2007 mq_purgelog.sh
+-rwxr-xr-x 1 1414 1414   3347 Oct 22  2007 mq_rstmq.sh
+-rwxr-xr-x 1 1414 1414   6667 Oct 22  2007 mq_strmqm.sh
+-rwxr-xr-x 1 1414 1414 363242 Oct 22  2007 q
+
+./w9m:
+total 76
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_01
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_02
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_03
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_04
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_05
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_06
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_07
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_08
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_09
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_10
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_11
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_12
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_13
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_14
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_15
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_16
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_17
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_18
+
+./w9m/02_00_00:
+total 44
+-rwxr-xr-x 1 root root  8404 Sep 28  2007 ARB_create.sh
+-rwxr-xr-x 1 root root 15397 Sep 28  2007 kill_traces.sh
+-rwxr-xr-x 1 root bin   4623 Sep 28  2007 mvtraces.ksh
+-rwxr-xr-x 1 root bin   2934 Sep 28  2007 pax.ksh
+-rwxr-xr-x 1 root bin   3109 Sep 28  2007 tar.ksh
+
+./w9m/02_00_01:
+total 172
+-rwxr-xr-x 1 500 500   8404 Sep 28  2007 ARB_create.sh
+-rwxr-xr-x 1 500 500 122880 Oct 16  2008 copiesecurisee.doc
+-rwxr-xr-x 1 500 500   2072 Oct 16  2008 copiesecurisee.sh
+-rwxr-xr-x 1 500 500  15397 Sep 28  2007 kill_traces.sh
+-rwxr-xr-x 1 500 500   5611 Jul  4  2008 mvtraces.ksh
+-rwxr-xr-x 1 500 500   2934 Sep 28  2007 pax.ksh
+-rwxr-xr-x 1 500 500   3109 Sep 28  2007 tar.ksh
+
+./w9m/02_00_02:
+total 172
+-rwxr-xr-x 1 root root   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  15397 Apr 14  2009 kill_traces.sh
+-rwxr-xr-x 1 root root   5611 Apr 14  2009 mvtraces.ksh
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root   3109 Apr 14  2009 tar.ksh
+
+./w9m/02_00_03:
+total 172
+-rwxr-xr-x 1 root root   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  15397 Apr 14  2009 kill_traces.sh
+-rwxr-xr-x 1 root root   5611 Apr 14  2009 mvtraces.ksh
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root   3109 Apr 14  2009 tar.ksh
+
+./w9m/02_00_04:
+total 37016
+-rwxr-xr-x 1 root root     8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root   122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root     2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root 18145211 Apr 14  2009 ibm_utl_dsa_220p_rhel3_i386.bin
+-rwxr-xr-x 1 root root 19530672 Apr 14  2009 ibm_utl_dsa_220p_sles10_x86-64.bin
+-rwxr-xr-x 1 root root    15397 Apr 14  2009 kill_traces.sh
+-rwxr-xr-x 1 root root     5611 Apr 14  2009 mvtraces.ksh
+-rwxr-xr-x 1 root root     2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root     3109 Apr 14  2009 tar.ksh
+
+./w9m/02_00_05:
+total 172
+-rwxr-xr-x 1 500 500   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 500 500 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 500 500   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 500 500  15506 Oct 20  2009 kill_traces.sh
+-rwxr-xr-x 1 500 500   5611 Apr 14  2009 mvtraces.ksh
+-rwxr-xr-x 1 500 500   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 500 500   3109 Apr 14  2009 tar.ksh
+
+./w9m/02_00_06:
+total 192
+-rwxr-xr-x 1 root root   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  18106 Mar 24  2010 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 24  2010 mvtraces.ksh
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root   3036 Mar 24  2010 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 24  2010 wget.ksh
+
+./w9m/02_00_07:
+total 200
+-rwxr-xr-x 1 root root   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  25744 Dec 29  2010 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 24  2010 mvtraces.ksh
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root   3036 Mar 24  2010 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 24  2010 wget.ksh
+
+./w9m/02_00_08:
+total 260
+-rwxr-xr-x 1 root root   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  25744 Dec 29  2010 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 24  2010 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Dec  6  2011 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root  23244 Dec  6  2011 purge.py
+-rwxr-xr-x 1 root root  30542 Dec  6  2011 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 24  2010 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 24  2010 wget.ksh
+
+./w9m/02_00_09:
+total 260
+-rwxr-xr-x 1 root root   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  25744 Dec 29  2010 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 24  2010 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Dec  6  2011 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root  23244 Dec  6  2011 purge.py
+-rwxr-xr-x 1 root root  30691 May 14  2012 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 24  2010 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 24  2010 wget.ksh
+
+./w9m/02_00_10:
+total 272
+-rwxr-xr-x 1 root root   8404 Apr 14  2009 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  25744 Dec 29  2010 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 24  2010 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Dec  6  2011 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root  33346 Jun  8  2012 purge.py
+-rwxr-xr-x 1 root root  30691 May 14  2012 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 24  2010 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 24  2010 wget.ksh
+
+./w9m/02_00_11:
+total 556
+-rwxr-xr-x 1 root root 276480 Feb 11  2013 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 14  2009 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 14  2009 copiesecurisee.sh
+-rwxr-xr-x 1 root root  16543 Feb 11  2013 gzippy.py
+-rwxr-xr-x 1 root root  25744 Dec 29  2010 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 24  2010 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Dec  6  2011 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Apr 14  2009 pax.ksh
+-rwxr-xr-x 1 root root  33346 Jun  8  2012 purge.py
+-rwxr-xr-x 1 root root  30691 May 14  2012 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 24  2010 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 24  2010 wget.ksh
+
+./w9m/02_00_12:
+total 556
+-rwxr-xr-x 1 root root 276480 Apr 15  2013 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 15  2013 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 15  2013 copiesecurisee.sh
+-rwxr-xr-x 1 root root  16543 Apr 15  2013 gzippy.py
+-rwxr-xr-x 1 root root  25744 Apr 15  2013 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Apr 15  2013 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Apr 15  2013 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Apr 15  2013 pax.ksh
+-rwxr-xr-x 1 root root  36263 Apr 15  2013 purge.py
+-rwxr-xr-x 1 root root  30691 Apr 15  2013 rename.py
+-rwxr-xr-x 1 root root   3036 Apr 15  2013 tar.ksh
+-rwxr-xr-x 1 root root   2964 Apr 15  2013 wget.ksh
+
+./w9m/02_00_13:
+total 576
+-rwxr-xr-x 1 root root 276480 Apr 22  2013 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Apr 22  2013 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Apr 22  2013 copiesecurisee.sh
+-rwxr-xr-x 1 root root  16543 Apr 22  2013 gzippy.py
+-rwxr-xr-x 1 root root  25744 Apr 22  2013 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Apr 22  2013 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Apr 22  2013 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Apr 22  2013 pax.ksh
+-rwxr-xr-x 1 root root  36263 Apr 22  2013 purge.py
+-rwxr-xr-x 1 root root  30691 Apr 22  2013 rename.py
+-rwxr-xr-x 1 root root   3036 Apr 22  2013 tar.ksh
+-rwxr-xr-x 1 root root   2964 Apr 22  2013 wget.ksh
+-rwxr-xr-x 1 root root  19081 Apr 22  2013 zippy.py
+
+./w9m/02_00_14:
+total 604
+-rwxr-xr-x 1 root root 276480 Sep  3  2013 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Sep  3  2013 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Sep  3  2013 copiesecurisee.sh
+-rwxr-xr-x 1 root root  16543 Sep  3  2013 gzippy.py
+-rwxr-xr-x 1 root root  25744 Sep  3  2013 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Sep  3  2013 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Sep  3  2013 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Sep  3  2013 pax.ksh
+-rwxr-xr-x 1 root root  42177 Sep  5  2013 purge.py
+-rwxr-xr-x 1 root root  14190 Sep  3  2013 purge_dossier_vide.py
+-rwxr-xr-x 1 root root  33535 Sep  3  2013 rename.py
+-rwxr-xr-x 1 root root   3036 Sep  3  2013 tar.ksh
+-rwxr-xr-x 1 root root   2964 Sep  3  2013 wget.ksh
+-rwxr-xr-x 1 root root  19081 Sep  3  2013 zippy.py
+
+./w9m/02_00_15:
+total 604
+-rwxr-xr-x 1 root root 276480 Mar 26 17:13 ARB_create.sh
+-rwxr-xr-x 1 root root 122880 Mar 26 17:13 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Mar 26 17:13 copiesecurisee.sh
+-rwxr-xr-x 1 root root  16543 Mar 26 17:13 gzippy.py
+-rwxr-xr-x 1 root root  25744 Mar 26 17:13 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 26 17:13 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Mar 26 17:13 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Mar 26 17:13 pax.ksh
+-rwxr-xr-x 1 root root  43660 Mar 26 17:13 purge.py
+-rwxr-xr-x 1 root root  16361 Mar 26 17:13 purge_dossier_vide.py
+-rwxr-xr-x 1 root root  34096 Mar 26 17:13 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 26 17:13 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 26 17:13 wget.ksh
+-rwxr-xr-x 1 root root  19081 Mar 26 17:13 zippy.py
+
+./w9m/02_00_16:
+total 624
+-rwxr-xr-x 1 root root 276480 Mar 26 17:13 ARB_create.sh
+-rwxr-xr-x 1 root root  10317 Mar 26 17:13 cc_timer.py
+-rwxr-xr-x 1 root root   7582 Mar 26 17:13 chmod.py
+-rwxr-xr-x 1 root root 122880 Mar 26 17:13 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Mar 26 17:13 copiesecurisee.sh
+-rwxr-xr-x 1 root root  16543 Mar 26 17:13 gzippy.py
+-rwxr-xr-x 1 root root  25744 Mar 26 17:13 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 26 17:13 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Mar 26 17:13 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Mar 26 17:13 pax.ksh
+-rwxr-xr-x 1 root root  43660 Mar 26 17:13 purge.py
+-rwxr-xr-x 1 root root  16361 Mar 26 17:13 purge_dossier_vide.py
+-rwxr-xr-x 1 root root  34096 Mar 26 17:13 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 26 17:13 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 26 17:13 wget.ksh
+-rwxr-xr-x 1 root root  19081 Mar 26 17:13 zippy.py
+
+./w9m/02_00_17:
+total 624
+-rwxr-xr-x 1 root root 276480 Mar 26 17:13 ARB_create.sh
+-rwxr-xr-x 1 root root  10317 Mar 26 17:13 cc_timer.py
+-rwxr-xr-x 1 root root   7582 Mar 26 17:13 chmod.py
+-rwxr-xr-x 1 root root 122880 Mar 26 17:13 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Mar 26 17:13 copiesecurisee.sh
+-rwxr-xr-x 1 root root  16985 Mar 26 17:13 gzippy.py
+-rwxr-xr-x 1 root root  25744 Mar 26 17:13 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 26 17:13 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Mar 26 17:13 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Mar 26 17:13 pax.ksh
+-rwxr-xr-x 1 root root  43660 Mar 26 17:13 purge.py
+-rwxr-xr-x 1 root root  16361 Mar 26 17:13 purge_dossier_vide.py
+-rwxr-xr-x 1 root root  34096 Mar 26 17:13 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 26 17:13 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 26 17:13 wget.ksh
+-rwxr-xr-x 1 root root  19081 Mar 26 17:13 zippy.py
+
+./w9m/02_00_18:
+total 640
+-rwxr-xr-x 1 root root 276480 Mar 26 17:13 ARB_create.sh
+-rwxr-xr-x 1 root root  14139 Mar 26 17:13 cc_mail.py
+-rwxr-xr-x 1 root root  10317 Mar 26 17:13 cc_timer.py
+-rwxr-xr-x 1 root root   7582 Mar 26 17:13 chmod.py
+-rwxr-xr-x 1 root root 122880 Mar 26 17:13 copiesecurisee.doc
+-rwxr-xr-x 1 root root   2072 Mar 26 17:13 copiesecurisee.sh
+-rwxr-xr-x 1 root root  17430 Mar 26 17:13 gzippy.py
+-rwxr-xr-x 1 root root  25744 Mar 26 17:13 kill_traces.sh
+-rwxr-xr-x 1 root root  18453 Mar 26 17:13 mvtraces.ksh
+-rwxr-xr-x 1 root root    132 Mar 26 17:13 params.csv.sample
+-rwxr-xr-x 1 root root   2934 Mar 26 17:13 pax.ksh
+-rwxr-xr-x 1 root root  43660 Mar 26 17:13 purge.py
+-rwxr-xr-x 1 root root  16361 Mar 26 17:13 purge_dossier_vide.py
+-rwxr-xr-x 1 root root  34096 Mar 26 17:13 rename.py
+-rwxr-xr-x 1 root root   3036 Mar 26 17:13 tar.ksh
+-rwxr-xr-x 1 root root   2964 Mar 26 17:13 wget.ksh
+-rwxr-xr-x 1 root root  19081 Mar 26 17:13 zippy.py
+
+./w9n:
+total 8
+drwxr-xr-x 4 root dibox 4096 Nov 21 10:47 mys
+drwxr-xr-x 6 root dibox 4096 Nov 21 10:47 ora
+
+./w9n/mys:
+total 8
+drwxr-xr-x 7 root root 4096 Mar 26 17:13 01_00_00
+drwxr-xr-x 7  501  501 4096 Mar 26 17:13 01_01_00
+
+./w9n/mys/01_00_00:
+total 32
+lrwxrwxrwx 1 root root   32 Jan 11  2010 .#ChangeLog -> xavier@fed.local.1723:1262905850
+drwxr-xr-x 6 root root 4096 Jan 11  2010 .bzr
+lrwxrwxrwx 1 root root   10 Jan 11  2010 DBA_mys -> DBA_mys.py
+-rwxr-xr-x 1 root root 8360 Jan 11  2010 DBA_mys.py
+drwxr-xr-x 2 root root 4096 Jan 11  2010 contribs
+drwxr-xr-x 2 root root 4096 Jan 11  2010 exemples
+drwxr-xr-x 3 root root 4096 Jan 11  2010 fr
+drwxr-xr-x 2 root root 4096 Jan 11  2010 tests
+
+./w9n/mys/01_00_00/.bzr:
+total 24
+drwxr-xr-x 3 root root 4096 Jan 11  2010 branch
+-rwxr-xr-x 1 root root   35 Jan 11  2010 branch-format
+drwxr-xr-x 2 root root 4096 Jan 11  2010 branch-lock
+drwxr-xr-x 4 root root 4096 Jan 11  2010 checkout
+-rwxr-xr-x 1 root root  141 Jan 11  2010 readme
+drwxr-xr-x 7 root root 4096 Jan 11  2010 repository
+
+./w9n/mys/01_00_00/.bzr/branch:
+total 20
+-rwxr-xr-x 1 root root   26 Jan 11  2010 branch.conf
+-rwxr-xr-x 1 root root   34 Jan 11  2010 format
+-rwxr-xr-x 1 root root   47 Jan 11  2010 last-revision
+drwxr-xr-x 2 root root 4096 Jan 11  2010 lock
+-rwxr-xr-x 1 root root   58 Jan 11  2010 tags
+
+./w9n/mys/01_00_00/.bzr/branch/lock:
+total 0
+
+./w9n/mys/01_00_00/.bzr/branch-lock:
+total 0
+
+./w9n/mys/01_00_00/.bzr/checkout:
+total 28
+-rwxr-xr-x 1 root root   27 Jan 11  2010 conflicts
+-rwxr-xr-x 1 root root 5321 Jan 11  2010 dirstate
+-rwxr-xr-x 1 root root   40 Jan 11  2010 format
+drwxr-xr-x 2 root root 4096 Jan 11  2010 lock
+-rwxr-xr-x 1 root root  130 Jan 11  2010 merge-hashes
+drwxr-xr-x 2 root root 4096 Jan 11  2010 shelf
+
+./w9n/mys/01_00_00/.bzr/checkout/lock:
+total 0
+
+./w9n/mys/01_00_00/.bzr/checkout/shelf:
+total 0
+
+./w9n/mys/01_00_00/.bzr/repository:
+total 28
+-rwxr-xr-x 1 root root   49 Jan 11  2010 format
+drwxr-xr-x 2 root root 4096 Jan 11  2010 indices
+drwxr-xr-x 2 root root 4096 Jan 11  2010 lock
+drwxr-xr-x 2 root root 4096 Jan 11  2010 obsolete_packs
+-rwxr-xr-x 1 root root  213 Jan 11  2010 pack-names
+drwxr-xr-x 2 root root 4096 Jan 11  2010 packs
+drwxr-xr-x 2 root root 4096 Jan 11  2010 upload
+
+./w9n/mys/01_00_00/.bzr/repository/indices:
+total 52
+-rwxr-xr-x 1 root root  740 Jan 11  2010 adb4d53ae1243f0df61e38761e0f4f24.iix
+-rwxr-xr-x 1 root root  704 Jan 11  2010 adb4d53ae1243f0df61e38761e0f4f24.rix
+-rwxr-xr-x 1 root root   60 Jan 11  2010 adb4d53ae1243f0df61e38761e0f4f24.six
+-rwxr-xr-x 1 root root 4424 Jan 11  2010 adb4d53ae1243f0df61e38761e0f4f24.tix
+-rwxr-xr-x 1 root root  737 Jan 11  2010 c018442630fef47aebdf5ca45a15357a.iix
+-rwxr-xr-x 1 root root  695 Jan 11  2010 c018442630fef47aebdf5ca45a15357a.rix
+-rwxr-xr-x 1 root root   60 Jan 11  2010 c018442630fef47aebdf5ca45a15357a.six
+-rwxr-xr-x 1 root root 2365 Jan 11  2010 c018442630fef47aebdf5ca45a15357a.tix
+-rwxr-xr-x 1 root root  735 Jan 11  2010 da5b73214b0821346b5ed0b1e6a1aaab.iix
+-rwxr-xr-x 1 root root  695 Jan 11  2010 da5b73214b0821346b5ed0b1e6a1aaab.rix
+-rwxr-xr-x 1 root root   60 Jan 11  2010 da5b73214b0821346b5ed0b1e6a1aaab.six
+-rwxr-xr-x 1 root root 2460 Jan 11  2010 da5b73214b0821346b5ed0b1e6a1aaab.tix
+
+./w9n/mys/01_00_00/.bzr/repository/lock:
+total 0
+
+./w9n/mys/01_00_00/.bzr/repository/obsolete_packs:
+total 252
+-rwxr-xr-x 1 root root   170 Jan 11  2010 033cdd84eb2fe450def6a1ae89ed7317.iix
+-rwxr-xr-x 1 root root  1069 Jan 11  2010 033cdd84eb2fe450def6a1ae89ed7317.pack
+-rwxr-xr-x 1 root root   166 Jan 11  2010 033cdd84eb2fe450def6a1ae89ed7317.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 033cdd84eb2fe450def6a1ae89ed7317.six
+-rwxr-xr-x 1 root root   259 Jan 11  2010 033cdd84eb2fe450def6a1ae89ed7317.tix
+-rwxr-xr-x 1 root root   170 Jan 11  2010 06110b0124ab93056a1a6e6fb62c718b.iix
+-rwxr-xr-x 1 root root   907 Jan 11  2010 06110b0124ab93056a1a6e6fb62c718b.pack
+-rwxr-xr-x 1 root root   166 Jan 11  2010 06110b0124ab93056a1a6e6fb62c718b.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 06110b0124ab93056a1a6e6fb62c718b.six
+-rwxr-xr-x 1 root root   251 Jan 11  2010 06110b0124ab93056a1a6e6fb62c718b.tix
+-rwxr-xr-x 1 root root   170 Jan 11  2010 291384b3dccf2e76aa6d5db993429f7c.iix
+-rwxr-xr-x 1 root root  2042 Jan 11  2010 291384b3dccf2e76aa6d5db993429f7c.pack
+-rwxr-xr-x 1 root root   167 Jan 11  2010 291384b3dccf2e76aa6d5db993429f7c.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 291384b3dccf2e76aa6d5db993429f7c.six
+-rwxr-xr-x 1 root root  1065 Jan 11  2010 291384b3dccf2e76aa6d5db993429f7c.tix
+-rwxr-xr-x 1 root root   169 Jan 11  2010 6657768ada291b8950bd749be8052fd8.iix
+-rwxr-xr-x 1 root root   580 Jan 11  2010 6657768ada291b8950bd749be8052fd8.pack
+-rwxr-xr-x 1 root root   166 Jan 11  2010 6657768ada291b8950bd749be8052fd8.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 6657768ada291b8950bd749be8052fd8.six
+-rwxr-xr-x 1 root root    60 Jan 11  2010 6657768ada291b8950bd749be8052fd8.tix
+-rwxr-xr-x 1 root root   171 Jan 11  2010 697f71d9e87b25d97f339899a20c9f90.iix
+-rwxr-xr-x 1 root root  1849 Jan 11  2010 697f71d9e87b25d97f339899a20c9f90.pack
+-rwxr-xr-x 1 root root   167 Jan 11  2010 697f71d9e87b25d97f339899a20c9f90.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 697f71d9e87b25d97f339899a20c9f90.six
+-rwxr-xr-x 1 root root   264 Jan 11  2010 697f71d9e87b25d97f339899a20c9f90.tix
+-rwxr-xr-x 1 root root   170 Jan 11  2010 a89df2e510751a33f1e78aeae504c38e.iix
+-rwxr-xr-x 1 root root  1549 Jan 11  2010 a89df2e510751a33f1e78aeae504c38e.pack
+-rwxr-xr-x 1 root root   167 Jan 11  2010 a89df2e510751a33f1e78aeae504c38e.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 a89df2e510751a33f1e78aeae504c38e.six
+-rwxr-xr-x 1 root root   251 Jan 11  2010 a89df2e510751a33f1e78aeae504c38e.tix
+-rwxr-xr-x 1 root root   169 Jan 11  2010 c0dd753e52b6685622f2d41114733411.iix
+-rwxr-xr-x 1 root root   567 Jan 11  2010 c0dd753e52b6685622f2d41114733411.pack
+-rwxr-xr-x 1 root root   166 Jan 11  2010 c0dd753e52b6685622f2d41114733411.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 c0dd753e52b6685622f2d41114733411.six
+-rwxr-xr-x 1 root root    60 Jan 11  2010 c0dd753e52b6685622f2d41114733411.tix
+-rwxr-xr-x 1 root root   172 Jan 11  2010 d198f932381be31e6758e18765b69135.iix
+-rwxr-xr-x 1 root root 52445 Jan 11  2010 d198f932381be31e6758e18765b69135.pack
+-rwxr-xr-x 1 root root   168 Jan 11  2010 d198f932381be31e6758e18765b69135.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 d198f932381be31e6758e18765b69135.six
+-rwxr-xr-x 1 root root   391 Jan 11  2010 d198f932381be31e6758e18765b69135.tix
+-rwxr-xr-x 1 root root   168 Jan 11  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.iix
+-rwxr-xr-x 1 root root  2441 Jan 11  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.pack
+-rwxr-xr-x 1 root root   167 Jan 11  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.six
+-rwxr-xr-x 1 root root   257 Jan 11  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.tix
+-rwxr-xr-x 1 root root   170 Jan 11  2010 f311fa26878e28315ad1ec0a663c0514.iix
+-rwxr-xr-x 1 root root  2179 Jan 11  2010 f311fa26878e28315ad1ec0a663c0514.pack
+-rwxr-xr-x 1 root root   167 Jan 11  2010 f311fa26878e28315ad1ec0a663c0514.rix
+-rwxr-xr-x 1 root root    60 Jan 11  2010 f311fa26878e28315ad1ec0a663c0514.six
+-rwxr-xr-x 1 root root   451 Jan 11  2010 f311fa26878e28315ad1ec0a663c0514.tix
+
+./w9n/mys/01_00_00/.bzr/repository/packs:
+total 144
+-rwxr-xr-x 1 root root 51612 Jan 11  2010 adb4d53ae1243f0df61e38761e0f4f24.pack
+-rwxr-xr-x 1 root root 65241 Jan 11  2010 c018442630fef47aebdf5ca45a15357a.pack
+-rwxr-xr-x 1 root root 17284 Jan 11  2010 da5b73214b0821346b5ed0b1e6a1aaab.pack
+
+./w9n/mys/01_00_00/.bzr/repository/upload:
+total 0
+
+./w9n/mys/01_00_00/contribs:
+total 184
+-rwxr-xr-x 1 root root   2096 Jan 11  2010 090410150817.DBA_dbidx_mysql.sh.log
+-rwxr-xr-x 1 root root   5497 Jan 11  2010 090410150856.DBA_dbcc_mysql.sh.log
+-rwxr-xr-x 1 root root   8843 Jan 11  2010 DBA_dbcc_mysql.sh
+-rwxr-xr-x 1 root root   6458 Jan 11  2010 DBA_dbidx_mysql.sh
+-rwxr-xr-x 1 root root 149504 Jan 11  2010 MOP_CC_MySQL.doc
+
+./w9n/mys/01_00_00/exemples:
+total 4
+-rwxr-xr-x 1 root root 691 Jan 11  2010 test.xml
+
+./w9n/mys/01_00_00/fr:
+total 12
+-rwxr-xr-x 1 root root   24 Jan 11  2010 __init__.py
+-rwxr-xr-x 1 root root  129 Jan 11  2010 __init__.pyc
+drwxr-xr-x 3 root root 4096 Jan 11  2010 laposte
+
+./w9n/mys/01_00_00/fr/laposte:
+total 52
+-rwxr-xr-x 1 root root    24 Jan 11  2010 __init__.py
+-rwxr-xr-x 1 root root   137 Jan 11  2010 __init__.pyc
+drwxr-xr-x 2 root root  4096 Jan 11  2010 elementtree
+-rwxr-xr-x 1 root root  7844 Jan 11  2010 w9n.py
+-rwxr-xr-x 1 root root 13288 Jan 11  2010 w9n.pyc
+-rwxr-xr-x 1 root root  5981 Jan 11  2010 xml2dic.py
+-rwxr-xr-x 1 root root  6085 Jan 11  2010 xml2dic.pyc
+
+./w9n/mys/01_00_00/fr/laposte/elementtree:
+total 88
+-rwxr-xr-x 1 root root  5954 Jan 11  2010 ElementPath.py
+-rwxr-xr-x 1 root root  4112 Jan 11  2010 ElementPath.pyc
+-rwxr-xr-x 1 root root 40886 Jan 11  2010 ElementTree.py
+-rwxr-xr-x 1 root root 28338 Jan 11  2010 ElementTree.pyc
+-rwxr-xr-x 1 root root     0 Jan 11  2010 __init__.py
+-rwxr-xr-x 1 root root   153 Jan 11  2010 __init__.pyc
+
+./w9n/mys/01_00_00/tests:
+total 8
+-rwxr-xr-x 1 root root 1525 Jan 11  2010 test_conf.py
+-rwxr-xr-x 1 root root  517 Jan 11  2010 test_w9n.py
+
+./w9n/mys/01_01_00:
+total 32
+drwxr-xr-x 6 501 501 4096 Jun 17  2009 .bzr
+lrwxrwxrwx 1 501 501   10 Jan  5  2010 DBA_mys -> DBA_mys.py
+-rwxr-xr-x 1 501 501 9091 Feb  1  2010 DBA_mys.py
+-rwxr-xr-x 1 501 501    0 Jan 14  2010 TODO
+drwxr-xr-x 2 501 501 4096 Jan 12  2010 contribs
+drwxr-xr-x 2 501 501 4096 Feb 15  2010 exemples
+drwxr-xr-x 3 501 501 4096 Feb 12  2010 fr
+drwxr-xr-x 2 501 501 4096 Jan 26  2010 tests
+
+./w9n/mys/01_01_00/.bzr:
+total 24
+drwxr-xr-x 3 501 501 4096 Feb  1  2010 branch
+-rwxr-xr-x 1 501 501   35 Jun 17  2009 branch-format
+drwxr-xr-x 2 501 501 4096 Jun 17  2009 branch-lock
+drwxr-xr-x 4 501 501 4096 Feb  1  2010 checkout
+-rwxr-xr-x 1 501 501  141 Jun 17  2009 readme
+drwxr-xr-x 7 501 501 4096 Feb  1  2010 repository
+
+./w9n/mys/01_01_00/.bzr/branch:
+total 20
+-rwxr-xr-x 1 501 501   26 Jun 17  2009 branch.conf
+-rwxr-xr-x 1 501 501   34 Jun 17  2009 format
+-rwxr-xr-x 1 501 501   47 Feb  1  2010 last-revision
+drwxr-xr-x 2 501 501 4096 Feb  1  2010 lock
+-rwxr-xr-x 1 501 501   58 Jan  8  2010 tags
+
+./w9n/mys/01_01_00/.bzr/branch/lock:
+total 0
+
+./w9n/mys/01_01_00/.bzr/branch-lock:
+total 0
+
+./w9n/mys/01_01_00/.bzr/checkout:
+total 28
+-rwxr-xr-x 1 501 501   27 Feb  1  2010 conflicts
+-rwxr-xr-x 1 501 501 6050 Feb 16  2010 dirstate
+-rwxr-xr-x 1 501 501   40 Jun 17  2009 format
+drwxr-xr-x 2 501 501 4096 Feb  1  2010 lock
+-rwxr-xr-x 1 501 501  130 Feb  1  2010 merge-hashes
+drwxr-xr-x 2 501 501 4096 Feb  1  2010 shelf
+
+./w9n/mys/01_01_00/.bzr/checkout/lock:
+total 0
+
+./w9n/mys/01_01_00/.bzr/checkout/shelf:
+total 0
+
+./w9n/mys/01_01_00/.bzr/repository:
+total 28
+-rwxr-xr-x 1 501 501   49 Jun 17  2009 format
+drwxr-xr-x 2 501 501 4096 Feb  1  2010 indices
+drwxr-xr-x 2 501 501 4096 Feb  1  2010 lock
+drwxr-xr-x 2 501 501 4096 Jan  8  2010 obsolete_packs
+-rwxr-xr-x 1 501 501  614 Feb  1  2010 pack-names
+drwxr-xr-x 2 501 501 4096 Feb  1  2010 packs
+drwxr-xr-x 2 501 501 4096 Feb  1  2010 upload
+
+./w9n/mys/01_01_00/.bzr/repository/indices:
+total 180
+-rwxr-xr-x 1 501 501  170 Jan 11  2010 13f480c50dd4269d4c5017a21a565471.iix
+-rwxr-xr-x 1 501 501  166 Jan 11  2010 13f480c50dd4269d4c5017a21a565471.rix
+-rwxr-xr-x 1 501 501   60 Jan 11  2010 13f480c50dd4269d4c5017a21a565471.six
+-rwxr-xr-x 1 501 501  259 Jan 11  2010 13f480c50dd4269d4c5017a21a565471.tix
+-rwxr-xr-x 1 501 501  170 Jan 11  2010 2096a6e69131e27ee72325b3136745af.iix
+-rwxr-xr-x 1 501 501  166 Jan 11  2010 2096a6e69131e27ee72325b3136745af.rix
+-rwxr-xr-x 1 501 501   60 Jan 11  2010 2096a6e69131e27ee72325b3136745af.six
+-rwxr-xr-x 1 501 501  455 Jan 11  2010 2096a6e69131e27ee72325b3136745af.tix
+-rwxr-xr-x 1 501 501  171 Jan 14  2010 248cc9b28a20718bccc795413a2881e7.iix
+-rwxr-xr-x 1 501 501  167 Jan 14  2010 248cc9b28a20718bccc795413a2881e7.rix
+-rwxr-xr-x 1 501 501   60 Jan 14  2010 248cc9b28a20718bccc795413a2881e7.six
+-rwxr-xr-x 1 501 501  643 Jan 14  2010 248cc9b28a20718bccc795413a2881e7.tix
+-rwxr-xr-x 1 501 501  169 Feb  1  2010 433e52a55640437df6c268d744555134.iix
+-rwxr-xr-x 1 501 501  167 Feb  1  2010 433e52a55640437df6c268d744555134.rix
+-rwxr-xr-x 1 501 501   60 Feb  1  2010 433e52a55640437df6c268d744555134.six
+-rwxr-xr-x 1 501 501  252 Feb  1  2010 433e52a55640437df6c268d744555134.tix
+-rwxr-xr-x 1 501 501  170 Jan 14  2010 4d9cd19daa1818c8938352474fc146aa.iix
+-rwxr-xr-x 1 501 501  167 Jan 14  2010 4d9cd19daa1818c8938352474fc146aa.rix
+-rwxr-xr-x 1 501 501   60 Jan 14  2010 4d9cd19daa1818c8938352474fc146aa.six
+-rwxr-xr-x 1 501 501  451 Jan 14  2010 4d9cd19daa1818c8938352474fc146aa.tix
+-rwxr-xr-x 1 501 501  171 Jan 14  2010 71a642f4074296ec309a0ba0e136b066.iix
+-rwxr-xr-x 1 501 501  167 Jan 14  2010 71a642f4074296ec309a0ba0e136b066.rix
+-rwxr-xr-x 1 501 501   60 Jan 14  2010 71a642f4074296ec309a0ba0e136b066.six
+-rwxr-xr-x 1 501 501  770 Jan 14  2010 71a642f4074296ec309a0ba0e136b066.tix
+-rwxr-xr-x 1 501 501  171 Jan 12  2010 851846e8528a6dc44b4b9d327269dc7b.iix
+-rwxr-xr-x 1 501 501  167 Jan 12  2010 851846e8528a6dc44b4b9d327269dc7b.rix
+-rwxr-xr-x 1 501 501   60 Jan 12  2010 851846e8528a6dc44b4b9d327269dc7b.six
+-rwxr-xr-x 1 501 501  260 Jan 12  2010 851846e8528a6dc44b4b9d327269dc7b.tix
+-rwxr-xr-x 1 501 501  740 Jan  4  2010 adb4d53ae1243f0df61e38761e0f4f24.iix
+-rwxr-xr-x 1 501 501  704 Jan  4  2010 adb4d53ae1243f0df61e38761e0f4f24.rix
+-rwxr-xr-x 1 501 501   60 Jan  4  2010 adb4d53ae1243f0df61e38761e0f4f24.six
+-rwxr-xr-x 1 501 501 4424 Jan  4  2010 adb4d53ae1243f0df61e38761e0f4f24.tix
+-rwxr-xr-x 1 501 501  737 Jan  8  2010 c018442630fef47aebdf5ca45a15357a.iix
+-rwxr-xr-x 1 501 501  695 Jan  8  2010 c018442630fef47aebdf5ca45a15357a.rix
+-rwxr-xr-x 1 501 501   60 Jan  8  2010 c018442630fef47aebdf5ca45a15357a.six
+-rwxr-xr-x 1 501 501 2365 Jan  8  2010 c018442630fef47aebdf5ca45a15357a.tix
+-rwxr-xr-x 1 501 501  735 Jan  6  2010 da5b73214b0821346b5ed0b1e6a1aaab.iix
+-rwxr-xr-x 1 501 501  695 Jan  6  2010 da5b73214b0821346b5ed0b1e6a1aaab.rix
+-rwxr-xr-x 1 501 501   60 Jan  6  2010 da5b73214b0821346b5ed0b1e6a1aaab.six
+-rwxr-xr-x 1 501 501 2460 Jan  6  2010 da5b73214b0821346b5ed0b1e6a1aaab.tix
+-rwxr-xr-x 1 501 501  169 Jan 12  2010 f65d275afa90566572967f63823bb976.iix
+-rwxr-xr-x 1 501 501  167 Jan 12  2010 f65d275afa90566572967f63823bb976.rix
+-rwxr-xr-x 1 501 501   60 Jan 12  2010 f65d275afa90566572967f63823bb976.six
+-rwxr-xr-x 1 501 501  445 Jan 12  2010 f65d275afa90566572967f63823bb976.tix
+
+./w9n/mys/01_01_00/.bzr/repository/lock:
+total 0
+
+./w9n/mys/01_01_00/.bzr/repository/obsolete_packs:
+total 252
+-rwxr-xr-x 1 501 501   170 Jan  6  2010 033cdd84eb2fe450def6a1ae89ed7317.iix
+-rwxr-xr-x 1 501 501  1069 Jan  6  2010 033cdd84eb2fe450def6a1ae89ed7317.pack
+-rwxr-xr-x 1 501 501   166 Jan  6  2010 033cdd84eb2fe450def6a1ae89ed7317.rix
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 033cdd84eb2fe450def6a1ae89ed7317.six
+-rwxr-xr-x 1 501 501   259 Jan  6  2010 033cdd84eb2fe450def6a1ae89ed7317.tix
+-rwxr-xr-x 1 501 501   170 Jan  7  2010 06110b0124ab93056a1a6e6fb62c718b.iix
+-rwxr-xr-x 1 501 501   907 Jan  7  2010 06110b0124ab93056a1a6e6fb62c718b.pack
+-rwxr-xr-x 1 501 501   166 Jan  7  2010 06110b0124ab93056a1a6e6fb62c718b.rix
+-rwxr-xr-x 1 501 501    60 Jan  7  2010 06110b0124ab93056a1a6e6fb62c718b.six
+-rwxr-xr-x 1 501 501   251 Jan  7  2010 06110b0124ab93056a1a6e6fb62c718b.tix
+-rwxr-xr-x 1 501 501   170 Jan  8  2010 291384b3dccf2e76aa6d5db993429f7c.iix
+-rwxr-xr-x 1 501 501  2042 Jan  8  2010 291384b3dccf2e76aa6d5db993429f7c.pack
+-rwxr-xr-x 1 501 501   167 Jan  8  2010 291384b3dccf2e76aa6d5db993429f7c.rix
+-rwxr-xr-x 1 501 501    60 Jan  8  2010 291384b3dccf2e76aa6d5db993429f7c.six
+-rwxr-xr-x 1 501 501  1065 Jan  8  2010 291384b3dccf2e76aa6d5db993429f7c.tix
+-rwxr-xr-x 1 501 501   169 Jan  6  2010 6657768ada291b8950bd749be8052fd8.iix
+-rwxr-xr-x 1 501 501   580 Jan  6  2010 6657768ada291b8950bd749be8052fd8.pack
+-rwxr-xr-x 1 501 501   166 Jan  6  2010 6657768ada291b8950bd749be8052fd8.rix
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 6657768ada291b8950bd749be8052fd8.six
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 6657768ada291b8950bd749be8052fd8.tix
+-rwxr-xr-x 1 501 501   171 Jan  6  2010 697f71d9e87b25d97f339899a20c9f90.iix
+-rwxr-xr-x 1 501 501  1849 Jan  6  2010 697f71d9e87b25d97f339899a20c9f90.pack
+-rwxr-xr-x 1 501 501   167 Jan  6  2010 697f71d9e87b25d97f339899a20c9f90.rix
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 697f71d9e87b25d97f339899a20c9f90.six
+-rwxr-xr-x 1 501 501   264 Jan  6  2010 697f71d9e87b25d97f339899a20c9f90.tix
+-rwxr-xr-x 1 501 501   170 Jan  6  2010 a89df2e510751a33f1e78aeae504c38e.iix
+-rwxr-xr-x 1 501 501  1549 Jan  6  2010 a89df2e510751a33f1e78aeae504c38e.pack
+-rwxr-xr-x 1 501 501   167 Jan  6  2010 a89df2e510751a33f1e78aeae504c38e.rix
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 a89df2e510751a33f1e78aeae504c38e.six
+-rwxr-xr-x 1 501 501   251 Jan  6  2010 a89df2e510751a33f1e78aeae504c38e.tix
+-rwxr-xr-x 1 501 501   169 Jan  6  2010 c0dd753e52b6685622f2d41114733411.iix
+-rwxr-xr-x 1 501 501   567 Jan  6  2010 c0dd753e52b6685622f2d41114733411.pack
+-rwxr-xr-x 1 501 501   166 Jan  6  2010 c0dd753e52b6685622f2d41114733411.rix
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 c0dd753e52b6685622f2d41114733411.six
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 c0dd753e52b6685622f2d41114733411.tix
+-rwxr-xr-x 1 501 501   172 Jan  6  2010 d198f932381be31e6758e18765b69135.iix
+-rwxr-xr-x 1 501 501 52445 Jan  6  2010 d198f932381be31e6758e18765b69135.pack
+-rwxr-xr-x 1 501 501   168 Jan  6  2010 d198f932381be31e6758e18765b69135.rix
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 d198f932381be31e6758e18765b69135.six
+-rwxr-xr-x 1 501 501   391 Jan  6  2010 d198f932381be31e6758e18765b69135.tix
+-rwxr-xr-x 1 501 501   168 Jan  6  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.iix
+-rwxr-xr-x 1 501 501  2441 Jan  6  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.pack
+-rwxr-xr-x 1 501 501   167 Jan  6  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.rix
+-rwxr-xr-x 1 501 501    60 Jan  6  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.six
+-rwxr-xr-x 1 501 501   257 Jan  6  2010 e40a2fdfb3c6cc9fb0a82be09d8ba8c4.tix
+-rwxr-xr-x 1 501 501   170 Jan  8  2010 f311fa26878e28315ad1ec0a663c0514.iix
+-rwxr-xr-x 1 501 501  2179 Jan  8  2010 f311fa26878e28315ad1ec0a663c0514.pack
+-rwxr-xr-x 1 501 501   167 Jan  8  2010 f311fa26878e28315ad1ec0a663c0514.rix
+-rwxr-xr-x 1 501 501    60 Jan  8  2010 f311fa26878e28315ad1ec0a663c0514.six
+-rwxr-xr-x 1 501 501   451 Jan  8  2010 f311fa26878e28315ad1ec0a663c0514.tix
+
+./w9n/mys/01_01_00/.bzr/repository/packs:
+total 188
+-rwxr-xr-x 1 501 501  1273 Jan 11  2010 13f480c50dd4269d4c5017a21a565471.pack
+-rwxr-xr-x 1 501 501  1460 Jan 11  2010 2096a6e69131e27ee72325b3136745af.pack
+-rwxr-xr-x 1 501 501  5739 Jan 14  2010 248cc9b28a20718bccc795413a2881e7.pack
+-rwxr-xr-x 1 501 501  4097 Feb  1  2010 433e52a55640437df6c268d744555134.pack
+-rwxr-xr-x 1 501 501  1881 Jan 14  2010 4d9cd19daa1818c8938352474fc146aa.pack
+-rwxr-xr-x 1 501 501  2460 Jan 14  2010 71a642f4074296ec309a0ba0e136b066.pack
+-rwxr-xr-x 1 501 501  2746 Jan 12  2010 851846e8528a6dc44b4b9d327269dc7b.pack
+-rwxr-xr-x 1 501 501 51612 Jan  4  2010 adb4d53ae1243f0df61e38761e0f4f24.pack
+-rwxr-xr-x 1 501 501 65241 Jan  8  2010 c018442630fef47aebdf5ca45a15357a.pack
+-rwxr-xr-x 1 501 501 17284 Jan  6  2010 da5b73214b0821346b5ed0b1e6a1aaab.pack
+-rwxr-xr-x 1 501 501  4681 Jan 12  2010 f65d275afa90566572967f63823bb976.pack
+
+./w9n/mys/01_01_00/.bzr/repository/upload:
+total 0
+
+./w9n/mys/01_01_00/contribs:
+total 184
+-rwxr-xr-x 1 501 501   2096 Apr 10  2009 090410150817.DBA_dbidx_mysql.sh.log
+-rwxr-xr-x 1 501 501   5497 Apr 10  2009 090410150856.DBA_dbcc_mysql.sh.log
+-rwxr-xr-x 1 501 501   8843 Jan  4  2010 DBA_dbcc_mysql.sh
+-rwxr-xr-x 1 501 501   6458 Jan 12  2010 DBA_dbidx_mysql.sh
+-rwxr-xr-x 1 501 501 149504 Apr 16  2009 MOP_CC_MySQL.doc
+
+./w9n/mys/01_01_00/exemples:
+total 4
+-rwxr-xr-x 1 501 501 1760 Feb 15  2010 test.xml
+
+./w9n/mys/01_01_00/fr:
+total 12
+-rwxr-xr-x 1 501 501   24 Jan  8  2010 __init__.py
+-rwxr-xr-x 1 501 501  129 Feb 12  2010 __init__.pyc
+drwxr-xr-x 3 501 501 4096 Feb 16  2010 laposte
+
+./w9n/mys/01_01_00/fr/laposte:
+total 76
+-rwxr-xr-x 1 501 501    73 Feb  1  2010 #ChangeLog#
+lrwxrwxrwx 1 501 501    33 Feb  1  2010 .#ChangeLog -> xavier@fed.local.24918:1264711179
+-rwxr-xr-x 1 501 501    24 Jan  8  2010 __init__.py
+-rwxr-xr-x 1 501 501   137 Feb 12  2010 __init__.pyc
+drwxr-xr-x 2 501 501  4096 Jan  4  2010 elementtree
+-rwxr-xr-x 1 501 501 19459 Feb 16  2010 w9n.py
+-rwxr-xr-x 1 501 501 23437 Feb 16  2010 w9n.pyc
+-rwxr-xr-x 1 501 501  6054 Jan 14  2010 xml2dic.py
+-rwxr-xr-x 1 501 501  6158 Feb 12  2010 xml2dic.pyc
+
+./w9n/mys/01_01_00/fr/laposte/elementtree:
+total 88
+-rwxr-xr-x 1 501 501  5954 Jun 17  2009 ElementPath.py
+-rwxr-xr-x 1 501 501  4112 Jan  4  2010 ElementPath.pyc
+-rwxr-xr-x 1 501 501 40886 Jun 17  2009 ElementTree.py
+-rwxr-xr-x 1 501 501 28338 Jan  4  2010 ElementTree.pyc
+-rwxr-xr-x 1 501 501     0 Jan  4  2010 __init__.py
+-rwxr-xr-x 1 501 501   153 Jan  4  2010 __init__.pyc
+
+./w9n/mys/01_01_00/tests:
+total 16
+-rwxr-xr-x 1 501 501    0 Jan 14  2010 test-empty.xml
+-rwxr-xr-x 1 501 501  171 Jan 14  2010 test-no-ops.xml
+-rwxr-xr-x 1 501 501  983 Jan 14  2010 test.xml
+-rwxr-xr-x 1 501 501 3006 Jan 26  2010 test_conf.py
+-rwxr-xr-x 1 501 501  535 Jan 14  2010 test_w9n.py
+
+./w9n/ora:
+total 16
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_01
+drwxr-xr-x 3 root dibox 4096 Mar 26 17:13 02_00_02
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_03
+
+./w9n/ora/02_00_00:
+total 56
+-rwxr-xr-x 1 1525 1522 14384 Nov 16  2007 DBA_Hot_backup.sh
+-rwxr-xr-x 1 1525 1522 11821 Nov 16  2007 DBA_anlz.sh
+-rwxr-xr-x 1 1525 1522 15055 Nov 16  2007 DBA_rbld.sh
+-rwxr-xr-x 1 1525 1522  2084 Nov 16  2007 config_rman.sh
+-rwxr-xr-x 1 1525 1522  5445 Nov 16  2007 save_clusterware.sh
+
+./w9n/ora/02_00_01:
+total 96
+-rwxr-xr-x 1 root root 13666 Jan 23  2009 DBA_Hot_backup.sh
+-rwxr-xr-x 1 root root 11821 Jan 23  2009 DBA_anlz.sh
+-rwxr-xr-x 1 root root 16492 Jan 23  2009 DBA_exp.sh
+-rwxr-xr-x 1 root root 18904 Jan 23  2009 DBA_imp.sh
+-rwxr-xr-x 1 root root 15055 Jan 23  2009 DBA_rbld.sh
+-rwxr-xr-x 1 root root  2084 Jan 23  2009 config_rman.sh
+-rwxr-xr-x 1 root root  5558 Jan 23  2009 save_clusterware.sh
+
+./w9n/ora/02_00_02:
+total 4
+drwxr-xr-x 2 root root 4096 Mar 17  2009 02_00_02
+
+./w9n/ora/02_00_02/02_00_02:
+total 108
+-rwxr-xr-x 1 root root 12007 Mar 17  2009 DBA_Cold_backup.sh
+-rwxr-xr-x 1 root root 13868 Mar 17  2009 DBA_Hot_backup.sh
+-rwxr-xr-x 1 root root 11821 Jan 23  2009 DBA_anlz.sh
+-rwxr-xr-x 1 root root 16492 Jan 23  2009 DBA_exp.sh
+-rwxr-xr-x 1 root root 18904 Jan 23  2009 DBA_imp.sh
+-rwxr-xr-x 1 root root 15055 Jan 23  2009 DBA_rbld.sh
+-rwxr-xr-x 1 root root  2084 Jan 23  2009 config_rman.sh
+-rwxr-xr-x 1 root root  5558 Jan 23  2009 save_clusterware.sh
+
+./w9n/ora/02_00_03:
+total 120
+-rwxr-xr-x 1 root root 12007 Sep 11  2012 DBA_Cold_backup.sh
+-rwxr-xr-x 1 root root 13868 Sep 11  2012 DBA_Hot_backup.sh
+-rwxr-xr-x 1 root root 11821 Sep 11  2012 DBA_anlz.sh
+-rwxr-xr-x 1 root root 16492 Sep 11  2012 DBA_exp.sh
+-rwxr-xr-x 1 root root  9551 Sep 11  2012 DBA_expdp.sh
+-rwxr-xr-x 1 root root 18904 Sep 11  2012 DBA_imp.sh
+-rwxr-xr-x 1 root root 15055 Sep 11  2012 DBA_rbld.sh
+-rwxr-xr-x 1 root root  2084 Sep 11  2012 config_rman.sh
+-rwxr-xr-x 1 root root  5558 Sep 11  2012 save_clusterware.sh
+
+./wav:
+total 8
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_01
+
+./wav/02_00_00:
+total 16
+-rwxr-xr-x 1 avtom01 absyss 3750 Nov  5  2007 purgeABMLogs.ksh
+-rwxr-xr-x 1 avtom01 absyss  903 Nov  5  2007 tpop.ksh
+-rwxr-xr-x 1 avtom01 absyss  897 Nov  5  2007 tpush.ksh
+-rwxr-xr-x 1 avtom01 absyss  904 Nov  5  2007 tval.ksh
+
+./wav/02_00_01:
+total 16
+-rwxr-xr-x 1 root root 3750 May  3  2013 purgeABMLogs.ksh
+-rwxr-xr-x 1 root root  903 May  3  2013 tpop.ksh
+-rwxr-xr-x 1 root root 1049 May  3  2013 tpush.ksh
+-rwxr-xr-x 1 root root  904 May  3  2013 tval.ksh
+
+./wh4:
+total 4
+drwxr-xr-x 2 root root 4096 Mar 26 17:13 02_00_00
+
+./wh4/02_00_00:
+total 44
+-rwxr-xr-x 1 root root 5956 Jun  5  2008 download_dat.pl
+-rwxr-xr-x 1 root root  160 Jun 30  2009 local_exclude.txt
+-rwxr-xr-x 1 root root    2 Mar 31  2008 local_files.txt
+-rwxr-xr-x 1 root root 3258 Jun  6  2008 local_scan.pl
+-rwxr-xr-x 1 root root  151 May 27  2008 local_scan.txt
+-rwxr-xr-x 1 root root 3883 Jun  5  2008 update_dat.pl
+-rwxr-xr-x 1 root root  188 Mar 31  2008 vmfs_exclude.txt
+-rwxr-xr-x 1 root root   16 Mar 31  2008 vmfs_files.txt
+-rwxr-xr-x 1 root root 3341 Jun  6  2008 vmfs_scan.pl
+-rwxr-xr-x 1 root root  150 May 27  2008 vmfs_scan.txt
+
+./wn_:
+total 8
+drwxr-xr-x 2 root root 4096 Mar 26 17:13 02_00_00
+drwxr-xr-x 2 root root 4096 Mar 26 17:13 02_00_01
+
+./wn_/02_00_00:
+total 16
+-rwxr-xr-x 1 root root 3865 Mar 18  2010 Start_Stop_ITDS_Instance.sh
+-rwxr-xr-x 1 root root 4753 Mar 18  2010 itds_backupdb.sh
+-rwxr-xr-x 1 root root 1635 Apr 23  2010 reorgchk.sh
+
+./wn_/02_00_01:
+total 20
+-rwxr-xr-x 1 root root 5187 Jun  7  2010 Start_Stop_ITDS_Instance.sh
+-rwxr-xr-x 1 root root 4753 Mar 18  2010 itds_backupdb.sh
+-rwxr-xr-x 1 root root 1635 Apr 23  2010 reorgchk.sh
+
+./wo_:
+total 4
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+
+./wo_/02_00_00:
+total 4
+-rwxr-xr-x 1 root root 3862 May  7  2009 rcapache2.sh
+
+./wr_:
+total 52
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_01
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_02
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_03
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_04
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_05
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_06
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_07
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_08
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_09
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_10
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_11
+drwxr-xr-x 2 root root  4096 Mar 26 17:13 02_00_12
+
+./wr_/02_00_00:
+total 44
+-rwxr-xr-x 1 3020 3020 18681 Jul  7  2008 export
+-rwxr-xr-x 1 3020 3020 18681 Jul  7  2008 import
+-rwxr-xr-x 1 3020 3020  2628 Jul  8  2008 timestamp.ksh
+
+./wr_/02_00_01:
+total 144
+-rwxr-xr-x 1 invite users      888 Aug 21  2009 .post_install.sh
+-rwxr-xr-x 1 invite users     1293 Aug 25  2009 cft_out_purge
+-rwxr-xr-x 1 invite users     4844 Aug 25  2009 cft_save_config
+-rwxr-xr-x 1 invite users     2747 Aug 25  2009 chowntr
+-rwxr-xr-x 1 invite users    18681 Aug 25  2009 export
+-rwxr-xr-x 1   1002 itmusers 10454 Oct  6  2009 export_bulle
+-rwxr-xr-x 1 invite users     1362 Oct  6  2009 export_bulle.c
+-rwxr-xr-x 1 invite users     6491 Oct  6  2009 export_bulle.pl
+-rwxr-xr-x 1 invite users     1138 Oct  6  2009 export_bulle.sh
+-rwxr-xr-x 1 invite users     1123 Oct  6  2009 export_su
+-rwxr-xr-x 1 invite users    18681 Aug 25  2009 import
+-rwxr-xr-x 1   1002 itmusers 10454 Oct  6  2009 import_bulle
+-rwxr-xr-x 1 invite users     1362 Oct  6  2009 import_bulle.c
+-rwxr-xr-x 1 invite users     6491 Oct  6  2009 import_bulle.pl
+-rwxr-xr-x 1 invite users     1138 Oct  6  2009 import_bulle.sh
+-rwxr-xr-x 1 invite users     1123 Oct  6  2009 import_su
+-rwxr-xr-x 1 invite users     2628 Aug 25  2009 timestamp.ksh
+-rwxr-xr-x 1 invite users    16042 Sep  8  2009 transfert
+
+./wr_/02_00_02:
+total 144
+-rwxr-xr-x 1 invite users    888 Dec 18  2009 .post_install.sh
+-rwxr-xr-x 1   3000 absyss  1293 Aug 25  2009 cft_out_purge
+-rwxr-xr-x 1   3000 absyss  4844 Aug 25  2009 cft_save_config
+-rwxr-xr-x 1   3000 absyss  2747 Aug 25  2009 chowntr
+-rwxr-xr-x 1   3000 absyss 18681 Aug 25  2009 export
+-rwxr-xr-x 1   3000 absyss 10454 Oct  6  2009 export_bulle
+-rwxr-xr-x 1   3000 absyss  1362 Oct  6  2009 export_bulle.c
+-rwxr-xr-x 1   3000 absyss  6491 Oct  6  2009 export_bulle.pl
+-rwxr-xr-x 1   3000 absyss  1138 Oct  6  2009 export_bulle.sh
+-rwxr-xr-x 1   3000 absyss  1123 Oct  6  2009 export_su
+-rwxr-xr-x 1   3000 absyss 18681 Aug 25  2009 import
+-rwxr-xr-x 1   3000 absyss 10454 Oct  6  2009 import_bulle
+-rwxr-xr-x 1   3000 absyss  1362 Oct  6  2009 import_bulle.c
+-rwxr-xr-x 1   3000 absyss  6491 Oct  6  2009 import_bulle.pl
+-rwxr-xr-x 1   3000 absyss  1138 Oct  6  2009 import_bulle.sh
+-rwxr-xr-x 1   3000 absyss  1123 Oct  6  2009 import_su
+-rwxr-xr-x 1   3000 absyss  2628 Aug 25  2009 timestamp.ksh
+-rwxr-xr-x 1   3000 absyss 15951 Sep 28  2009 transfert
+
+./wr_/02_00_03:
+total 160
+-rwxr-xr-x 1 invite users    888 Apr  7  2010 .post_install.sh
+-rwxr-xr-x 1 root   root     262 Apr  7  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 root   root    2017 Apr 12  2010 autorise_transfert_bulle.sh
+-rwxr-xr-x 1   3000 absyss  1293 Aug 25  2009 cft_out_purge
+-rwxr-xr-x 1   3000 absyss  4844 Aug 25  2009 cft_save_config
+-rwxr-xr-x 1   3000 absyss  2747 Aug 25  2009 chowntr
+-rwxr-xr-x 1   3000 absyss 18681 Aug 25  2009 export
+-rwxr-xr-x 1   3000 absyss 10454 Oct  6  2009 export_bulle
+-rwxr-xr-x 1   3000 absyss  1657 Apr  7  2010 export_bulle.c
+-rwxr-xr-x 1   3000 absyss  6963 Apr  7  2010 export_bulle.pl
+-rwxr-xr-x 1   3000 absyss  5927 Apr  7  2010 export_bulle.sh
+-rwxr-xr-x 1   3000 absyss  1123 Oct  6  2009 export_su
+-rwxr-xr-x 1   3000 absyss 18681 Aug 25  2009 import
+-rwxr-xr-x 1   3000 absyss 10454 Oct  6  2009 import_bulle
+-rwxr-xr-x 1   3000 absyss  1652 Apr  7  2010 import_bulle.c
+-rwxr-xr-x 1   3000 absyss  6742 Apr  7  2010 import_bulle.pl
+-rwxr-xr-x 1   3000 absyss  6369 Apr  7  2010 import_bulle.sh
+-rwxr-xr-x 1   3000 absyss  1123 Oct  6  2009 import_su
+-rwxr-xr-x 1   3000 absyss  2628 Aug 25  2009 timestamp.ksh
+-rwxr-xr-x 1   3000 absyss 15951 Sep 28  2009 transfert
+
+./wr_/02_00_04:
+total 160
+-rwxr-xr-x 1 3000 absyss   888 May 10  2010 .post_install.sh
+-rwxr-xr-x 1 3000 absyss   262 Apr  7  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 3000 absyss  2017 Apr 12  2010 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 3000 absyss  1293 Aug 25  2009 cft_out_purge
+-rwxr-xr-x 1 3000 absyss  4844 Aug 25  2009 cft_save_config
+-rwxr-xr-x 1 3000 absyss  2747 Aug 25  2009 chowntr
+-rwxr-xr-x 1 3000 absyss 18681 Aug 25  2009 export
+-rwxr-xr-x 1 3000 absyss 10706 Nov 17  2010 export_bulle
+-rwxr-xr-x 1 3000 absyss  1753 Nov 17  2010 export_bulle.c
+-rwxr-xr-x 1 3000 absyss  6963 Apr  7  2010 export_bulle.pl
+-rwxr-xr-x 1 3000 absyss  5927 Apr  7  2010 export_bulle.sh
+-rwxr-xr-x 1 3000 absyss  1123 Oct  6  2009 export_su
+-rwxr-xr-x 1 3000 absyss 18681 Aug 25  2009 import
+-rwxr-xr-x 1 3000 absyss 10690 Nov 17  2010 import_bulle
+-rwxr-xr-x 1 3000 absyss  1748 Nov 17  2010 import_bulle.c
+-rwxr-xr-x 1 3000 absyss  6742 Apr  7  2010 import_bulle.pl
+-rwxr-xr-x 1 3000 absyss  6369 Apr  7  2010 import_bulle.sh
+-rwxr-xr-x 1 3000 absyss  1123 Oct  6  2009 import_su
+-rwxr-xr-x 1 3000 absyss  2628 Aug 25  2009 timestamp.ksh
+-rwxr-xr-x 1 3000 absyss 15951 Sep 28  2009 transfert
+
+./wr_/02_00_05:
+total 200
+-rwxr-xr-x 1 root root   888 Jan 11  2011 .post_install.sh
+-rwxr-xr-x 1  502  501   262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1  502  501  2017 Dec 14  2010 autorise_transfert_bulle.sh
+-rwxr-xr-x 1  502  501  1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1  502  501  4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1  502  501  2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1  502  501 18681 Dec 21  2010 export
+-rwxr-xr-x 1  502  501 19098 Dec 14  2010 export.old
+-rwxr-xr-x 1  502  501 10586 Dec 14  2010 export_bulle
+-rwxr-xr-x 1  502  501  1657 Dec 14  2010 export_bulle.c
+-rwxr-xr-x 1  502  501  6963 Dec 14  2010 export_bulle.pl
+-rwxr-xr-x 1  502  501  5927 Dec 14  2010 export_bulle.sh
+-rwxr-xr-x 1  502  501  1123 Dec 14  2010 export_su
+-rwxr-xr-x 1  502  501 18681 Dec 21  2010 import
+-rwxr-xr-x 1  502  501 19098 Dec 14  2010 import.old
+-rwxr-xr-x 1  502  501 10570 Dec 14  2010 import_bulle
+-rwxr-xr-x 1  502  501  1652 Dec 14  2010 import_bulle.c
+-rwxr-xr-x 1  502  501  6742 Dec 14  2010 import_bulle.pl
+-rwxr-xr-x 1  502  501  6369 Dec 14  2010 import_bulle.sh
+-rwxr-xr-x 1  502  501  1123 Dec 14  2010 import_su
+-rwxr-xr-x 1  502  501  2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1  502  501 16318 Jan  4  2011 transfert
+
+./wr_/02_00_06:
+total 204
+-rwxr-xr-x 1 3020 3020   888 Apr 14  2011 .post_install.sh
+-rwxr-xr-x 1 3020 3020   262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 3020 3020  2017 Dec 14  2010 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 3020 3020  1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1 3020 3020  4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1 3020 3020  2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1 3020 3020 18681 Dec 21  2010 export
+-rwxr-xr-x 1 3020 3020 19098 Dec 14  2010 export.old
+-rwxr-xr-x 1 3020 3020 10586 Dec 14  2010 export_bulle
+-rwxr-xr-x 1 3020 3020  1657 Dec 14  2010 export_bulle.c
+-rwxr-xr-x 1 3020 3020  6963 Dec 14  2010 export_bulle.pl
+-rwxr-xr-x 1 3020 3020  5927 Dec 14  2010 export_bulle.sh
+-rwxr-xr-x 1 3020 3020  1123 Dec 14  2010 export_su
+-rwxr-xr-x 1 3020 3020 18681 Dec 21  2010 import
+-rwxr-xr-x 1 3020 3020 19098 Dec 14  2010 import.old
+-rwxr-xr-x 1 3020 3020 10570 Dec 14  2010 import_bulle
+-rwxr-xr-x 1 3020 3020  1652 Dec 14  2010 import_bulle.c
+-rwxr-xr-x 1 3020 3020  6742 Dec 14  2010 import_bulle.pl
+-rwxr-xr-x 1 3020 3020  6369 Dec 14  2010 import_bulle.sh
+-rwxr-xr-x 1 3020 3020  1123 Dec 14  2010 import_su
+-rwxr-xr-x 1 3020 3020  2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1 3020 3020 16621 Apr 14  2011 transfert
+
+./wr_/02_00_07:
+total 216
+-rwxr-xr-x 1 3020 3020   888 Oct 25  2011 .post_install.sh
+-rwxr-xr-x 1 3020 3020   262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 3020 3020  2017 Dec 14  2010 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 3020 3020  1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1 3020 3020  4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1 3020 3020  2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1 3020 3020 11529 Oct 25  2011 dos2unix.py
+-rwxr-xr-x 1 3020 3020 18681 Dec 21  2010 export
+-rwxr-xr-x 1 3020 3020 19098 Dec 14  2010 export.old
+-rwxr-xr-x 1 3020 3020 10586 Dec 14  2010 export_bulle
+-rwxr-xr-x 1 3020 3020  1657 Dec 14  2010 export_bulle.c
+-rwxr-xr-x 1 3020 3020  6963 Dec 14  2010 export_bulle.pl
+-rwxr-xr-x 1 3020 3020  5927 Dec 14  2010 export_bulle.sh
+-rwxr-xr-x 1 3020 3020  1123 Dec 14  2010 export_su
+-rwxr-xr-x 1 3020 3020 18681 Dec 21  2010 import
+-rwxr-xr-x 1 3020 3020 19098 Dec 14  2010 import.old
+-rwxr-xr-x 1 3020 3020 10570 Dec 14  2010 import_bulle
+-rwxr-xr-x 1 3020 3020  1652 Dec 14  2010 import_bulle.c
+-rwxr-xr-x 1 3020 3020  6742 Dec 14  2010 import_bulle.pl
+-rwxr-xr-x 1 3020 3020  6369 Dec 14  2010 import_bulle.sh
+-rwxr-xr-x 1 3020 3020  1123 Dec 14  2010 import_su
+-rwxr-xr-x 1 3020 3020  2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1 3020 3020 16621 Apr 14  2011 transfert
+
+./wr_/02_00_08:
+total 216
+-rwxr-xr-x 1 invite users   888 Dec 26  2011 .post_install.sh
+-rwxr-xr-x 1 invite users   262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 invite users  2218 Dec 26  2011 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 invite users  1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1 invite users  4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1 invite users  2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1 invite users 11529 Oct 25  2011 dos2unix.py
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 export
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 export.old
+-rwxr-xr-x 1 invite users 10602 Dec 26  2011 export_bulle
+-rwxr-xr-x 1 invite users  1753 Dec 26  2011 export_bulle.c
+-rwxr-xr-x 1 invite users  8988 Dec 26  2011 export_bulle.pl
+-rwxr-xr-x 1 invite users  6038 Dec 26  2011 export_bulle.sh
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 import
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 import.old
+-rwxr-xr-x 1 invite users 10586 Dec 26  2011 import_bulle
+-rwxr-xr-x 1 invite users  1748 Dec 26  2011 import_bulle.c
+-rwxr-xr-x 1 invite users  8678 Dec 26  2011 import_bulle.pl
+-rwxr-xr-x 1 invite users  6645 Dec 26  2011 import_bulle.sh
+-rwxr-xr-x 1 invite users  2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1 invite users 16621 Apr 14  2011 transfert
+
+./wr_/02_00_09:
+total 232
+-rwxr-xr-x 1 invite users   888 Jun  8  2012 .post_install.sh
+-rwxr-xr-x 1 invite users   262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 invite users  2218 Dec 26  2011 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 invite users  1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1 invite users  4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1 invite users  2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1 invite users 11529 Oct 25  2011 dos2unix.py
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 export
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 export.old
+-rwxr-xr-x 1 invite users 10602 Dec 26  2011 export_bulle
+-rwxr-xr-x 1 invite users  1753 Dec 26  2011 export_bulle.c
+-rwxr-xr-x 1 invite users  8988 Dec 26  2011 export_bulle.pl
+-rwxr-xr-x 1 invite users  6038 Dec 26  2011 export_bulle.sh
+-rwxr-xr-x 1 invite users 13713 Jun  8  2012 ficmodif.py
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 import
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 import.old
+-rwxr-xr-x 1 invite users 10586 Dec 26  2011 import_bulle
+-rwxr-xr-x 1 invite users  1748 Dec 26  2011 import_bulle.c
+-rwxr-xr-x 1 invite users  8678 Dec 26  2011 import_bulle.pl
+-rwxr-xr-x 1 invite users  6645 Dec 26  2011 import_bulle.sh
+-rwxr-xr-x 1 invite users  2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1 invite users 16621 Apr 14  2011 transfert
+
+./wr_/02_00_10:
+total 248
+-rwxr-xr-x 1 invite users   888 Jun 27  2012 .post_install.sh
+-rwxr-xr-x 1 invite users   262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 invite users  2218 Dec 26  2011 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 invite users  1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1 invite users  4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1 invite users  2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1 invite users 11529 Oct 25  2011 dos2unix.py
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 export
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 export.old
+-rwxr-xr-x 1 invite users 10602 Dec 26  2011 export_bulle
+-rwxr-xr-x 1 invite users  1753 Dec 26  2011 export_bulle.c
+-rwxr-xr-x 1 invite users  8988 Dec 26  2011 export_bulle.pl
+-rwxr-xr-x 1 invite users  6038 Dec 26  2011 export_bulle.sh
+-rwxr-xr-x 1 invite users 13713 Jun  8  2012 ficmodif.py
+-rwxr-xr-x 1 invite users 13912 Jun 27  2012 gzippy.py
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 import
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 import.old
+-rwxr-xr-x 1 invite users 10586 Dec 26  2011 import_bulle
+-rwxr-xr-x 1 invite users  1748 Dec 26  2011 import_bulle.c
+-rwxr-xr-x 1 invite users  8678 Dec 26  2011 import_bulle.pl
+-rwxr-xr-x 1 invite users  6645 Dec 26  2011 import_bulle.sh
+-rwxr-xr-x 1 invite users  2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1 invite users 16621 Apr 14  2011 transfert
+
+./wr_/02_00_11:
+total 280
+-rwxr-xr-x 1 invite users   888 Oct 16  2012 .post_install.sh
+-rwxr-xr-x 1 invite users   262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 invite users  2218 Dec 26  2011 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 invite users  1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1 invite users  4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1 invite users  2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1 invite users 11529 Oct 25  2011 dos2unix.py
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 export
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 export.old
+-rwxr-xr-x 1 invite users 10602 Dec 26  2011 export_bulle
+-rwxr-xr-x 1 invite users  1753 Dec 26  2011 export_bulle.c
+-rwxr-xr-x 1 invite users  8988 Dec 26  2011 export_bulle.pl
+-rwxr-xr-x 1 invite users  6038 Dec 26  2011 export_bulle.sh
+-rwxr-xr-x 1 invite users 13713 Jun  8  2012 ficmodif.py
+-rwxr-xr-x 1 invite users 13912 Jun 27  2012 gzippy.py
+-rwxr-xr-x 1 invite users 18681 Dec 21  2010 import
+-rwxr-xr-x 1 invite users 19098 Dec 14  2010 import.old
+-rwxr-xr-x 1 invite users 10586 Dec 26  2011 import_bulle
+-rwxr-xr-x 1 invite users  1748 Dec 26  2011 import_bulle.c
+-rwxr-xr-x 1 invite users  8678 Dec 26  2011 import_bulle.pl
+-rwxr-xr-x 1 invite users  6645 Dec 26  2011 import_bulle.sh
+-rwxr-xr-x 1 invite users  2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1 invite users 30819 Oct 16  2012 transf.py
+-rwxr-xr-x 1 invite users 16621 Apr 14  2011 transfert
+
+./wr_/02_00_12:
+total 280
+-rwxr-xr-x 1 invite users   888 Mar  4  2013 .post_install.sh
+-rwxr-xr-x 1 root   sys     262 Dec 14  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+-rwxr-xr-x 1 root   sys    2218 Dec 26  2011 autorise_transfert_bulle.sh
+-rwxr-xr-x 1 root   sys    1293 Dec 14  2010 cft_out_purge
+-rwxr-xr-x 1 root   sys    4844 Dec 14  2010 cft_save_config
+-rwxr-xr-x 1 root   sys    2893 Jan  4  2011 chowntr
+-rwxr-xr-x 1 root   sys   11529 Oct 25  2011 dos2unix.py
+-rwxr-xr-x 1 root   sys   18681 Dec 21  2010 export
+-rwxr-xr-x 1 root   sys   19098 Dec 14  2010 export.old
+-rwxr-xr-x 1 root   sys   10602 Dec 26  2011 export_bulle
+-rwxr-xr-x 1 root   sys    1753 Dec 26  2011 export_bulle.c
+-rwxr-xr-x 1 root   sys    8988 Dec 26  2011 export_bulle.pl
+-rwxr-xr-x 1 root   sys    6038 Dec 26  2011 export_bulle.sh
+-rwxr-xr-x 1 root   sys   13713 Jun  8  2012 ficmodif.py
+-rwxr-xr-x 1 root   sys   13912 Jun 27  2012 gzippy.py
+-rwxr-xr-x 1 root   sys   18681 Dec 21  2010 import
+-rwxr-xr-x 1 root   sys   19098 Dec 14  2010 import.old
+-rwxr-xr-x 1 root   sys   10586 Dec 26  2011 import_bulle
+-rwxr-xr-x 1 root   sys    1748 Dec 26  2011 import_bulle.c
+-rwxr-xr-x 1 root   sys    8678 Dec 26  2011 import_bulle.pl
+-rwxr-xr-x 1 root   sys    6645 Dec 26  2011 import_bulle.sh
+-rwxr-xr-x 1 root   sys    2628 Dec 14  2010 timestamp.ksh
+-rwxr-xr-x 1 root   sys   31474 Mar  4  2013 transf.py
+-rwxr-xr-x 1 root   sys   16621 Apr 14  2011 transfert
+
+./ww_:
+total 4
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 01_00_00
+
+./ww_/01_00_00:
+total 12
+-rwxr-xr-x 1 root root 2298 Feb 11  2011 ioda_master_hotbackup_post.sh
+-rwxr-xr-x 1 root root 4255 Feb 11  2011 ioda_master_hotbackup_pre.sh
+
+./xm_:
+total 32
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_01
+drwxr-xr-x 3 root dibox 4096 Mar 26 17:13 02_00_02
+drwxr-xr-x 3 root dibox 4096 Mar 26 17:13 02_00_03
+drwxr-xr-x 3 root dibox 4096 Mar 26 17:13 02_00_04
+drwxr-xr-x 3 root dibox 4096 Mar 26 17:13 02_00_05
+drwxr-xr-x 3 root dibox 4096 Mar 26 17:13 02_00_06
+drwxr-xr-x 3 root dibox 4096 Mar 26 17:13 02_00_07
+
+./xm_/02_00_00:
+total 16
+-rwxr-xr-x 1 root bin 5732 Sep 28  2007 BPbackup
+-rwxr-xr-x 1 root bin 5732 Sep 28  2007 BPbarchive
+
+./xm_/02_00_01:
+total 16
+-rwxr-xr-x 1 root root 5684 Apr 10  2008 BParchive
+-rwxr-xr-x 1 root root 5684 Apr 10  2008 BPbackup
+
+./xm_/02_00_02:
+total 52
+-rwxr-xr-x 1 root    root  805 Aug 21  2009 .post_install.sh
+-rwxr-xr-x 1 root    root 5684 Aug 21  2009 BParchive
+-rwxr-xr-x 1 root    root 5684 Aug 21  2009 BPbackup
+drwxr-xr-x 2 root    root 4096 Sep 14  2009 conf
+-rwxr-xr-x 1 pvtom01 3002 9632 Aug 21  2009 sauvegarde
+-rwxr-xr-x 1 root    root  637 Aug 21  2009 sauvegarde.c
+-rwxr-xr-x 1 root    root 6982 Sep 29  2009 sauvegarde.pl
+-rwxr-xr-x 1 root    root  759 Aug 21  2009 sauvegarde.sh
+
+./xm_/02_00_02/conf:
+total 8
+-rwxr-xr-x 1 root root 10 Sep 14  2009 Appli1.conf
+-rwxr-xr-x 1 root root 10 Aug 21  2009 Appli1_Module.conf
+
+./xm_/02_00_03:
+total 56
+-rwxr-xr-x 1 root root  805 Apr  7  2010 .post_install.sh
+-rwxr-xr-x 1 root root 5684 Aug 21  2009 BParchive
+-rwxr-xr-x 1 root root 5684 Aug 21  2009 BPbackup
+-rwxr-xr-x 1 root root  262 Apr  7  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+drwxr-xr-x 2 root root 4096 Sep 14  2009 conf
+-rwxr-xr-x 1 1001 at   9632 Aug 21  2009 sauvegarde
+-rwxr-xr-x 1 root root  637 Aug 21  2009 sauvegarde.c
+-rwxr-xr-x 1 root root 7734 Apr  7  2010 sauvegarde.pl
+-rwxr-xr-x 1 root root  759 Aug 21  2009 sauvegarde.sh
+
+./xm_/02_00_03/conf:
+total 8
+-rwxr-xr-x 1 root root 10 Sep 14  2009 Appli1.conf
+-rwxr-xr-x 1 root root 10 Aug 21  2009 Appli1_Module.conf
+
+./xm_/02_00_04:
+total 56
+-rwxr-xr-x 1 root root  805 Sep 21  2010 .post_install.sh
+-rwxr-xr-x 1 root root 5931 Aug  4  2010 BParchive
+-rwxr-xr-x 1 root root 5931 Aug  4  2010 BPbackup
+-rwxr-xr-x 1 root root  262 Apr  7  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+drwxr-xr-x 2 root root 4096 Sep 14  2009 conf
+-rwxr-xr-x 1 1001 at   9632 Aug 21  2009 sauvegarde
+-rwxr-xr-x 1 root root  637 Aug 21  2009 sauvegarde.c
+-rwxr-xr-x 1 root root 7734 Apr  7  2010 sauvegarde.pl
+-rwxr-xr-x 1 root root  759 Aug 21  2009 sauvegarde.sh
+
+./xm_/02_00_04/conf:
+total 8
+-rwxr-xr-x 1 root root 10 Sep 14  2009 Appli1.conf
+-rwxr-xr-x 1 root root 10 Aug 21  2009 Appli1_Module.conf
+
+./xm_/02_00_05:
+total 56
+-rwxr-xr-x 1 root root  805 May 23  2011 .post_install.sh
+-rwxr-xr-x 1 root root 6528 May 20  2011 BParchive
+-rwxr-xr-x 1 root root 6528 May 20  2011 BPbackup
+-rwxr-xr-x 1 root root  262 Apr  7  2010 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+drwxr-xr-x 2 root root 4096 Sep 14  2009 conf
+-rwxr-xr-x 1 1001 at   9632 Aug 21  2009 sauvegarde
+-rwxr-xr-x 1 root root  637 Aug 21  2009 sauvegarde.c
+-rwxr-xr-x 1 root root 7734 Apr  7  2010 sauvegarde.pl
+-rwxr-xr-x 1 root root  759 Aug 21  2009 sauvegarde.sh
+
+./xm_/02_00_05/conf:
+total 8
+-rwxr-xr-x 1 root root 10 Sep 14  2009 Appli1.conf
+-rwxr-xr-x 1 root root 10 Aug 21  2009 Appli1_Module.conf
+
+./xm_/02_00_06:
+total 60
+-rwxr-xr-x 1 root root  805 Sep 13  2012 .post_install.sh
+-rwxr-xr-x 1 root root 6528 Sep 13  2012 BParchive
+-rwxr-xr-x 1 root root 6528 Sep 13  2012 BPbackup
+-rwxr-xr-x 1 root root  959 Sep 13  2012 VTL_flag_repli.sh
+-rwxr-xr-x 1 root root  262 Sep 13  2012 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+drwxr-xr-x 2 root root 4096 Sep 13  2012 conf
+-rwxr-xr-x 1 root root 9632 Sep 13  2012 sauvegarde
+-rwxr-xr-x 1 root root  637 Sep 13  2012 sauvegarde.c
+-rwxr-xr-x 1 root root 7734 Sep 13  2012 sauvegarde.pl
+-rwxr-xr-x 1 root root  759 Sep 13  2012 sauvegarde.sh
+
+./xm_/02_00_06/conf:
+total 8
+-rwxr-xr-x 1 root root 10 Sep 13  2012 Appli1.conf
+-rwxr-xr-x 1 root root 10 Sep 13  2012 Appli1_Module.conf
+
+./xm_/02_00_07:
+total 76
+-rwxr-xr-x 1 root root    805 Mar 26 17:13 .post_install.sh
+-rwxr-xr-x 1 root root   6528 Mar 26 17:13 BParchive
+-rwxr-xr-x 1 root root   6528 Mar 26 17:13 BPbackup
+-rwxr-xr-x 1 root root  11315 Mar 26 17:13 FULLSANbackup
+-rwxr-xr-x 1 root root    496 Mar 26 17:13 NB_sync
+-rwxr-xr-x 1 root root    959 Mar 26 17:13 VTL_flag_repli.sh
+-rwxr-xr-x 1 root root    262 Mar 26 17:13 ___WARNING_AVANT_RECONSTITUTION_PAQUET
+drwxr-xr-x 2 root dibox  4096 Mar 26 17:13 conf
+-rwxr-xr-x 1 root root   9632 Mar 26 17:13 sauvegarde
+-rwxr-xr-x 1 root root    637 Mar 26 17:13 sauvegarde.c
+-rwxr-xr-x 1 root root   7734 Mar 26 17:13 sauvegarde.pl
+-rwxr-xr-x 1 root root    759 Mar 26 17:13 sauvegarde.sh
+
+./xm_/02_00_07/conf:
+total 8
+-rwxr-xr-x 1 root root 10 Mar 26 17:13 Appli1.conf
+-rwxr-xr-x 1 root root 10 Mar 26 17:13 Appli1_Module.conf
+
+./xmb:
+total 24
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_02
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_03
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_04
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_05
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_06
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_07
+
+./xmb/02_00_02:
+total 28
+-rwxr-xr-x 1 root root 11328 Oct  7  2010 crash_recovery_linux.sh
+-rwxr-xr-x 1 root root 13785 Sep 23  2010 crash_recovery_linux_bulle.sh
+
+./xmb/02_00_03:
+total 28
+-rwxr-xr-x 1 root root 12050 Feb 11  2011 crash_recovery_linux.sh
+-rwxr-xr-x 1 root root 13358 Feb 11  2011 crash_recovery_linux_bulle.sh
+
+./xmb/02_00_04:
+total 28
+-rwxr-xr-x 1 root sys 12065 May 13  2011 crash_recovery_linux.sh
+-rwxr-xr-x 1 root sys 13832 May 13  2011 crash_recovery_linux_bulle.sh
+
+./xmb/02_00_05:
+total 28
+-rwxr-xr-x 1 root root 12126 May  3  2012 crash_recovery_linux.sh
+-rwxr-xr-x 1 root root 13843 May  3  2012 crash_recovery_linux_bulle.sh
+
+./xmb/02_00_06:
+total 40
+-rwxr-xr-x 1 root root 12126 May  3  2012 crash_recovery_linux.sh
+-rwxr-xr-x 1 root root 13843 May  3  2012 crash_recovery_linux_bulle.sh
+-rwxr-xr-x 1 root root  9518 Jun 28  2012 dump_linux.sh
+
+./xmb/02_00_07:
+total 28
+-rwxr-xr-x 1 root root 10885 Feb  4  2013 crash_recovery_linux.sh
+-rwxr-xr-x 1 root root 13843 Dec 31  2012 crash_recovery_linux_bulle.sh
+
+./yi_:
+total 16
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_00
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_01
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_02
+drwxr-xr-x 2 root dibox 4096 Mar 26 17:13 02_00_03
+
+./yi_/02_00_00:
+total 16
+-rwxr-xr-x 1 root root 4031 Jul 11  2008 Start_Stop_App.py
+-rwxr-xr-x 1 root root 6235 Jul 11  2008 Start_Stop_Cluster.py
+-rwxr-xr-x 1 root root 3290 Jul 11  2008 Start_Stop_Server.sh
+
+./yi_/02_00_01:
+total 36
+-rwxr-xr-x 1 root sys 3262 Oct  7  2008 Start_Stop_App.py
+-rwxr-xr-x 1 root sys 6236 Oct  7  2008 Start_Stop_Cluster.py
+-rwxr-xr-x 1 root sys 3224 Oct 10  2008 Start_Stop_Dmgr.sh
+-rwxr-xr-x 1 root sys 3996 Oct  8  2008 Start_Stop_IHS.sh
+-rwxr-xr-x 1 root sys 3341 Oct 10  2008 Start_Stop_Nodeagent.sh
+-rwxr-xr-x 1 root sys 3290 Oct  7  2008 Start_Stop_Server.sh
+-rwxr-xr-x 1 root sys 2088 Oct 10  2008 WAS_backupapp.sh
+-rwxr-xr-x 1 root sys 2082 Sep  1  2008 WAS_backupnd.sh
+
+./yi_/02_00_02:
+total 40
+-rwxr-xr-x 1 root root 3262 Oct 22  2009 Start_Stop_App.py
+-rwxr-xr-x 1 root root 6236 Oct 21  2009 Start_Stop_Cluster.py
+-rwxr-xr-x 1 root root 3510 Oct 22  2009 Start_Stop_Dmgr.sh
+-rwxr-xr-x 1 root root 5098 Oct 22  2009 Start_Stop_IHS.sh
+-rwxr-xr-x 1 root root 3611 Oct 22  2009 Start_Stop_Nodeagent.sh
+-rwxr-xr-x 1 root root 3592 Oct 22  2009 Start_Stop_Server.sh
+-rwxr-xr-x 1 root root 2088 Oct 21  2009 WAS_backupapp.sh
+-rwxr-xr-x 1 root root 2082 Oct 21  2009 WAS_backupnd.sh
+
+./yi_/02_00_03:
+total 44
+-rwxr-xr-x 1 root root 6446 May 31  2013 Start_Stop_App.py
+-rwxr-xr-x 1 root root 6236 May 31  2013 Start_Stop_Cluster.py
+-rwxr-xr-x 1 root root 3510 May 31  2013 Start_Stop_Dmgr.sh
+-rwxr-xr-x 1 root root 5098 May 31  2013 Start_Stop_IHS.sh
+-rwxr-xr-x 1 root root 3611 May 31  2013 Start_Stop_Nodeagent.sh
+-rwxr-xr-x 1 root root 3592 May 31  2013 Start_Stop_Server.sh
+-rwxr-xr-x 1 root root 2088 May 31  2013 WAS_backupapp.sh
+-rwxr-xr-x 1 root root 2082 May 31  2013 WAS_backupnd.sh

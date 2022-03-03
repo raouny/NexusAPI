@@ -1,0 +1,12 @@
+#!/bin/ksh
+HOSTNAME=$(hostname)
+MAIL=bruno.coquelle@laposte.fr
+if ps -ef | grep -v grep | grep -v chowntr_cron | grep chowntr > /dev/null
+then
+    echo "chowntr deja en cours d execution"
+else
+    $WR_OUTIL/chowntr
+	if [ $? != 0 ];then
+		echo "Changement de proprietaire CFT - Echec du chowntr sur $HOSTNAME" | mailx -s "Erreur du chowntr par cron sur $HOSTNAME" $MAIL
+	fi
+fi

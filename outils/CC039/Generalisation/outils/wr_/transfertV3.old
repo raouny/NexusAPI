@@ -1,0 +1,273 @@
+#@(#) transfert v1.0
+#set -x
+########################################################################
+# BC: 03/02/2015                                                                  
+# Reprise de l'existant en CFT 2.71 en gérant les arborescences <ccx> sous /transfert pour CFT V3
+##############################################################
+
+#@(#) Cette procedure lancee par CFT a pour but de permettre le transfert :
+#@(#)  d'un fichier ccffddee.rr ou :
+#@(#)           cc represente le numero de compte de l'appli emettrice
+#@(#)           ff      "     le fichier dans l'appli emettrice
+#@(#)           dd      "     l'entite destinatrice
+#@(#)           ee      "     l'entite emettrice
+#@(#)           rr      "     le numero de compte de l'appli destinatrice
+#@(#)
+#@(#) d'un fichier ccffddee.rr.iiiiiiii ou :
+#@(#)           cc represente le numero de compte de l'appli emettrice
+#@(#)           ff      "     le fichier dans l'appli emettrice
+#@(#)           dd      "     l'entite destinatrice
+#@(#)           ee      "     l'entite emettrice
+#@(#)           rr      "     le numero de compte de l'appli destinatrice
+#@(#)           iiiiiiii "    un identifiant sur 8 caracteres obligatoires
+#@(#)
+
+#@(#) Elle a besoin d'une table qui fait la correspondance entre rrdd et le
+#@(#) nom de partenaire CFT : elle est representee par $TABLE.
+
+#@(#) Si le partenaire est local alors le fichier reste au niveau du
+#@(#) repertoire de transfert ($TRANSFERT), sinon le fichier est deplace dans
+#@(#) le repertoire d'emission ($ENVOI) puis l'ordre est donne a CFT pour le 
+#@(#) transfert en s'appuyant sur la procedure ~cft/proc_CC/CCFF.send. Ces 2 
+#@(#) variables doivent etre valorisee dans le fichier .profile de cft.
+
+#@(#)
+#@(#) Codes retours :
+#@(#)			0 -> Tous les fichiers presents dans $TRANSFERT/export
+#@(#)			     ont pu etre transferes.
+#@(#)			1 -> Au moins un fichier n'a pu etre transfere.
+
+# Declarations et valorisations locales au site :
+
+typeset SESI_LOCAL=$(CFTUTIL cftext type=PARM|grep 'PART       ='|cut -f2 -d"'")
+typeset TABLE=$HOME/exploit_appli
+typeset FICHIER
+typeset LISTE_APPLI=$HOME/liste_appli
+
+
+# Declarations variables globales
+
+typeset fichier PROC dtemp
+typeset cc ff
+typeset part dd rr ficourt 
+typeset dateheure
+typeset -i retour=0
+
+
+# PROCEDURES
+
+PARTENAIRE_CFT()
+{
+typeset -i retourpart
+part=`grep -i ${rr}${dd} $TABLE | cut -d: -f1`
+part=$(echo $part||tr "[A-Z]" "[a-z]")
+
+if [ "$part" = "" ]
+then
+  echo "$0:Le fichier $fichier n'a pu etre transfere : 
+Table $TABLE incomplete : pas de correspondance SESI:${rr}${dd}" >&2
+  retourpart=1
+else
+  retourpart=0
+fi
+return $retourpart
+}
+
+TRANSFERER()
+{
+typeset source=$1 typeset cible=$2
+typeset dirsource=$(dirname $source) dircible=$(dirname $cible)
+typeset -i retourtrans=1
+
+# Verifications pour pouvoir deplacer ou renommer le fichier dans $cible
+
+if [ -f $cible ] # Si le fichier existe, alors avertir
+then
+   echo "$PROCEDURE:Le fichier $source n'a pu etre deplace \
+car $cible existe deja." >&2
+
+   # Si le deplacement se fait dans le meme systeme de fichier
+elif [ $(df -k $dirsource $dircible | \
+         uniq -c | \
+         tail -1 | \
+         awk '{print $1}') -eq 2 ]
+then
+   /bin/mv $source $cible
+   retourtrans=$?
+   # S'il n'y a pas assez de place, alors avertir
+elif [ $(ls -lisa $source | awk '{print $7}') -gt $(df -k $dircible | awk 'NR==3 {printf "%d" ,$3*1024}') ]
+then
+   echo "$PROCEDURE:Le fichier $source n'a pu etre deplace \
+car il n'y a plus de place dans $dircible." >&2
+elif mv $source $cible
+then               # Si le deplacement a ete effectue: transfert par CFT
+   retourtrans=0
+else   # S'il y a eu un incident lors du deplacement,
+       # alors avertir
+   retourtrans=$?
+   echo "$PROCEDURE:PROBLEME LORS DU DEPLACEMENT DE $source VERS $cible.
+CAUSE : INCONNUE (code retour de /bin/mv : $retourtrans ) ." >&2
+fi
+return $retourtrans
+}
+
+
+DUPLIQUER()
+{
+typeset -i retourdupli=0
+cat $2|while read verif dest
+do
+	if [ "$verif" = "$3" ]
+	then
+		/bin/cp $TRANSFERTV3/$1/export/$3 $TRANSFERTV3/$1/import/$dest
+		retourdupli=$?
+################alimentation accounting local si c est le cas
+                if [ $part = $SESI_LOCAL ]
+                then dateref=$(date "+%d%m%y")
+                     echo $dateheure";"$taille";"$verif";"$dest >> $CFTDIRRUNTIME/accnt/cftaccnt.local.${dateref}
+                fi
+	fi
+done
+return $retourdupli
+}
+
+
+# Debut
+
+MAIN()
+{
+# affichage des fichiers dans /transfertV3/$1/export avant
+dateref=$(date "+%d%m%y")
+echo "Fichiers presents avant le transfert sous /transfertV3/$1/export:"
+cd $TRANSFERTV3/$1/export
+ls
+
+
+#cas des fichiers des autres appli
+dateheure=$(date "+%y%m%d%H%M%S")
+
+for fichier in \
+   $(ls \
+   [a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,A-Z,0-9][a-z,A-Z,0-9][a-z,0-9][a-z,0-9]\.[a-z,0-9][a-z,0-9] \
+   [a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9]\.[a-z,0-9][a-z,0-9]\.[a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9][a-z,0-9] 2>&- \
+   ; cd $HOME)
+do
+
+# Affichage du traitement en cours
+  echo "Traitement du fichier $fichier"
+
+# Decomposition du nom du fichier
+  dtemp=${fichier#????}        # supprime les 4 premiers caracteres
+# dd=${dtemp%%??.*}            # ne garde que les 2 premiers caracteres
+  dd=$(echo ${dtemp%%??.*}|tr "[A-Z]" "[a-z]")            # ne garde que les 2 premiers caracteres
+
+  dtemp=${fichier#????????.}   # supprime les 9 premiers caracteres
+# rr=${dtemp%%.*}              # ne garde que les 2 premiers caracteres
+  rr=$(echo ${dtemp%%.*}|tr "[A-Z]" "[a-z]")              # ne garde que les 2 premiers caracteres
+
+# ficourt=${fichier%%.*}       # ne garde que les 8 premiers caracteres
+  ficourt=$(echo ${fichier%%.*}|tr "[A-Z]" "[a-z]")       # ne garde que les 8 premiers caracteres
+
+# cc=${fichier%%??????.*}      # ne garde que les 2 premiers caracteres
+  cc=$(echo ${fichier%%??????.*}|tr "[a-z]" "[A-Z]")      # ne garde que les 2 premiers caracteres
+
+  dtemp=${fichier%%????.*}     # ne garde que les 4 premiers caracteres
+# ff=${dtemp#??}               # supprimer les 2 premiers caracteres
+  ff=$(echo ${dtemp#??}|tr "[a-z]" "[A-Z]")               # supprimer les 2 premiers caracteres
+
+# Recherche du partenaire CFT
+  PARTENAIRE_CFT
+
+# Si le partenaire existe, on continue le traitement
+
+  if [ $? -eq 0 ]
+  then      # Si le partenaire est local : on deplace le fichier sous import
+    if [ $part = $SESI_LOCAL ]
+    then
+		echo "Transfert de $fichier en local"
+                taille=$(ls -l $fichier|awk '{print $5}')
+
+############### si le fichier est a copier vers une autre appli
+	        if [ -a $HOME/proc_${cc}/a_copier ]
+		then DUPLIQUER $HOME/proc_${cc}/a_copier $fichier
+	      	     if [ $? -ne 0 ]
+                     then echo "transfert: la duplication de $fichier a echoue‹" >&2
+                          retour=3
+		     fi
+		fi
+
+############### construction du sous-repertoire de destination
+                ccx=$rr"_" 
+		TRANSFERER ${TRANSFERTV3}/$1/export/${fichier} ${TRANSFERTV3}/$ccx/import/${fichier}
+		if [ $? -ne 0 ]
+        	then
+			retour=3
+                        echo "probleme de deplacement en local du fichier $fichier" >&2
+################alimentation du fichier accounting en local
+                else dateref=$(date "+%d%m%y")
+                     echo $dateheure";"$taille";"$fichier >> $CFTDIRRUNTIME/accnt/cftaccnt.local.${dateref}
+                     find $CFTDIRRUNTIME/accnt -name cftaccnt.local* -mtime +60 -exec rm {} \;
+		fi
+# Si le partenaire est distant, on le transfere par CFT
+
+    else
+
+       FICHIER=$(echo $fichier|tr "[a-z]" "[A-Z]")
+       echo "Transfert de $fichier en distant"
+# si le fichier est a copier vers une autre appli
+       if [ -a $HOME/proc_${cc}/a_copier ]
+       then DUPLIQUER $1 $HOME/proc_${cc}/a_copier $fichier
+            if [ $? -ne 0 ]
+            then echo "transfert:la duplication de $fichier a echouee">&2
+                 retour=3
+	    fi
+       fi
+
+       PROC=$HOME/proc_${cc}/${cc}${ff}.send
+       if [ -x $PROC ]
+       then TRANSFERER ${TRANSFERTV3}/$1/export/${fichier} ${ENVOI}/${fichier}.${dateheure}
+            if [ $? -eq 0 ]
+            then echo "Envoi par CFT de $fichier"
+	         $PROC ${ENVOI}/${fichier}.${dateheure} \
+		 $ficourt                         \
+		 $part                            \
+		 $rr
+            else retour=3
+            fi
+       else echo "transfert:Pas d'emission de $fichier car $PROC n'existe pas ou n'est pas executable" >&2
+            retour=3
+       fi
+    fi
+  else
+# Si le partenaire n'existe pas on reitere avec le fichier suivant
+     retour=3
+  fi 
+done
+
+
+# affichage des fichiers dans /transfertV3/$1/export apres
+echo "Fichiers presents apres le transfert sous /transfertV3/$1/export:"
+cd $TRANSFERTV3/$1/export
+ls
+
+# affichage des fichiers dans /transfertV3/$1/import
+cd $TRANSFERTV3/$1/import
+date >> $CFTDIRRUNTIME/accnt/listing.import.${dateref}
+ls -rtl >> $CFTDIRRUNTIME/accnt/listing.import.${dateref}
+echo "----------------------------" >> $CFTDIRRUNTIME/accnt/listing.import.${dateref}
+
+}
+
+ls $TRANSFERTV3 > $LISTE_APPLI
+
+cat $LISTE_APPLI|cut -d: -f1|while read APPLI
+do
+longueur_app=$(echo $APPLI|wc -m)
+let longueur_app=$longueur_app-1
+if [ $longueur_app = 3 ]
+then MAIN $APPLI
+fi
+done
+
+# Fin
+exit $retour

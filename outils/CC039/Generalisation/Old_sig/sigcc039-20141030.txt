@@ -1,0 +1,563 @@
+.:
+total 48
+drwxr-xr-x 1 root root     0 Jun 30 16:18 alt
+-rwxr-xr-x 1 root root 20480 Oct 11  2013 cat_unix.tar
+drwxr-xr-x 1 root root     0 Nov 15  2013 fe_
+-rwxr-xr-x 1 root root 16399 Oct 16 16:46 sigcc039-20141016.txt
+-rwxr-xr-x 1 root root     0 Oct 30  2014 sigcc039-20141030.txt
+drwxr-xr-x 1 root root     0 Oct 30 11:30 w8p
+drwxr-xr-x 1 root root     0 Oct 25  2011 w8q
+drwxr-xr-x 1 root root     0 Oct 30 14:52 w9m
+drwxr-xr-x 1 root root     0 Oct 25  2011 w9n
+drwxr-xr-x 1 root root     0 Jun 19 16:37 wav
+drwxr-xr-x 1 root root     0 Oct 25  2011 wh4
+drwxr-xr-x 1 root root     0 Oct 25  2011 wn_
+drwxr-xr-x 1 root root     0 Oct 25  2011 wo_
+drwxr-xr-x 1 root root     0 Oct 16 11:29 wr_
+drwxr-xr-x 1 root root     0 Oct 25  2011 ww_
+drwxr-xr-x 1 root root     0 Dec 13  2013 xm_
+drwxr-xr-x 1 root root     0 Mar 14  2013 xmb
+drwxr-xr-x 1 root root     0 Jun  4  2013 yi_
+
+./alt:
+total 0
+drwxr-xr-x 0 root root 0 Jun 30 16:19 02_00_00
+
+./alt/02_00_00:
+total 24
+-rwxr-xr-x 1 root root 7798 Jun 30 16:16 alt_real.exp.gz
+-rwxr-xr-x 1 root root 1932 Jun 30 16:16 alt_real.ksh.gz
+-rwxr-xr-x 1 root root 1730 Jun 30 16:16 alt_real.sh.gz
+
+./fe_:
+total 16
+drwxr-xr-x 0 root root    0 Sep  2  2013 01_00_00
+drwxr-xr-x 0 root root    0 Nov 15  2013 01_00_01
+-rwxr-xr-x 1 root root 9710 Nov  8  2013 update_cc.py.gz
+
+./fe_/01_00_00:
+total 56
+-rwxr-xr-x 1 root root 51200 Oct  8  2013 fe_.tar
+
+./fe_/01_00_01:
+total 16
+-rwxr-xr-x 1 root root 9032 Oct 18  2013 update_cc.py.gz
+
+./w8p:
+total 8
+-rwxr-xr-x 1 root root 2158 Oct 30 11:29 recette_client_linux.sh.gz
+
+./w8q:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+
+./w8q/02_00_00:
+total 424
+-rwxr-xr-x 1 root root 430080 Oct 25  2011 w8q.tar
+
+./w9m:
+total 0
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_00
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_01
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_02
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_03
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_04
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_05
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_06
+drwxr-xr-x 1 root root 0 Oct 25  2011 02_00_07
+drwxr-xr-x 1 root root 0 Dec  6  2011 02_00_08
+drwxr-xr-x 1 root root 0 May 14  2012 02_00_09
+drwxr-xr-x 1 root root 0 Jun 11  2012 02_00_10
+drwxr-xr-x 1 root root 0 Feb 14  2013 02_00_11
+drwxr-xr-x 1 root root 0 Apr 22  2013 02_00_12
+drwxr-xr-x 1 root root 0 Apr 23  2013 02_00_13
+drwxr-xr-x 1 root root 0 Sep  5  2013 02_00_14
+drwxr-xr-x 1 root root 0 Nov 21  2013 02_00_15
+drwxr-xr-x 1 root root 0 Dec 13  2013 02_00_16
+drwxr-xr-x 1 root root 0 Feb  7  2014 02_00_17
+drwxr-xr-x 1 root root 0 Mar 26  2014 02_00_18
+drwxr-xr-x 1 root root 0 Oct  1 14:24 02_00_19
+drwxr-xr-x 1 root root 0 Oct 16 10:19 02_00_20
+drwxr-xr-x 1 root root 0 Oct 30 14:53 02_00_21
+
+./w9m/02_00_00:
+total 40
+-rwxr-xr-x 1 root root 40960 Oct 25  2011 w9m.tar
+
+./w9m/02_00_01:
+total 176
+-rwxr-xr-x 1 root root 174080 Oct 25  2011 w9m.tar
+
+./w9m/02_00_02:
+total 176
+-rwxr-xr-x 1 root root 174080 Oct 25  2011 w9m.tar
+
+./w9m/02_00_03:
+total 176
+-rwxr-xr-x 1 root root 174080 Oct 25  2011 w9m.tar
+
+./w9m/02_00_04:
+total 36960
+-rwxr-xr-x 1 root root 37847040 Oct 25  2011 w9m.tar
+
+./w9m/02_00_05:
+total 176
+-rwxr-xr-x 1 root root 174080 Oct 25  2011 w9m.tar
+
+./w9m/02_00_06:
+total 192
+-rwxr-xr-x 1 root root 194560 Oct 25  2011 w9m.tar
+
+./w9m/02_00_07:
+total 192
+-rwxr-xr-x 1 root root 194560 Oct 25  2011 w9m.tar
+
+./w9m/02_00_08:
+total 256
+-rwxr-xr-x 1 root root 256000 Dec  6  2011 w9m.tar
+
+./w9m/02_00_09:
+total 256
+-rwxr-xr-x 1 root root 256000 May 14  2012 w9m.tar
+
+./w9m/02_00_10:
+total 264
+-rwxr-xr-x 1 root root 266240 Jun 11  2012 w9m.tar
+
+./w9m/02_00_11:
+total 544
+-rwxr-xr-x 1 root root 552960 Feb 14  2013 w9m.tar
+
+./w9m/02_00_12:
+total 544
+-rwxr-xr-x 1 root root 552960 Apr 22  2013 w9m.tar
+
+./w9m/02_00_13:
+total 560
+-rwxr-xr-x 1 root root 573440 Apr 23  2013 w9m.tar
+
+./w9m/02_00_14:
+total 584
+-rwxr-xr-x 1 root root 593920 Sep  5  2013 w9m.tar
+
+./w9m/02_00_15:
+total 272
+-rwxr-xr-x 1 root root 94783 Sep  3  2013 ARB_create.sh.gz
+-rwxr-xr-x 1 root root 65744 Sep  3  2013 copiesecurisee.doc.gz
+-rwxr-xr-x 1 root root   867 Sep  3  2013 copiesecurisee.sh.gz
+-rwxr-xr-x 1 root root  3827 Sep  3  2013 gzippy.py.gz
+-rwxr-xr-x 1 root root  5219 Sep  3  2013 kill_traces.sh.gz
+-rwxr-xr-x 1 root root  4376 Sep  3  2013 mvtraces.ksh.gz
+-rwxr-xr-x 1 root root   138 Sep  3  2013 params.csv.sample.gz
+-rwxr-xr-x 1 root root   808 Sep  3  2013 pax.ksh.gz
+-rwxr-xr-x 1 root root  9731 Oct 11  2013 purge.py.gz
+-rwxr-xr-x 1 root root  4395 Nov  4  2013 purge_dossier_vide.py.gz
+-rwxr-xr-x 1 root root  7085 Oct 11  2013 rename.py.gz
+-rwxr-xr-x 1 root root  1136 Sep  3  2013 tar.ksh.gz
+-rwxr-xr-x 1 root root   871 Sep  3  2013 wget.ksh.gz
+-rwxr-xr-x 1 root root  4791 Sep  3  2013 zippy.py.gz
+
+./w9m/02_00_16:
+total 288
+-rwxr-xr-x 1 root root 94783 Sep  3  2013 ARB_create.sh.gz
+-rwxr-xr-x 1 root root  3123 Dec 12  2013 cc_timer.py.gz
+-rwxr-xr-x 1 root root  2148 Dec 12  2013 chmod.py.gz
+-rwxr-xr-x 1 root root 65744 Sep  3  2013 copiesecurisee.doc.gz
+-rwxr-xr-x 1 root root   867 Sep  3  2013 copiesecurisee.sh.gz
+-rwxr-xr-x 1 root root  3827 Sep  3  2013 gzippy.py.gz
+-rwxr-xr-x 1 root root  5219 Sep  3  2013 kill_traces.sh.gz
+-rwxr-xr-x 1 root root  4376 Sep  3  2013 mvtraces.ksh.gz
+-rwxr-xr-x 1 root root   138 Sep  3  2013 params.csv.sample.gz
+-rwxr-xr-x 1 root root   808 Sep  3  2013 pax.ksh.gz
+-rwxr-xr-x 1 root root  9731 Oct 11  2013 purge.py.gz
+-rwxr-xr-x 1 root root  4395 Nov  4  2013 purge_dossier_vide.py.gz
+-rwxr-xr-x 1 root root  7085 Oct 11  2013 rename.py.gz
+-rwxr-xr-x 1 root root  1136 Sep  3  2013 tar.ksh.gz
+-rwxr-xr-x 1 root root   871 Sep  3  2013 wget.ksh.gz
+-rwxr-xr-x 1 root root  4791 Sep  3  2013 zippy.py.gz
+
+./w9m/02_00_17:
+total 288
+-rwxr-xr-x 1 root root 94783 Sep  3  2013 ARB_create.sh.gz
+-rwxr-xr-x 1 root root  3123 Dec 12  2013 cc_timer.py.gz
+-rwxr-xr-x 1 root root  2148 Dec 12  2013 chmod.py.gz
+-rwxr-xr-x 1 root root 65744 Sep  3  2013 copiesecurisee.doc.gz
+-rwxr-xr-x 1 root root   867 Sep  3  2013 copiesecurisee.sh.gz
+-rwxr-xr-x 1 root root  4637 Jan 20  2014 gzippy.py.gz
+-rwxr-xr-x 1 root root  5219 Sep  3  2013 kill_traces.sh.gz
+-rwxr-xr-x 1 root root  4376 Sep  3  2013 mvtraces.ksh.gz
+-rwxr-xr-x 1 root root   138 Sep  3  2013 params.csv.sample.gz
+-rwxr-xr-x 1 root root   808 Sep  3  2013 pax.ksh.gz
+-rwxr-xr-x 1 root root  9731 Oct 11  2013 purge.py.gz
+-rwxr-xr-x 1 root root  4395 Nov  4  2013 purge_dossier_vide.py.gz
+-rwxr-xr-x 1 root root  7085 Oct 11  2013 rename.py.gz
+-rwxr-xr-x 1 root root  1136 Sep  3  2013 tar.ksh.gz
+-rwxr-xr-x 1 root root   871 Sep  3  2013 wget.ksh.gz
+-rwxr-xr-x 1 root root  4791 Sep  3  2013 zippy.py.gz
+
+./w9m/02_00_18:
+total 296
+-rwxr-xr-x 1 root root 94783 Sep  3  2013 ARB_create.sh.gz
+-rwxr-xr-x 1 root root  4293 Mar 26  2014 cc_mail.py.gz
+-rwxr-xr-x 1 root root  3123 Dec 12  2013 cc_timer.py.gz
+-rwxr-xr-x 1 root root  2148 Dec 12  2013 chmod.py.gz
+-rwxr-xr-x 1 root root 65744 Sep  3  2013 copiesecurisee.doc.gz
+-rwxr-xr-x 1 root root   867 Sep  3  2013 copiesecurisee.sh.gz
+-rwxr-xr-x 1 root root  4119 Mar 26  2014 gzippy.py.gz
+-rwxr-xr-x 1 root root  5219 Sep  3  2013 kill_traces.sh.gz
+-rwxr-xr-x 1 root root  4376 Sep  3  2013 mvtraces.ksh.gz
+-rwxr-xr-x 1 root root   138 Sep  3  2013 params.csv.sample.gz
+-rwxr-xr-x 1 root root   808 Sep  3  2013 pax.ksh.gz
+-rwxr-xr-x 1 root root  9731 Oct 11  2013 purge.py.gz
+-rwxr-xr-x 1 root root  4395 Nov  4  2013 purge_dossier_vide.py.gz
+-rwxr-xr-x 1 root root  7085 Oct 11  2013 rename.py.gz
+-rwxr-xr-x 1 root root  1136 Sep  3  2013 tar.ksh.gz
+-rwxr-xr-x 1 root root   871 Sep  3  2013 wget.ksh.gz
+-rwxr-xr-x 1 root root  4791 Sep  3  2013 zippy.py.gz
+
+./w9m/02_00_19:
+total 336
+-rwxr-xr-x 1 root root 94783 Sep  3  2013 ARB_create.sh.gz
+-rwxr-xr-x 1 root root  4293 Mar 26  2014 cc_mail.py.gz
+-rwxr-xr-x 1 root root  3123 Dec 12  2013 cc_timer.py.gz
+-rwxr-xr-x 1 root root  2148 Dec 12  2013 chmod.py.gz
+-rwxr-xr-x 1 root root 65744 Sep  3  2013 copiesecurisee.doc.gz
+-rwxr-xr-x 1 root root   867 Sep  3  2013 copiesecurisee.sh.gz
+-rwxr-xr-x 1 root root  4119 Mar 26  2014 gzippy.py.gz
+-rwxr-xr-x 1 root root  5219 Sep  3  2013 kill_traces.sh.gz
+-rwxr-xr-x 1 root root  4376 Sep  3  2013 mvtraces.ksh.gz
+-rwxr-xr-x 1 root root   138 Sep  3  2013 params.csv.sample.gz
+-rwxr-xr-x 1 root root   808 Sep  3  2013 pax.ksh.gz
+-rwxr-xr-x 1 root root 44612 Jun 30 16:14 purge.py
+-rwxr-xr-x 1 root root  4395 Nov  4  2013 purge_dossier_vide.py.gz
+-rwxr-xr-x 1 root root  7085 Oct 11  2013 rename.py.gz
+-rwxr-xr-x 1 root root  1136 Sep  3  2013 tar.ksh.gz
+-rwxr-xr-x 1 root root  4326 Jun 30 16:14 tarpy.py.gz
+-rwxr-xr-x 1 root root   871 Sep  3  2013 wget.ksh.gz
+-rwxr-xr-x 1 root root  4791 Sep  3  2013 zippy.py.gz
+
+./w9m/02_00_20:
+total 336
+-rwxr-xr-x 1 root root 94783 Sep  3  2013 ARB_create.sh.gz
+-rwxr-xr-x 1 root root  4293 Mar 26  2014 cc_mail.py.gz
+-rwxr-xr-x 1 root root  3123 Dec 12  2013 cc_timer.py.gz
+-rwxr-xr-x 1 root root  2148 Dec 12  2013 chmod.py.gz
+-rwxr-xr-x 1 root root 65744 Sep  3  2013 copiesecurisee.doc.gz
+-rwxr-xr-x 1 root root   867 Sep  3  2013 copiesecurisee.sh.gz
+-rwxr-xr-x 1 root root  4119 Mar 26  2014 gzippy.py.gz
+-rwxr-xr-x 1 root root  5219 Sep  3  2013 kill_traces.sh.gz
+-rwxr-xr-x 1 root root  4376 Sep  3  2013 mvtraces.ksh.gz
+-rwxr-xr-x 1 root root   138 Sep  3  2013 params.csv.sample.gz
+-rwxr-xr-x 1 root root   808 Sep  3  2013 pax.ksh.gz
+-rwxr-xr-x 1 root root 44612 Jun 30 16:14 purge.py
+-rwxr-xr-x 1 root root  4518 Sep 24 09:46 purge_dossier_vide.py.gz
+-rwxr-xr-x 1 root root  7223 Oct 14 10:49 rename.py.gz
+-rwxr-xr-x 1 root root  1136 Sep  3  2013 tar.ksh.gz
+-rwxr-xr-x 1 root root  4541 Oct 15 11:14 tarpy.py.gz
+-rwxr-xr-x 1 root root   871 Sep  3  2013 wget.ksh.gz
+-rwxr-xr-x 1 root root  4791 Sep  3  2013 zippy.py.gz
+
+./w9m/02_00_21:
+total 304
+-rwxr-xr-x 1 root root 94783 Sep  3  2013 ARB_create.sh.gz
+-rwxr-xr-x 1 root root  4293 Mar 26  2014 cc_mail.py.gz
+-rwxr-xr-x 1 root root  3123 Dec 12  2013 cc_timer.py.gz
+-rwxr-xr-x 1 root root  2148 Dec 12  2013 chmod.py.gz
+-rwxr-xr-x 1 root root 65744 Sep  3  2013 copiesecurisee.doc.gz
+-rwxr-xr-x 1 root root   867 Sep  3  2013 copiesecurisee.sh.gz
+-rwxr-xr-x 1 root root  4119 Mar 26  2014 gzippy.py.gz
+-rwxr-xr-x 1 root root  5219 Sep  3  2013 kill_traces.sh.gz
+-rwxr-xr-x 1 root root  4376 Sep  3  2013 mvtraces.ksh.gz
+-rwxr-xr-x 1 root root   138 Sep  3  2013 params.csv.sample.gz
+-rwxr-xr-x 1 root root   808 Sep  3  2013 pax.ksh.gz
+-rwxr-xr-x 1 root root  9985 Oct 30 14:53 purge.py.gz
+-rwxr-xr-x 1 root root  4518 Sep 24 09:46 purge_dossier_vide.py.gz
+-rwxr-xr-x 1 root root  7223 Oct 14 10:49 rename.py.gz
+-rwxr-xr-x 1 root root  1136 Sep  3  2013 tar.ksh.gz
+-rwxr-xr-x 1 root root  4541 Oct 15 11:14 tarpy.py.gz
+-rwxr-xr-x 1 root root   871 Sep  3  2013 wget.ksh.gz
+-rwxr-xr-x 1 root root  4791 Sep  3  2013 zippy.py.gz
+
+./w9n:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 mys
+drwxr-xr-x 0 root root 0 Sep 11  2012 ora
+
+./w9n/mys:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 01_00_00
+drwxr-xr-x 0 root root 0 Oct 25  2011 01_01_00
+
+./w9n/mys/01_00_00:
+total 616
+-rwxr-xr-x 1 root root 624640 Oct 25  2011 w9n.tar
+
+./w9n/mys/01_01_00:
+total 704
+-rwxr-xr-x 1 root root 716800 Oct 25  2011 w9n.tar
+
+./w9n/ora:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_01
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_02
+drwxr-xr-x 0 root root 0 Sep 11  2012 02_00_03
+
+./w9n/ora/02_00_00:
+total 64
+-rwxr-xr-x 1 root root 61440 Oct 25  2011 w9n.tar
+
+./w9n/ora/02_00_01:
+total 96
+-rwxr-xr-x 1 root root 92160 Oct 25  2011 w9n.tar
+
+./w9n/ora/02_00_02:
+total 112
+-rwxr-xr-x 1 root root 112640 Oct 25  2011 w9n.tar
+
+./w9n/ora/02_00_03:
+total 120
+-rwxr-xr-x 1 root root 122880 Sep 11  2012 w9n.tar
+
+./wav:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+drwxr-xr-x 0 root root 0 May 23  2013 02_00_01
+drwxr-xr-x 0 root root 0 Jun 19 16:38 02_00_02
+
+./wav/02_00_00:
+total 16
+-rwxr-xr-x 1 root root 10240 Oct 25  2011 wav.tar
+
+./wav/02_00_01:
+total 24
+-rwxr-xr-x 1 root root 20480 May 23  2013 wav.tar
+
+./wav/02_00_02:
+total 72
+-rwxr-xr-x 1 root root 71680 Jun 19 16:34 wav.tar
+
+./wh4:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+
+./wh4/02_00_00:
+total 32
+-rwxr-xr-x 1 root root 30720 Oct 25  2011 wh4.tar
+
+./wn_:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_01
+
+./wn_/02_00_00:
+total 24
+-rwxr-xr-x 1 root root 20480 Oct 25  2011 wn_.tar
+
+./wn_/02_00_01:
+total 24
+-rwxr-xr-x 1 root root 20480 Oct 25  2011 wn_.tar
+
+./wo_:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+
+./wo_/02_00_00:
+total 16
+-rwxr-xr-x 1 root root 10240 Oct 25  2011 wo_.tar
+
+./wr_:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_01
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_02
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_03
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_04
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_05
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_06
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_07
+drwxr-xr-x 0 root root 0 Jan  2  2012 02_00_08
+drwxr-xr-x 0 root root 0 Jun 11  2012 02_00_09
+drwxr-xr-x 0 root root 0 Oct 16  2012 02_00_10
+drwxr-xr-x 0 root root 0 Oct 19  2012 02_00_11
+drwxr-xr-x 0 root root 0 Mar  4  2013 02_00_12
+drwxr-xr-x 0 root root 0 Oct 16 11:34 02_00_13
+
+./wr_/02_00_00:
+total 32
+-rwxr-xr-x 1 root root 30720 Oct 25  2011 wr_.tar
+
+./wr_/02_00_01:
+total 120
+-rwxr-xr-x 1 root root 122880 Oct 25  2011 wr_.tar
+
+./wr_/02_00_02:
+total 120
+-rwxr-xr-x 1 root root 122880 Oct 25  2011 wr_.tar
+
+./wr_/02_00_03:
+total 144
+-rwxr-xr-x 1 root root 143360 Oct 25  2011 wr_.tar
+
+./wr_/02_00_04:
+total 144
+-rwxr-xr-x 1 root root 143360 Oct 25  2011 wr_.tar
+
+./wr_/02_00_05:
+total 184
+-rwxr-xr-x 1 root root 184320 Oct 25  2011 wr_.tar
+
+./wr_/02_00_06:
+total 184
+-rwxr-xr-x 1 root root 184320 Oct 25  2011 wr_.tar
+
+./wr_/02_00_07:
+total 192
+-rwxr-xr-x 1 root root 194560 Oct 25  2011 wr_.tar
+
+./wr_/02_00_08:
+total 192
+-rwxr-xr-x 1 root root 194560 Dec 26  2011 wr_.tar
+
+./wr_/02_00_09:
+total 216
+-r-xr-xr-x 1 root root 215040 Jun 11  2012 wr_.tar
+
+./wr_/02_00_10:
+total 224
+-rwxr-xr-x 1 root root 225280 Jul  2  2012 wr_.tar
+
+./wr_/02_00_11:
+total 256
+-rwxr-xr-x 1 root root 256000 Oct 19  2012 wr_.tar
+
+./wr_/02_00_12:
+total 256
+-rwxr-xr-x 1 root root 256000 Mar  4  2013 wr_.tar
+
+./wr_/02_00_13:
+total 256
+-rwxr-xr-x 1 root root 256000 Oct 16 11:34 wr_.tar
+
+./ww_:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 01_00_00
+
+./ww_/01_00_00:
+total 16
+-rwxr-xr-x 1 root root 10240 Oct 25  2011 ww_.tar
+
+./xm_:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_01
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_02
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_03
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_04
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_05
+drwxr-xr-x 0 root root 0 Sep 14  2012 02_00_06
+drwxr-xr-x 0 root root 0 Dec 13  2013 02_00_07
+
+./xm_/02_00_00:
+total 16
+-rwxr-xr-x 1 root root 14336 Oct 25  2011 xm_.tar
+
+./xm_/02_00_01:
+total 24
+-rwxr-xr-x 1 root root 20480 Oct 25  2011 xm_.tar
+
+./xm_/02_00_02:
+total 40
+-rwxr-xr-x 1 root root 40960 Oct 25  2011 xm_.tar
+
+./xm_/02_00_03:
+total 56
+-rwxr-xr-x 1 root root 51200 Oct 25  2011 xm_.tar
+
+./xm_/02_00_04:
+total 56
+-rwxr-xr-x 1 root root 51200 Oct 25  2011 xm_.tar
+
+./xm_/02_00_05:
+total 56
+-rwxr-xr-x 1 root root 51200 Oct 25  2011 xm_.tar
+
+./xm_/02_00_06:
+total 56
+-rwxr-xr-x 1 root root 51200 Sep 13  2012 xm_.tar
+
+./xm_/02_00_07:
+total 88
+-rwxr-xr-x 1 root root  497 Nov 26  2013 .post_install.sh.gz
+-rwxr-xr-x 1 root root 1903 Nov 26  2013 BParchive.gz
+-rwxr-xr-x 1 root root 1902 Nov 26  2013 BPbackup.gz
+-rwxr-xr-x 1 root root 2736 Nov 26  2013 FULLSANbackup.gz
+-rwxr-xr-x 1 root root  234 Nov 26  2013 NB_sync.gz
+-rwxr-xr-x 1 root root  612 Nov 26  2013 VTL_flag_repli.sh.gz
+-rwxr-xr-x 1 root root  252 Nov 26  2013 ___WARNING_AVANT_RECONSTITUTION_PAQUET.gz
+drwxr-xr-x 0 root root    0 Dec 13  2013 conf
+-rwxr-xr-x 1 root root  402 Nov 26  2013 sauvegarde.c.gz
+-rwxr-xr-x 1 root root 3080 Nov 26  2013 sauvegarde.gz
+-rwxr-xr-x 1 root root 2614 Nov 26  2013 sauvegarde.pl.gz
+-rwxr-xr-x 1 root root  463 Nov 26  2013 sauvegarde.sh.gz
+
+./xm_/02_00_07/conf:
+total 16
+-rwxr-xr-x 1 root root 91 Nov 26  2013 Appli1.conf.gz
+-rwxr-xr-x 1 root root 98 Nov 26  2013 Appli1_Module.conf.gz
+
+./xmb:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_02
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_03
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_04
+drwxr-xr-x 0 root root 0 May 14  2012 02_00_05
+drwxr-xr-x 0 root root 0 Jul  2  2012 02_00_06
+drwxr-xr-x 0 root root 0 Mar 14  2013 02_00_07
+
+./xmb/02_00_02:
+total 32
+-rwxr-xr-x 1 root root 30720 Oct 25  2011 xmb.tar
+
+./xmb/02_00_03:
+total 32
+-rwxr-xr-x 1 root root 30720 Oct 25  2011 xmb.tar
+
+./xmb/02_00_04:
+total 32
+-rwxr-xr-x 1 root root 30720 Oct 25  2011 xmb.tar
+
+./xmb/02_00_05:
+total 32
+-rwxr-xr-x 1 root root 30720 May 14  2012 xmb.tar
+
+./xmb/02_00_06:
+total 40
+-rwxr-xr-x 1 root root 40960 Jul  2  2012 xmb.tar
+
+./xmb/02_00_07:
+total 32
+-rwxr-xr-x 1 root root 30720 Mar 14  2013 xmb.tar
+
+./yi_:
+total 0
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_00
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_01
+drwxr-xr-x 0 root root 0 Oct 25  2011 02_00_02
+drwxr-xr-x 0 root root 0 Jun  4  2013 02_00_03
+
+./yi_/02_00_00:
+total 16
+-rwxr-xr-x 1 root root 10240 Oct 25  2011 yi_.tar
+
+./yi_/02_00_01:
+total 40
+-rwxr-xr-x 1 root root 40960 Oct 25  2011 yi_.tar
+
+./yi_/02_00_02:
+total 40
+-rwxr-xr-x 1 root root 40960 Oct 25  2011 yi_.tar
+
+./yi_/02_00_03:
+total 40
+-rwxr-xr-x 1 root root 40960 Jun  4  2013 yi_.tar
