@@ -1,35 +1,17 @@
-pipeline {
-    agent any
+String branchName = env.BRANCH_NAME
+String gitCredentials = "CREDENTIAL_ID"
+String repoUrl = "https://github.com/username/repo-name.git"
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-       stage('Checkout') {
-      steps {
-           node {
-    dir('RepoOne') {
-        git url: 'https://github.com/raouny/NexusAPI.git'
-    }
+node {
+  // Start Stages
+  stage('Clone') {
+      // Clones the repository from the current branch name
+      echo 'Make the output directory'
+      sh 'mkdir -p build'
 
-
-    sh('. RepoOne/build.sh')
-
-}
-
-       }
-    }
-    }
+      echo 'Cloning files from (branch: "' + branchName + '" )'
+      dir('build') {
+          git branch: branchName, credentialsId: 	gitCredentials, url: repoUrl
+      }     
+  }       
 }
