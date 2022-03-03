@@ -1,411 +1,239 @@
-<!-- markdownlint-configure-file {
-  "MD013": {
-    "code_blocks": false,
-    "tables": false
-  },
-  "MD033": false,
-  "MD041": false
-} -->
-
-<div align="center">
-
-# zoxide
-
-[![crates.io][crates.io-badge]][crates.io]
-[![Downloads][downloads-badge]][releases]
-[![Built with Nix][builtwithnix-badge]][builtwithnix]
-
-zoxide is a **smarter cd command**, inspired by z and autojump.
-
-It remembers which directories you use most frequently, so you can "jump" to
-them in just a few keystrokes.<br />
-zoxide works on all major shells.
-
-[Getting started](#getting-started) •
-[Installation](#installation) •
-[Configuration](#configuration) •
-[Integrations](#third-party-integrations)
-
-</div>
-
-## Getting started
-
-![Tutorial][tutorial]
-
-```sh
-z foo              # cd into highest ranked directory matching foo
-z foo bar          # cd into highest ranked directory matching foo and bar
-z foo /            # cd into a subdirectory starting with foo
-
-z ~/foo            # z also works like a regular cd command
-z foo/             # cd into relative path
-z ..               # cd one level up
-z -                # cd into previous directory
-
-zi foo             # cd with interactive selection (using fzf)
-
-z foo<SPACE><TAB>  # show interactive completions (zoxide v0.8.0+, bash 4.4+/fish/zsh only)
-```
-
-Read more about the matching algorithm [here][algorithm-matching].
-
-## Installation
-
-### *Step 1: Install zoxide*
-
-zoxide runs on most major platforms. If your platform isn't listed below,
-please [open an issue][issues].
-
-<details>
-<summary>Linux</summary>
-
-To install zoxide, run this command in your terminal:
-
-```sh
-curl -sS https://webinstall.dev/zoxide | bash
-```
-
-Alternatively, you can use a package manager:
-
-| Distribution       | Repository              | Instructions                                                                                   |
-| ------------------ | ----------------------- | ---------------------------------------------------------------------------------------------- |
-| ***Any***          | **[crates.io]**         | `cargo install zoxide --locked`                                                                |
-| *Any*              | [conda-forge]           | `conda install -c conda-forge zoxide`                                                          |
-| *Any*              | [Linuxbrew]             | `brew install zoxide`                                                                          |
-| Alpine Linux 3.13+ | [Alpine Linux Packages] | `apk add zoxide`                                                                               |
-| Arch Linux         | [Arch Linux Community]  | `pacman -S zoxide`                                                                             |
-| CentOS 7+          | [Copr]                  | `dnf copr enable atim/zoxide` <br /> `dnf install zoxide`                                      |
-| Debian 11+         | [Debian Packages]       | `apt install zoxide`                                                                           |
-| Devuan 4.0+        | [Devuan Packages]       | `apt install zoxide`                                                                           |
-| Fedora 32+         | [Fedora Packages]       | `dnf install zoxide`                                                                           |
-| Gentoo             | [GURU Overlay]          | `eselect repository enable guru` <br /> `emerge --sync guru` <br /> `emerge app-shells/zoxide` |
-| Manjaro            |                         | `pacman -S zoxide`                                                                             |
-| NixOS              | [nixpkgs]               | `nix-env -iA nixpkgs.zoxide`                                                                   |
-| Parrot OS          |                         | `apt install zoxide`                                                                           |
-| Raspbian 11+       | [Raspbian Packages]     | `apt install zoxide`                                                                           |
-| Ubuntu 21.04+      | [Ubuntu Packages]       | `apt install zoxide`                                                                           |
-| Void Linux         | [Void Linux Packages]   | `xbps-install -S zoxide`                                                                       |
-
-</details>
-
-<details>
-<summary>macOS</summary>
-
-To install zoxide, use a package manager:
-
-| Repository      | Instructions                          |
-| --------------- | ------------------------------------- |
-| **[crates.io]** | `cargo install zoxide --locked`       |
-| [conda-forge]   | `conda install -c conda-forge zoxide` |
-| [Homebrew]      | `brew install zoxide`                 |
-| [MacPorts]      | `port install zoxide`                 |
-
-</details>
-
-<details>
-<summary>Windows</summary>
-
-To install zoxide, run this command in your command prompt:
-
-```sh
-curl.exe -A "MS" https://webinstall.dev/zoxide | powershell
-```
-
-Alternatively, you can use a package manager:
-
-| Repository      | Instructions                          |
-| --------------- | ------------------------------------- |
-| **[crates.io]** | `cargo install zoxide --locked`       |
-| [Chocolatey]    | `choco install zoxide`                |
-| [conda-forge]   | `conda install -c conda-forge zoxide` |
-| [Scoop]         | `scoop install zoxide`                |
-
-</details>
-
-<details>
-<summary>BSD</summary>
-
-To install zoxide, use a package manager:
-
-| Distribution  | Repository      | Instructions                    |
-| ------------- | --------------- | ------------------------------- |
-| ***Any***     | **[crates.io]** | `cargo install zoxide --locked` |
-| DragonFly BSD | [DPorts]        | `pkg install zoxide`            |
-| FreeBSD       | [FreshPorts]    | `pkg install zoxide`            |
-| NetBSD        | [pkgsrc]        | `pkgin install zoxide`          |
-
-</details>
-
-<details>
-<summary>Android</summary>
-
-To install zoxide, use a package manager:
-
-| Repository | Instructions         |
-| ---------- | -------------------- |
-| [Termux]   | `pkg install zoxide` |
-
-</details>
-
-### *Step 2: Add zoxide to your shell*
-
-To start using zoxide, add it to your shell.
-
-<details>
-<summary>Bash</summary>
-
-Add this to your configuration (usually `~/.bashrc`):
-
-```sh
-eval "$(zoxide init bash)"
-```
-
-</details>
-
-<details>
-<summary>Elvish</summary>
-
-Add this to your configuration (usually `~/.elvish/rc.elv`):
-
-```sh
-eval (zoxide init elvish | slurp)
-```
-
-Note: zoxide only supports elvish v0.16.0 and above.
-
-</details>
-
-<details>
-<summary>Fish</summary>
-
-Add this to your configuration (usually `~/.config/fish/config.fish`):
-
-```fish
-zoxide init fish | source
-```
-
-</details>
-
-<details>
-<summary>Nushell</summary>
-
-Add this to your configuration (find it by running `config path` in Nushell):
-
-```toml
-startup = ["zoxide init nushell --hook prompt | save ~/.zoxide.nu", "source ~/.zoxide.nu"]
-```
-
-Note: zoxide only supports Nushell v0.37.0 and above.
-
-</details>
-
-<details>
-<summary>PowerShell</summary>
-
-Add this to your configuration (find it by running `echo $profile` in
-PowerShell):
-
-```powershell
-# For zoxide v0.8.0+
-Invoke-Expression (& {
-    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-    (zoxide init --hook $hook powershell | Out-String)
-})
-
-# For older versions of zoxide
-Invoke-Expression (& {
-    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-    (zoxide init --hook $hook powershell) -join "`n"
-})
-```
-
-</details>
-
-<details>
-<summary>Xonsh</summary>
-
-Add this to your configuration (usually `~/.xonshrc`):
-
-```python
-execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
-```
-
-</details>
-
-<details>
-<summary>Zsh</summary>
-
-Add this to your configuration (usually `~/.zshrc`):
-
-```sh
-eval "$(zoxide init zsh)"
-```
-
-For completions to work, the above line must be added _after_ `compinit` is
-called. You may have to rebuild your cache by running `rm ~/.zcompdump*; compinit`.
-
-</details>
-
-<details>
-<summary>Any POSIX shell</summary>
-
-Add this to your configuration:
-
-```sh
-eval "$(zoxide init posix --hook prompt)"
-```
-
-</details>
-
-### *Step 3: Install fzf (optional)*
-
-[fzf] is a command-line fuzzy finder, used by zoxide for interactive
-selection. It can be installed from [here][fzf-installation]. zoxide supports
-fzf v0.21.0+.
-
-### *Step 4: Import your data (optional)*
-
-If you currently use any of the following utilities, you may want to import
-your data into zoxide:
-
-<details>
-<summary>autojump</summary>
-
-```sh
-zoxide import --from autojump path/to/db
-```
-
-</details>
-
-<details>
-<summary>z, z.lua, or zsh-z</summary>
-
-```sh
-zoxide import --from z path/to/db
-```
-
-</details>
-
-## Configuration
+# Color LS
+
+[![forthebadge](http://forthebadge.com/images/badges/made-with-ruby.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+
+[![Gem Version](https://badge.fury.io/rb/colorls.svg)](https://badge.fury.io/rb/colorls)
+[![CI](https://github.com/athityakumar/colorls/actions/workflows/ruby.yml/badge.svg)](https://github.com/athityakumar/colorls/actions/workflows/ruby.yml)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields)](http://makeapullrequest.com)
+
+A Ruby script that colorizes the `ls` output with color and icons. Here are the screenshots of working example on an iTerm2 terminal (Mac OS), `oh-my-zsh` with `powerlevel9k` theme and `powerline nerd-font + awesome-config` font with the `Solarized Dark` color theme.
+
+ ![image](https://user-images.githubusercontent.com/17109060/32149040-04f3125c-bd25-11e7-8003-66fd29bc18d4.png)
+
+*If you're interested in knowing the powerlevel9k configuration to get this prompt, have a look at [this gist](https://gist.github.com/athityakumar/1bd5e9e24cd2a1891565573a893993eb).*
+
+# Table of contents
+
+- [Usage](#usage)
+  - [Flags](#flags)
+    - `-1`
+    - `-a`   (or) `--all`
+    - `-A`   (or) `--almost-all`
+    - `-d`   (or) `--dirs`
+    - `-f`   (or) `--files`
+    - `-h`   (or) `--help`
+    - `-l`   (or) `--long`
+    - `-r`   (or) `--report`
+    - `--tree` (or) `--tree=[DEPTH]`
+    - `--gs` (or) `--git-status`
+    - `--sd` (or) `--sort-dirs` or `--group-directories-first`
+    - `--sf` (or) `--sort-files`
+    - `-t`
+  - [Combination of flags](#combination-of-flags)
+- [Installation](#installation)
+- [Recommended configurations](#recommended-configurations)
+- [Custom configurations](#custom-configurations)
+- [Updating](#updating)
+- [Uninstallation](#uninstallation)
+- [Contributing](#contributing)
+- [License](#license)
+
+# Usage
+
+[(Back to top)](#table-of-contents)
+
+Man pages have been added. Checkout `man colorls`.
 
 ### Flags
 
-When calling `zoxide init`, the following flags are available:
+- With `-1` : Lists one entry per line
 
-- `--cmd`
-  - Changes the prefix of predefined aliases (`z`, `zi`).
-  - `--cmd j` would change the aliases to (`j`, `ji`).
-  - `--cmd cd` would replace the `cd` command (doesn't work on Nushell / POSIX shells).
-- `--hook <HOOK>`
-  - Changes how often zoxide increments a directory's score:
-    | Hook     | Description                       |
-    | -------- | --------------------------------- |
-    | `none`   | Never                             |
-    | `prompt` | At every shell prompt             |
-    | `pwd`    | Whenever the directory is changed |
-- `--no-aliases`
-  - Don't define aliases (`z`, `zi`).
-  - These functions will still be available in your shell as `__zoxide_z` and
-    `__zoxide_zi`, should you choose to redefine them.
+  ![image](https://user-images.githubusercontent.com/17109060/32149062-4f0547ca-bd25-11e7-98b6-587467379704.png)
 
-### Environment variables
+- With `-a` (or) `--all` : Does not ignore entries starting with '.'
 
-Environment variables<sup>[?][wiki-env]</sup> can be used for configuration.
-They must be set before `zoxide init` is called.
+  ![image](https://user-images.githubusercontent.com/17109060/32149045-182eb39e-bd25-11e7-83d4-897cb14bcff3.png)
 
-- `_ZO_DATA_DIR`
-  - Specifies the directory in which the database is stored.
-  - The default value varies across OSes:
-    | OS          | Path                                     | Example                                    |
-    | ----------- | ---------------------------------------- | ------------------------------------------ |
-    | Linux / BSD | `$XDG_DATA_HOME` or `$HOME/.local/share` | `/home/alice/.local/share`                 |
-    | macOS       | `$HOME/Library/Application Support`      | `/Users/Alice/Library/Application Support` |
-    | Windows     | `%LOCALAPPDATA%`                         | `C:\Users\Alice\AppData\Local`             |
-- `_ZO_ECHO`
-  - When set to 1, `z` will print the matched directory before navigating to
-    it.
-- `_ZO_EXCLUDE_DIRS`
-  - Excludes the specified directories from the database.
-  - This is provided as a list of [globs][glob], separated by OS-specific
-    characters:
-    | OS                  | Separator | Example                 |
-    | ------------------- | --------- | ----------------------- |
-    | Linux / macOS / BSD | `:`       | `$HOME:$HOME/private/*` |
-    | Windows             | `;`       | `$HOME;$HOME/private/*` |
-  - By default, this is set to `"$HOME"`.
-- `_ZO_FZF_OPTS`
-  - Custom options to pass to [fzf] during interactive selection. See
-    [`man fzf`][fzf-man] for the list of options.
-- `_ZO_MAXAGE`
-  - Configures the [aging algorithm][algorithm-aging], which limits the maximum
-    number of entries in the database.
-  - By default, this is set to 10000.
-- `_ZO_RESOLVE_SYMLINKS`
-  - When set to 1, `z` will resolve symlinks before adding directories to the
-    database.
+- With `-A` (or) `--almost-all` : Does not ignore entries starting with '.', except `./` and `../`
 
-## Third-party integrations
+  ![image](https://user-images.githubusercontent.com/17109060/32149046-1ef7664e-bd25-11e7-8bd9-bfc3c8b27b74.png)
 
-| Application        | Description                             | Plugin                     |
-| ------------------ | --------------------------------------- | -------------------------- |
-| [emacs]            | Text editor                             | [zoxide.el]                |
-| [nnn]              | File manager                            | [nnn-autojump]             |
-| [ranger]           | File manager                            | [ranger-zoxide]            |
-| [telescope.nvim]   | Fuzzy finder for Neovim                 | [telescope-zoxide]         |
-| [vim]              | Text editor                             | [zoxide.vim]               |
-| [xplr]             | File manager                            | [zoxide.xplr]              |
-| [xxh]              | Transports shell configuration over SSH | [xxh-plugin-prerun-zoxide] |
-| [zsh-autocomplete] | Realtime completions for zsh            | Supported by default       |
+- With `-d` (or) `--dirs` : Shows only directories
 
-[algorithm-aging]: https://github.com/ajeetdsouza/zoxide/wiki/Algorithm#aging
-[algorithm-matching]: https://github.com/ajeetdsouza/zoxide/wiki/Algorithm#matching
-[alpine linux packages]: https://pkgs.alpinelinux.org/packages?name=zoxide
-[arch linux community]: https://archlinux.org/packages/community/x86_64/zoxide/
-[builtwithnix-badge]: https://img.shields.io/badge/builtwith-nix-7d81f7?style=flat-square
-[builtwithnix]: https://builtwithnix.org/
-[chocolatey]: https://community.chocolatey.org/packages/zoxide
-[conda-forge]: https://anaconda.org/conda-forge/zoxide
-[copr]: https://copr.fedorainfracloud.org/coprs/atim/zoxide/
-[crates.io-badge]: https://img.shields.io/crates/v/zoxide?style=flat-square
-[crates.io]: https://crates.io/crates/zoxide
-[debian packages]: https://packages.debian.org/stable/admin/zoxide
-[devuan packages]: https://pkginfo.devuan.org/cgi-bin/package-query.html?c=package&q=zoxide
-[downloads-badge]: https://img.shields.io/github/downloads/ajeetdsouza/zoxide/total?style=flat-square
-[dports]: https://github.com/DragonFlyBSD/DPorts/tree/master/sysutils/zoxide
-[emacs]: https://www.gnu.org/software/emacs/
-[fedora packages]: https://src.fedoraproject.org/rpms/rust-zoxide
-[freshports]: https://www.freshports.org/sysutils/zoxide/
-[fzf-installation]: https://github.com/junegunn/fzf#installation
-[fzf-man]: https://manpages.ubuntu.com/manpages/en/man1/fzf.1.html
-[fzf]: https://github.com/junegunn/fzf
-[glob]: https://man7.org/linux/man-pages/man7/glob.7.html
-[guru overlay]: https://github.com/gentoo-mirror/guru
-[homebrew]: https://formulae.brew.sh/formula/zoxide
-[issues]: https://github.com/ajeetdsouza/zoxide/issues/new
-[linuxbrew]: https://formulae.brew.sh/formula-linux/zoxide
-[macports]: https://ports.macports.org/port/zoxide/summary
-[neovim]: https://github.com/neovim/neovim
-[nixpkgs]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/misc/zoxide/default.nix
-[nnn-autojump]: https://github.com/jarun/nnn/blob/master/plugins/autojump
-[nnn]: https://github.com/jarun/nnn
-[pkgsrc]: https://pkgsrc.se/sysutils/zoxide
-[ranger-zoxide]: https://github.com/jchook/ranger-zoxide
-[ranger]: https://github.com/ranger/ranger
-[raspbian packages]: https://archive.raspbian.org/raspbian/pool/main/r/rust-zoxide/
-[releases]: https://github.com/ajeetdsouza/zoxide/releases
-[scoop]: https://github.com/ScoopInstaller/Main/tree/master/bucket/zoxide.json
-[telescope-zoxide]: https://github.com/jvgrootveld/telescope-zoxide
-[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
-[termux]: https://github.com/termux/termux-packages/tree/master/packages/zoxide
-[tutorial]: contrib/tutorial.webp
-[ubuntu packages]: https://packages.ubuntu.com/hirsute/zoxide
-[vim]: https://github.com/vim/vim
-[void linux packages]: https://github.com/void-linux/void-packages/tree/master/srcpkgs/zoxide
-[wiki-env]: https://github.com/ajeetdsouza/zoxide/wiki/HOWTO:-set-environment-variables "HOWTO: set environment variables"
-[xplr]: https://github.com/sayanarijit/xplr
-[xxh-plugin-prerun-zoxide]: https://github.com/xxh/xxh-plugin-prerun-zoxide
-[xxh]: https://github.com/xxh/xxh
-[zoxide.el]: https://gitlab.com/Vonfry/zoxide.el
-[zoxide.vim]: https://github.com/nanotee/zoxide.vim
-[zoxide.xplr]: https://github.com/sayanarijit/zoxide.xplr
-[zsh-autocomplete]: https://github.com/marlonrichert/zsh-autocomplete
+  ![image](https://user-images.githubusercontent.com/17109060/32149066-5f842aa8-bd25-11e7-9bf0-23313b717182.png)
+
+- With `-f` (or) `--files` : Shows only files
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149065-5a27c9d4-bd25-11e7-9a2b-fd731d76a058.png)
+
+- With `-h` (or) `--help` : Prints a very helpful help menu
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149096-cf2cf5b0-bd25-11e7-84b6-909d79099c98.png)
+
+- With `-l` (or) `--long` : Shows in long listing format
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149049-2a63ae48-bd25-11e7-943c-5ceed25bd693.png)
+
+- With `-r` (or) `--report` : Shows brief report about number of files and folders shown
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149082-96a83fec-bd25-11e7-9081-7f77e4c90e90.png)
+
+- With `--tree` (or) `--tree=[DEPTH]` : Shows tree view of the directory with the specified depth (default 3)
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149051-32e596e4-bd25-11e7-93a9-5e50c8d2bb19.png)
+
+- With `--gs` (or) `--git-status` : Shows git status for each entry
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149075-7a1a1954-bd25-11e7-964e-1adb173aa2b9.png)
+
+- With `--sd` (or) `--sort-dirs` or `--group-directories-first` : Shows directories first, followed by files
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149068-65117fc0-bd25-11e7-8ada-0b055603e3fd.png)
+
+- With `--sf` (or) `--sort-files` : Shows files first, followed by directories
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149071-6b379de4-bd25-11e7-8764-a0c577e526a1.png)
+
+- With `-t` : Sort by modification time, newest first (NEED TO ADD IMAGE)
+
+- With color options : `--light` or `--dark` can be passed as a flag, to choose the appropriate color scheme. By default, the dark color scheme is chosen. In order to tweak any color, read [Custom configurations](#custom-configurations).
+
+### Combination of flags
+
+- Using `--gs` with `-t` :
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149076-8423c864-bd25-11e7-816e-8642643d2c27.png)
+
+- Using `--gs` with `-l` :
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149078-899b0622-bd25-11e7-9810-d398eaa77e32.png)
+
+- Using `--sd` with `-l` and `-A` :
+
+  ![image](https://user-images.githubusercontent.com/17109060/32149084-9eb2a416-bd25-11e7-8fb7-a9d336c6e038.png)
+
+# Installation
+
+[(Back to top)](#table-of-contents)
+
+1. Install Ruby (preferably, version >= 2.6)
+2. [Download](https://www.nerdfonts.com/font-downloads) and install a Nerd Font. Have a look at the [Nerd Font README](https://github.com/ryanoasis/nerd-fonts/blob/master/readme.md) for installation instructions.
+
+    *Note for `iTerm2` users - Please enable the Nerd Font at iTerm2 > Preferences > Profiles > Text > Non-ASCII font > Hack Regular Nerd Font Complete.*
+
+    *Note for `HyperJS` users - Please add `"Hack Nerd Font"` Font as an option to `fontFamily` in your `~/.hyper.js` file.*
+
+3. Install the [colorls](https://rubygems.org/gems/colorls/) ruby gem with `gem install colorls`
+
+    *Note for `rbenv` users - In case of load error when using `lc`, please try the below patch.*
+
+    ```sh
+    rbenv rehash
+    rehash
+    ```
+
+4. Enable tab completion for flags by entering following line to your shell configuration file (`~/.bashrc` or `~/.zshrc`) :
+    ```bash
+    source $(dirname $(gem which colorls))/tab_complete.sh
+    ```
+
+5. Start using `colorls` :tada:
+
+6. Have a look at [Recommended configurations](#recommended-configurations) and [Custom configurations](#custom-configurations).
+
+# Recommended configurations
+
+[(Back to top)](#table-of-contents)
+
+1. To add some short command (say, `lc`) with some flag options (say, `-l`, `-A`, `--sd`) by default, add this to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.) :
+    ```sh
+    alias lc='colorls -lA --sd'
+    ```
+
+2. For changing the icon(s) to other unicode icons of choice (select icons from [here](https://nerdfonts.com/)), change the YAML files in a text editor of your choice (say, `subl`)
+
+    ```sh
+    subl $(dirname $(gem which colorls))/yaml
+    ```
+
+# Custom configurations
+
+[(Back to top)](#table-of-contents)
+
+You can overwrite the existing icons and colors mapping by copying the yaml files from `$(dirname $(gem which colorls))/yaml` into `~/.config/colorls`, and changing them.
+
+- To overwrite color mapping :
+
+  Please have a look at the [list of supported color names](https://github.com/sickill/rainbow#color-list). You may also use a color hex code as long as it is quoted within the YAML file and prefaced with a `#` symbol.
+
+  Let's say that you're using the dark color scheme and would like to change the color of untracked file (`??`) in the `--git-status` flag to yellow. Copy the defaut `dark_colors.yaml` and change it.
+
+  ```sh
+  cp $(dirname $(gem which colorls))/yaml/dark_colors.yaml ~/.config/colorls/dark_colors.yaml
+  ```
+
+  In the `~/.config/colorls/dark_colors.yaml` file, change the color set for `untracked` from `darkorange` to `yellow`, and save the change.
+
+  ```
+  untracked: yellow
+  ```
+
+  Or, using hex color codes:
+
+  ```
+  untracked: '#FFFF00'
+  ```
+
+- To overwrite icon mapping :
+
+  Please have a look at the [list of supported icons](https://nerdfonts.com/). Let's say you want to add an icon for swift files. Copy the default `files.yaml` and change it.
+
+  ```sh
+  cp $(dirname $(gem which colorls))/yaml/files.yaml ~/.config/colorls/files.yaml`
+  ```
+
+  In the `~/.config/colorls/files.yaml` file, add a new icon / change an existing icon, and save the change.
+
+
+  ```
+  swift: "\uF179"
+  ```
+
+- User contributed alias configurations :
+
+  - [@rjhilgefort](https://gist.github.com/rjhilgefort/51ea47dd91bcd90cd6d9b3b199188c16)
+
+
+# Updating
+
+[(Back to top)](#table-of-contents)
+
+Want to update to the latest version of `colorls`?
+
+```sh
+gem update colorls
+```
+
+# Uninstallation
+
+[(Back to top)](#table-of-contents)
+
+Want to uninstall and revert back to the old style? No issues (sob). Please feel free to open an issue regarding how we can enhance `colorls`.
+
+```sh
+gem uninstall colorls
+```
+
+# Contributing
+
+[(Back to top)](#table-of-contents)
+
+Your contributions are always welcome! Please have a look at the [contribution guidelines](CONTRIBUTING.md) first. :tada:
+
+# License
+
+[(Back to top)](#table-of-contents)
+
+
+The MIT License (MIT) 2017 - [Athitya Kumar](https://github.com/athityakumar/). Please have a look at the [LICENSE.md](LICENSE.md) for more details.
