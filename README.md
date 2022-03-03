@@ -1,6 +1,6 @@
 <h1 align="center"CCO La Poste - CI/CD Pipeline</h1>
 <p align="center">
-  <img src="http://ForTheBadge.com/images/badges/made-with-python.svg" />
+  <img src="https://img.shields.io/badge/python-2.7-blue.svg" />
   <a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
   </a>
