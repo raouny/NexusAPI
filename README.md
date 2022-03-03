@@ -2,7 +2,6 @@
 
 
 
-<img src="https://img.shields.io/badge/made%20with-python-blue.svg" alt="made with python">
 [![Coverage Status](https://coveralls.io/repos/github/raouny/NexusAPI/badge.svg)](https://coveralls.io/github/raouny/NexusAPI)
 
 
